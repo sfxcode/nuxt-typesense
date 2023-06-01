@@ -1,6 +1,4 @@
-import { fileURLToPath } from 'url'
-import {defineNuxtModule, addPlugin, addImportsDir} from '@nuxt/kit'
-import {resolve} from "path";
+import { addImportsDir, createResolver, defineNuxtModule } from '@nuxt/kit'
 import consola from 'consola'
 import defu from "defu";
 import {name, version} from '../package.json'
@@ -30,10 +28,8 @@ export default defineNuxtModule<ModuleOptions>({
       },
     )
 
-    const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
-    nuxt.options.build.transpile.push(runtimeDir)
-
-    addPlugin(resolve(runtimeDir, 'plugin'))
+    const { resolve } = createResolver(import.meta.url)
+    const runtimeDir = resolve('./runtime')
     addImportsDir(resolve(runtimeDir, 'composables'))
 
     consola.info('nuxt-typesense available')
