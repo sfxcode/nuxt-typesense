@@ -9,6 +9,9 @@ import {
   PromoteApi,
 } from '../api'
 
+import {useTypesenseUrl} from "./typesenseUrl";
+import {useTypesenseApiKey} from "./typesenseApiKey";
+
 export const useTypesenseApi = () => {
   const url = useTypesenseUrl()
   const apiKey = useTypesenseApiKey()
