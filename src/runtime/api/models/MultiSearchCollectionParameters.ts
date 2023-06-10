@@ -203,6 +203,12 @@ export interface MultiSearchCollectionParameters {
      */
     preSegmentedQuery?: boolean;
     /**
+     * Search using a bunch of search parameters by setting this parameter to the name of the existing Preset.
+     * @type {string}
+     * @memberof MultiSearchCollectionParameters
+     */
+    preset?: string;
+    /**
      * If you have some overrides defined but want to disable all of them during query time, you can do that by setting this parameter to false
      * @type {boolean}
      * @memberof MultiSearchCollectionParameters
@@ -314,6 +320,7 @@ export function MultiSearchCollectionParametersFromJSONTyped(json: any, ignoreDi
         'hiddenHits': !exists(json, 'hidden_hits') ? undefined : json['hidden_hits'],
         'highlightFields': !exists(json, 'highlight_fields') ? undefined : json['highlight_fields'],
         'preSegmentedQuery': !exists(json, 'pre_segmented_query') ? undefined : json['pre_segmented_query'],
+        'preset': !exists(json, 'preset') ? undefined : json['preset'],
         'enableOverrides': !exists(json, 'enable_overrides') ? undefined : json['enable_overrides'],
         'prioritizeExactMatch': !exists(json, 'prioritize_exact_match') ? undefined : json['prioritize_exact_match'],
         'exhaustiveSearch': !exists(json, 'exhaustive_search') ? undefined : json['exhaustive_search'],
@@ -366,6 +373,7 @@ export function MultiSearchCollectionParametersToJSON(value?: MultiSearchCollect
         'hidden_hits': value.hiddenHits,
         'highlight_fields': value.highlightFields,
         'pre_segmented_query': value.preSegmentedQuery,
+        'preset': value.preset,
         'enable_overrides': value.enableOverrides,
         'prioritize_exact_match': value.prioritizeExactMatch,
         'exhaustive_search': value.exhaustiveSearch,
