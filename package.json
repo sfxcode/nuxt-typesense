@@ -1,6 +1,6 @@
 {
   "name": "@sfxcode/nuxt-typesense",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -25,25 +25,25 @@
     "api-codegen": "openapi-generator-cli generate -i https://raw.githubusercontent.com/typesense/typesense-api-spec/master/openapi.yml -g typescript-fetch -o src/runtime/api --additional-properties=typescriptThreePlus=true,supportsES6=true"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.5.3"
+    "@nuxt/kit": "^3.7.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.39.5",
-    "@formkit/nuxt": "^0.17.2",
-    "@iconify-json/bx": "^1.1.6",
-    "@nuxt/content": "^2.6.0",
-    "@nuxt/module-builder": "^0.4.0",
-    "@nuxt/schema": "^3.5.3",
+    "@antfu/eslint-config": "^0.41.0",
+    "@formkit/nuxt": "^0.19.0",
+    "@iconify-json/bx": "^1.1.7",
+    "@nuxt/content": "^2.7.2",
+    "@nuxt/module-builder": "^0.5.0",
+    "@nuxt/schema": "^3.7.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
-    "@openapitools/openapi-generator-cli": "^2.6.0",
-    "@sfxcode/nuxt-mongocamp-server": "^1.0.1",
-    "@sfxcode/nuxt-primevue": "^1.1.8",
-    "@types/node": "^20.2.5",
-    "@unocss/nuxt": "^0.53.1",
+    "@openapitools/openapi-generator-cli": "^2.7.0",
+    "@sfxcode/nuxt-mongocamp-server": "^1.0.5",
+    "@sfxcode/nuxt-primevue": "^1.3.5",
+    "@types/node": "^20.5.7",
+    "@unocss/nuxt": "^0.55.3",
     "defu": "^6.1.2",
-    "eslint": "^8.42.0",
-    "jiti": "^1.18.2",
-    "nuxt": "^3.5.3",
-    "sass": "^1.63.2"
+    "eslint": "^8.48.0",
+    "jiti": "^1.19.3",
+    "nuxt": "^3.7.0",
+    "sass": "^1.66.1"
   }
 }
