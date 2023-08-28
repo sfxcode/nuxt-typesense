@@ -20,6 +20,8 @@ export * from './FacetCounts';
 export * from './FacetCountsCountsInner';
 export * from './FacetCountsStats';
 export * from './Field';
+export * from './FieldEmbed';
+export * from './FieldEmbedModelConfig';
 export * from './HealthStatus';
 export * from './ImportDocumentsImportDocumentsParametersParameter';
 export * from './ModelApiResponse';

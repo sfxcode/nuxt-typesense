@@ -37,6 +37,12 @@ export interface ImportDocumentsImportDocumentsParametersParameter {
      * @memberof ImportDocumentsImportDocumentsParametersParameter
      */
     dirtyValues?: ImportDocumentsImportDocumentsParametersParameterDirtyValuesEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ImportDocumentsImportDocumentsParametersParameter
+     */
+    remoteEmbeddingBatchSize?: number;
 }
 
 
@@ -74,6 +80,7 @@ export function ImportDocumentsImportDocumentsParametersParameterFromJSONTyped(j
         'action': !exists(json, 'action') ? undefined : json['action'],
         'batchSize': !exists(json, 'batch_size') ? undefined : json['batch_size'],
         'dirtyValues': !exists(json, 'dirty_values') ? undefined : json['dirty_values'],
+        'remoteEmbeddingBatchSize': !exists(json, 'remote_embedding_batch_size') ? undefined : json['remote_embedding_batch_size'],
     };
 }
 
@@ -89,6 +96,7 @@ export function ImportDocumentsImportDocumentsParametersParameterToJSON(value?: 
         'action': value.action,
         'batch_size': value.batchSize,
         'dirty_values': value.dirtyValues,
+        'remote_embedding_batch_size': value.remoteEmbeddingBatchSize,
     };
 }
 

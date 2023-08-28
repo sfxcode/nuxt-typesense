@@ -28,10 +28,10 @@ import {
 export interface SearchGroupedHit {
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<string>}
      * @memberof SearchGroupedHit
      */
-    groupKey: Array<object>;
+    groupKey: Array<string>;
     /**
      * The documents that matched the search query
      * @type {Array<SearchResultHit>}

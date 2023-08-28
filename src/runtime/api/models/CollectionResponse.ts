@@ -69,7 +69,7 @@ export interface CollectionResponse {
      */
     readonly numDocuments: number;
     /**
-     * Timestamp of when the collection was created
+     * Timestamp of when the collection was created (Unix epoch in seconds)
      * @type {number}
      * @memberof CollectionResponse
      */

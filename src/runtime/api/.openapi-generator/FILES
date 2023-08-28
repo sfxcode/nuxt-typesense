@@ -28,6 +28,8 @@ models/FacetCounts.ts
 models/FacetCountsCountsInner.ts
 models/FacetCountsStats.ts
 models/Field.ts
+models/FieldEmbed.ts
+models/FieldEmbedModelConfig.ts
 models/HealthStatus.ts
 models/ImportDocumentsImportDocumentsParametersParameter.ts
 models/ModelApiResponse.ts

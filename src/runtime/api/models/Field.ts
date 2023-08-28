@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { FieldEmbed } from './FieldEmbed';
+import {
+    FieldEmbedFromJSON,
+    FieldEmbedFromJSONTyped,
+    FieldEmbedToJSON,
+} from './FieldEmbed';
+
 /**
  * 
  * @export
@@ -79,6 +86,12 @@ export interface Field {
      * @memberof Field
      */
     drop?: boolean;
+    /**
+     * 
+     * @type {FieldEmbed}
+     * @memberof Field
+     */
+    embed?: FieldEmbed;
 }
 
 /**
@@ -112,6 +125,7 @@ export function FieldFromJSONTyped(json: any, ignoreDiscriminator: boolean): Fie
         'infix': !exists(json, 'infix') ? undefined : json['infix'],
         'numDim': !exists(json, 'num_dim') ? undefined : json['num_dim'],
         'drop': !exists(json, 'drop') ? undefined : json['drop'],
+        'embed': !exists(json, 'embed') ? undefined : FieldEmbedFromJSON(json['embed']),
     };
 }
 
@@ -134,6 +148,7 @@ export function FieldToJSON(value?: Field | null): any {
         'infix': value.infix,
         'num_dim': value.numDim,
         'drop': value.drop,
+        'embed': FieldEmbedToJSON(value.embed),
     };
 }
 

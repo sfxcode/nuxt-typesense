@@ -263,6 +263,18 @@ export interface MultiSearchCollectionParameters {
      */
     vectorQuery?: string;
     /**
+     * Timeout (in milliseconds) for fetching remote embeddings.
+     * @type {number}
+     * @memberof MultiSearchCollectionParameters
+     */
+    remoteEmbeddingTimeoutMs?: number;
+    /**
+     * Number of times to retry fetching remote embeddings.
+     * @type {number}
+     * @memberof MultiSearchCollectionParameters
+     */
+    remoteEmbeddingNumTries?: number;
+    /**
      * The collection to search in.
      * @type {string}
      * @memberof MultiSearchCollectionParameters
@@ -330,6 +342,8 @@ export function MultiSearchCollectionParametersFromJSONTyped(json: any, ignoreDi
         'minLen1typo': !exists(json, 'min_len_1typo') ? undefined : json['min_len_1typo'],
         'minLen2typo': !exists(json, 'min_len_2typo') ? undefined : json['min_len_2typo'],
         'vectorQuery': !exists(json, 'vector_query') ? undefined : json['vector_query'],
+        'remoteEmbeddingTimeoutMs': !exists(json, 'remote_embedding_timeout_ms') ? undefined : json['remote_embedding_timeout_ms'],
+        'remoteEmbeddingNumTries': !exists(json, 'remote_embedding_num_tries') ? undefined : json['remote_embedding_num_tries'],
         'collection': json['collection'],
     };
 }
@@ -383,6 +397,8 @@ export function MultiSearchCollectionParametersToJSON(value?: MultiSearchCollect
         'min_len_1typo': value.minLen1typo,
         'min_len_2typo': value.minLen2typo,
         'vector_query': value.vectorQuery,
+        'remote_embedding_timeout_ms': value.remoteEmbeddingTimeoutMs,
+        'remote_embedding_num_tries': value.remoteEmbeddingNumTries,
         'collection': value.collection,
     };
 }
