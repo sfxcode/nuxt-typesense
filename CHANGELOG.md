@@ -1,4 +1,10 @@
 
+## [v0.6.7] - 2023-09-24
+### :wrench: Chores
+- [`97bc258`](https://github.com/sfxcode/nuxt-typesense/commit/97bc2584e7ead1c03b35dd2f431cfa5c17dd5b62) - **deps**: Update all *(commit by [@sfxcode](https://github.com/sfxcode))*
+- [`6e2335e`](https://github.com/sfxcode/nuxt-typesense/commit/6e2335ed15ef06d85d884541a2b0120b2d759ccd) - **deps**: new Version *(commit by [@sfxcode](https://github.com/sfxcode))*
+
+
 ## [v0.6.6] - 2023-09-17
 ### :wrench: Chores
 - [`89e6a94`](https://github.com/sfxcode/nuxt-typesense/commit/89e6a9450961850aee4b02d3d52a00bb0451a876) - **deps**: Nuxt 3.7.3 and other changes *(commit by [@sfxcode](https://github.com/sfxcode))*
@@ -25,3 +31,4 @@
 [v0.6.4]: https://github.com/sfxcode/nuxt-typesense/compare/v0.6.3...v0.6.4
 [v0.6.5]: https://github.com/sfxcode/nuxt-typesense/compare/v0.6.4...v0.6.5
 [v0.6.6]: https://github.com/sfxcode/nuxt-typesense/compare/v0.6.5...v0.6.6
+[v0.6.7]: https://github.com/sfxcode/nuxt-typesense/compare/v0.6.6...v0.6.7
