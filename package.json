@@ -28,22 +28,21 @@
     "@nuxt/kit": "^3.7.3"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.42.0",
-    "@formkit/nuxt": "^1.0.0",
+    "@antfu/eslint-config": "1.0.0-beta.6",
+    "@formkit/nuxt": "^1.1.0",
     "@iconify-json/bx": "^1.1.7",
-    "@nuxt/content": "^2.8.2",
     "@nuxt/module-builder": "^0.5.1",
     "@nuxt/schema": "^3.7.3",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@openapitools/openapi-generator-cli": "^2.7.0",
     "@sfxcode/nuxt-mongocamp-server": "^1.0.5",
-    "@sfxcode/nuxt-primevue": "^1.3.7",
-    "@types/node": "^20.6.2",
-    "@unocss/nuxt": "^0.55.7",
+    "@sfxcode/nuxt-primevue": "^1.3.8",
+    "@types/node": "^20.6.4",
+    "@unocss/nuxt": "^0.56.1",
     "defu": "^6.1.2",
-    "eslint": "^8.49.0",
+    "eslint": "^8.50.0",
     "jiti": "^1.20.0",
     "nuxt": "^3.7.3",
-    "sass": "^1.67.0"
+    "sass": "^1.68.0"
   }
 }
