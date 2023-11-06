@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   modules: [
     NuxtTypesense,
     '@formkit/nuxt',
-    '@sfxcode/nuxt-primevue',
+    'nuxt-primevue',
     '@unocss/nuxt',
   ],
   typesense: {
@@ -33,7 +33,6 @@ export default defineNuxtConfig({
   css: [
     'primevue/resources/primevue.css',
     'primeicons/primeicons.css',
-    '@sfxcode/formkit-primevue/dist/sass/formkit-primevue.scss',
     'primevue/resources/themes/tailwind-light/theme.css',
   ],
 
