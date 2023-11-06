@@ -1,6 +1,6 @@
 import {useTypesenseApi} from "./typesenseApi";
-import {TypesenseCollectionInfo} from "../model/TypesenseCollectionInfo";
-import {CollectionResponse} from "../api";
+import type {TypesenseCollectionInfo} from "../model/TypesenseCollectionInfo";
+import type {CollectionResponse} from "../api";
 
 export const useTypesenseCollections = () => {
   const {collectionsApi} = useTypesenseApi()

@@ -1,5 +1,3 @@
-import {Field} from "../api";
-
 export interface TypesenseCollectionInfo {
 
   readonly name: string;
