@@ -17,14 +17,7 @@ const { data: infos, refresh: refreshInfos} = await useAsyncData('infos', () => 
       </template>
       <template #content>
         <DataTable :value="infos">
-          <Column field="name" header="Name" sortable>
-            <template #body="{data}">
-              {{data.name}}
-            </template>
-            <template #filter="{filterModel}">
-              <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
-            </template>
-          </Column>
+          <Column field="name" header="Name" sortable/>
           <Column field="numDocuments" header="Count" />
           <Column field="fields" header="Fields" />
           <Column field="defaultSortingField" header="Sort By" />

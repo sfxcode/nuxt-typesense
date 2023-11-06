@@ -37,7 +37,7 @@ const { data: result, refresh:reloadKeys} = await useAsyncData('keys', () => key
       <template #content>
         <h3>Keys</h3>
         <DataTable :value="result.keys">
-          <Column field="valuePrefix" header="Prefix" />
+          <Column field="valuePrefix" header="Prefix" sortable/>
           <Column field="description" header="Description" />
           <Column field="collections" header="Collections" />
           <Column field="actions" header="Actions" />
