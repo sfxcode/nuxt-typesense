@@ -1,3 +1,4 @@
+apis/AnalyticsApi.ts
 apis/CollectionsApi.ts
 apis/DebugApi.ts
 apis/DocumentsApi.ts
@@ -8,6 +9,11 @@ apis/OverrideApi.ts
 apis/PromoteApi.ts
 apis/index.ts
 index.ts
+models/AnalyticsRuleParameters.ts
+models/AnalyticsRuleParametersDestination.ts
+models/AnalyticsRuleParametersSource.ts
+models/AnalyticsRuleSchema.ts
+models/AnalyticsRulesRetrieveSchema.ts
 models/ApiKey.ts
 models/ApiKeyAllOf.ts
 models/ApiKeySchema.ts
