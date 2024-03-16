@@ -1,4 +1,4 @@
-const testSchema = {
+export const testSchema = {
   'name': 'books_test',
   'fields': [
     {'name': 'title', 'type': 'string' },

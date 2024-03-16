@@ -1,11 +1,9 @@
 import {defineNuxtConfig} from 'nuxt/config'
-import NuxtTypesense from '..'
 
 export default defineNuxtConfig({
   ssr: true,
   modules: [
-    NuxtTypesense,
-    '@formkit/nuxt',
+    '../src/module',
     'nuxt-primevue',
     '@unocss/nuxt',
   ],

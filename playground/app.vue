@@ -1,9 +1,5 @@
 <script setup lang="ts">
 
-const url = useTypesenseUrl()
-
-const api = useTypesenseApiKey()
-
 useHead({
   titleTemplate: '%s - Typesense',
   htmlAttrs: {

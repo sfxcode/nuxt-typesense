@@ -13,7 +13,7 @@ export const useTypesenseCollections = () => {
   async function convertCollectionData(data: Array<CollectionResponse>) {
     return data.map(response => {
       const fields = response.fields.map(f => f.name)
-      let collection = {
+      const collection = {
         name: response.name,
         fields: fields,
         defaultSortingField: response.defaultSortingField,

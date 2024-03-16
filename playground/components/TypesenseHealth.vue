@@ -14,36 +14,50 @@ healthApi.health().then(res => {
   health.value = res.ok
 })
 
-const { data: result, refresh:reloadKeys} = await useAsyncData('keys', () => keysApi.getKeys())
+
+
+
+const { data: result} = await useAsyncData('keys', () => keysApi.getKeys())
 
 
 </script>
 
 <template>
-
-  <div >
-
+  <div>
     <Card>
       <template #header>
-        <div class="p-2">Typesense Nuxt</div>
-
+        <div class="p-2">
+          Typesense Nuxt
+        </div>
       </template>
       <template #title>
         API Status
       </template>
       <template #subtitle>
-      OK {{ health}} - Version {{ version}}
-    </template>
+        OK {{ health }} - Version {{ version }}
+      </template>
       <template #content>
         <h3>Keys</h3>
         <DataTable :value="result.keys">
-          <Column field="valuePrefix" header="Prefix" sortable/>
-          <Column field="description" header="Description" />
-          <Column field="collections" header="Collections" />
-          <Column field="actions" header="Actions" />
+          <Column
+            field="valuePrefix"
+            header="Prefix"
+            sortable
+          />
+          <Column
+            field="description"
+            header="Description"
+          />
+          <Column
+            field="collections"
+            header="Collections"
+          />
+          <Column
+            field="actions"
+            header="Actions"
+          />
         </DataTable>
       </template>
-
     </Card>
   </div>
 </template>
