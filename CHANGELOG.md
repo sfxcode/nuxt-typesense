@@ -1,4 +1,20 @@
 
+## v0.8.2
+
+[compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v0.8.1...v0.8.2)
+
+### 💅 Refactors
+
+- **module:** Update to latest ([5285797](https://github.com/sfxcode/nuxt-typesense/commit/5285797))
+
+### 📖 Documentation
+
+- Update CHANGELOG.md for v0.8.1 [skip ci] ([b5a8b58](https://github.com/sfxcode/nuxt-typesense/commit/b5a8b58))
+
+### ❤️ Contributors
+
+- Sfxcode ([@sfxcode](http://github.com/sfxcode))
+
 ## [v0.8.1] - 2024-03-15
 ### :bug: Bug Fixes
 - [`e2b4bc6`](https://github.com/sfxcode/nuxt-typesense/commit/e2b4bc6dec05014639b47a2a5468b5779069892b) - **DocumentsApi**: remove undefined *(commit by [@sfxcode](https://github.com/sfxcode))*
