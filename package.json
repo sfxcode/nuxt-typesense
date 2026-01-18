@@ -29,22 +29,23 @@
     "api-codegen": "openapi-generator-cli generate -i https://raw.githubusercontent.com/typesense/typesense-api-spec/master/openapi.yml -g typescript-fetch -o src/runtime/api --additional-properties=typescriptThreePlus=true,supportsES6=true"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.10.3"
+    "@nuxt/kit": "^4.2.2"
   },
   "devDependencies": {
-    "@iconify-json/bx": "^1.1.10",
-    "@nuxt/devtools": "^1.0.8",
-    "@nuxt/eslint-config": "^0.2.0",
-    "@nuxt/module-builder": "^0.5.5",
-    "@nuxt/schema": "^3.10.3",
-    "@nuxt/test-utils": "^3.11.0",
-    "@types/node": "^20.11.28",
-    "@unocss/nuxt": "^0.58.6",
-    "changelogen": "^0.5.5",
-    "eslint": "^8.57.0",
-    "nuxt": "^3.10.3",
-    "nuxt-primevue": "^0.3.1",
-    "primeicons": "^6.0.1",
-    "vitest": "^1.4.0"
+    "@iconify-json/bx": "^1.2.2",
+    "@nuxt/devtools": "^3.1.1",
+    "@nuxt/eslint-config": "^1.12.1",
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/schema": "^4.2.2",
+    "@nuxt/test-utils": "^3.23.0",
+    "@openapitools/openapi-generator-cli": "^2.27.0",
+    "@types/node": "^25.0.9",
+    "@unocss/nuxt": "^66.6.0",
+    "changelogen": "^0.6.2",
+    "eslint": "^9.39.2",
+    "nuxt": "^4.2.2",
+    "nuxt-primevue": "^3.0.0",
+    "primeicons": "^7.0.0",
+    "vitest": "^4.0.17"
   }
 }
