@@ -1,6 +1,6 @@
 {
   "name": "@sfxcode/nuxt-typesense",
-  "version": "0.8.2",
+  "version": "1.0.0",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -25,7 +25,7 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish --access public && git push --follow-tags",
+    "release": "npm run lint && npm run test && npm run prepack && changelogen --patch --release && npm publish --access=public && git push --follow-tags",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest watch",
