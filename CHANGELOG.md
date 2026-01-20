@@ -1,4 +1,38 @@
 
+## v1.0.1
+
+[compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v0.8.2...v1.0.1)
+
+### 🚀 Enhancements
+
+- Add main CSS and components for Typesense UI integration - switch to Nuxt UI ([ab190a7](https://github.com/sfxcode/nuxt-typesense/commit/ab190a7))
+- Add main CSS and components for Typesense UI integration - switch to Nuxt UI ([c5ed664](https://github.com/sfxcode/nuxt-typesense/commit/c5ed664))
+- Add additional API imports and instances in typesenseApi.ts ([1a83155](https://github.com/sfxcode/nuxt-typesense/commit/1a83155))
+- Update package.json to include types and additional dependencies ([1aa3419](https://github.com/sfxcode/nuxt-typesense/commit/1aa3419))
+- Disable multi-word component names rule for layouts and pages in ESLint config ([b1572e6](https://github.com/sfxcode/nuxt-typesense/commit/b1572e6))
+
+### 💅 Refactors
+
+- Clean up unused imports and improve type definitions ([92dd19a](https://github.com/sfxcode/nuxt-typesense/commit/92dd19a))
+- Clean up code formatting and improve consistency across components ([d886665](https://github.com/sfxcode/nuxt-typesense/commit/d886665))
+- Simplify collection data conversion in typeSenseCollection.ts ([b10c6b9](https://github.com/sfxcode/nuxt-typesense/commit/b10c6b9))
+- Update logging message to use success level for nuxt-typesense availability ([0ca831d](https://github.com/sfxcode/nuxt-typesense/commit/0ca831d))
+
+### 📖 Documentation
+
+- Update README.md to enhance Typesense module documentation and setup instructions ([05a3c38](https://github.com/sfxcode/nuxt-typesense/commit/05a3c38))
+
+### 🏡 Chore
+
+- Update version to 7.18.0 and restructure exports ([3907beb](https://github.com/sfxcode/nuxt-typesense/commit/3907beb))
+- Update version to 7.18.0 and restructure exports ([6ed4807](https://github.com/sfxcode/nuxt-typesense/commit/6ed4807))
+- Update package manager to pnpm@10.28.1 ([bd0477e](https://github.com/sfxcode/nuxt-typesense/commit/bd0477e))
+- Bump version to 1.0.0 and update release script for patch versioning ([826e795](https://github.com/sfxcode/nuxt-typesense/commit/826e795))
+
+### ❤️ Contributors
+
+- Sfxcode ([@sfxcode](https://github.com/sfxcode))
+
 ## v0.8.2
 
 [compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v0.8.1...v0.8.2)
