@@ -7,8 +7,8 @@ import {
   OperationsApi,
 } from '../api'
 
-import {useTypesenseUrl} from "./typesenseUrl";
-import {useTypesenseApiKey} from "./typesenseApiKey";
+import { useTypesenseUrl } from './typesenseUrl'
+import { useTypesenseApiKey } from './typesenseApiKey'
 
 export const useTypesenseApi = () => {
   const url = useTypesenseUrl()
@@ -21,7 +21,7 @@ export const useTypesenseApi = () => {
   const documentsApi = new DocumentsApi(configuration)
   const healthApi = new HealthApi(configuration)
   const keysApi = new KeysApi(configuration)
-  //const operationsApi = new OperationsApi(configuration)
+  const operationsApi = new OperationsApi(configuration)
 
   return {
     collectionsApi,
@@ -29,8 +29,7 @@ export const useTypesenseApi = () => {
     documentsApi,
     healthApi,
     keysApi,
-   // operationsApi,
-
+    operationsApi,
 
   }
 }

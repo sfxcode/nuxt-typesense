@@ -1,12 +1,12 @@
 export default defineAppConfig({
   header: {
     title: 'Typesense',
-    description: 'Typesense API.'
+    description: 'Typesense API.',
   },
   ui: {
     colors: {
       primary: 'green',
-      neutral: 'neutral'
+      neutral: 'neutral',
     },
-  }
+  },
 })

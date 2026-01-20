@@ -7,7 +7,7 @@ const title = header.title
   <UHeader>
     <template #left>
       <div class="text-primary font-bold">
-        {{   header.title }}
+        {{ title }}
       </div>
     </template>
 
@@ -24,7 +24,6 @@ const title = header.title
       />
     </template>
   </UHeader>
-
 </template>
 
 <style scoped>

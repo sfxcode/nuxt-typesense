@@ -1,21 +1,21 @@
-import {defineNuxtConfig} from 'nuxt/config'
+import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  ssr: true,
 
   modules: [
     '../src/module',
     '@nuxt/ui',
   ],
+  ssr: true,
 
   devtools: {
-    enabled: true
+    enabled: true,
   },
 
   css: ['~/assets/css/main.css'],
 
   routeRules: {
-    '/': { prerender: true }
+    '/': { prerender: true },
   },
 
   compatibilityDate: '2025-01-15',

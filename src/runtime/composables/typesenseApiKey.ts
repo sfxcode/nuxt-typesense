@@ -1,4 +1,4 @@
-import {useRuntimeConfig} from '#app'
+import { useRuntimeConfig } from '#app'
 
 export const useTypesenseApiKey = () => {
   const config = useRuntimeConfig()

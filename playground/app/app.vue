@@ -1,10 +1,9 @@
 <script setup lang="ts">
-
 useHead({
   titleTemplate: '%s - Typesense',
   htmlAttrs: {
-    class: 'bg-white'
-  }
+    class: 'bg-white',
+  },
 })
 </script>
 
@@ -17,4 +16,3 @@ useHead({
     </NuxtLayout>
   </UApp>
 </template>
-

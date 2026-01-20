@@ -1,23 +1,18 @@
 <script setup>
-
 const { healthApi, debugApi, keysApi } = useTypesenseApi()
-
 
 const health = ref()
 const version = ref()
 
-debugApi.debug().then(res => {
+debugApi.debug().then((res) => {
   version.value = res.version
 })
 
-healthApi.health().then(res => {
+healthApi.health().then((res) => {
   health.value = res.ok
 })
 
-
-const { data: result, refresh} = await useAsyncData('keys', () => keysApi.getKeys())
-
-
+const { data: result, refresh } = await useAsyncData('keys', () => keysApi.getKeys())
 </script>
 
 <template>
@@ -28,9 +23,13 @@ const { data: result, refresh} = await useAsyncData('keys', () => keysApi.getKey
       </div>
     </template>
     <template #default>
-      <UButton class="font-bold rounded-full" @click="refresh()">Reload</UButton>
-      <pre class="mt-2">{{  result?.keys }}</pre>
+      <UButton
+        class="font-bold rounded-full"
+        @click="refresh()"
+      >
+        Reload
+      </UButton>
+      <pre class="mt-2">{{ result?.keys }}</pre>
     </template>
-
   </UCard>
 </template>

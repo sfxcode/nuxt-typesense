@@ -1,8 +1,7 @@
 import { addImportsDir, createResolver, defineNuxtModule } from '@nuxt/kit'
 import consola from 'consola'
-import defu from "defu";
-import {name, version} from '../package.json'
-
+import defu from 'defu'
+import { name, version } from '../package.json'
 
 export interface ModuleOptions {
   url?: string
@@ -34,6 +33,5 @@ export default defineNuxtModule<ModuleOptions>({
 
     consola.info('nuxt-typesense available')
     consola.info(options.url)
-
   },
 })
