@@ -31,7 +31,6 @@ export default defineNuxtModule<ModuleOptions>({
     const runtimeDir = resolve('./runtime')
     addImportsDir(resolve(runtimeDir, 'composables'))
 
-    consola.info('nuxt-typesense available')
-    consola.info(options.url)
+    consola.success('nuxt-typesense available')
   },
 })
