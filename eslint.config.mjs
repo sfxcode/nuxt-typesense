@@ -16,5 +16,11 @@ export default createConfigForNuxt({
   },
 })
   .append(
-    // your custom flat config here...
+    // Disable multi-word component names for layouts and pages
+    {
+      files: ['**/layouts/**/*.vue', '**/pages/**/*.vue'],
+      rules: {
+        'vue/multi-word-component-names': 'off',
+      },
+    },
   )
