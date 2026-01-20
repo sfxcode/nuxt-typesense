@@ -5,18 +5,21 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs"
     }
   },
-  "main": "./dist/module.cjs",
-  "types": "./dist/types.d.ts",
+  "main": "./dist/module.mjs",
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/types.d.mts"
+      ]
+    }
+  },
   "files": [
     "dist"
   ],
-  "build": {
-    "failOnWarn": false
-  },
   "scripts": {
     "prepack": "nuxt-module-build build",
     "dev": "nuxi dev playground",
@@ -29,7 +32,9 @@
     "api-codegen": "openapi-generator-cli generate -i https://raw.githubusercontent.com/typesense/typesense-api-spec/master/openapi.yml -g typescript-fetch -o src/runtime/api --additional-properties=typescriptThreePlus=true,supportsES6=true"
   },
   "dependencies": {
-    "@nuxt/kit": "^4.2.2"
+    "@nuxt/kit": "^4.2.2",
+    "consola": "^3.4.2",
+    "defu": "^6.1.4"
   },
   "devDependencies": {
     "@iconify-json/bx": "^1.2.2",
