@@ -13,14 +13,13 @@ export const useTypesenseCollections = () => {
   async function convertCollectionData(data: Array<CollectionResponse>) {
     return data.map((response) => {
       const fields = response.fields.map(f => f.name)
-      const collection = {
+      return {
         name: response.name,
         fields: fields,
         defaultSortingField: response.defaultSortingField,
         numDocuments: response.numDocuments,
         date: new Date(response.createdAt * 1000),
       } as TypesenseCollectionInfo
-      return collection
     })
   }
 
