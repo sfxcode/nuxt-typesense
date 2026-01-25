@@ -29,7 +29,10 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "api-codegen": "openapi-generator-cli generate -i https://raw.githubusercontent.com/typesense/typesense-api-spec/master/openapi.yml -g typescript-fetch -o src/runtime/api --additional-properties=typescriptThreePlus=true,supportsES6=true"
+    "api-codegen": "openapi-generator-cli generate -i https://raw.githubusercontent.com/typesense/typesense-api-spec/master/openapi.yml -g typescript-fetch -o src/runtime/api --additional-properties=typescriptThreePlus=true,supportsES6=true",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "@nuxt/kit": "^4.2.2",
@@ -51,6 +54,7 @@
     "changelogen": "^0.6.2",
     "eslint": "^9.39.2",
     "nuxt": "^4.2.2",
+    "vitepress": "^1.6.4",
     "vitest": "^4.0.17"
   },
   "packageManager": "pnpm@10.28.1+sha512.7d7dbbca9e99447b7c3bf7a73286afaaf6be99251eb9498baefa7d406892f67b879adb3a1d7e687fc4ccc1a388c7175fbaae567a26ab44d1067b54fcb0d6a316"

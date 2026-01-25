@@ -24,6 +24,10 @@ dist
 playground/.env
 .netlify
 
+# VitePress
+docs/.vitepress/dist
+docs/.vitepress/cache
+
 # Env
 playground/.env
 
