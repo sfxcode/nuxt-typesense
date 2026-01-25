@@ -15,7 +15,7 @@ async function importProducts(products: any[]) {
     collectionName: 'products',
     body: jsonl,
     action: 'upsert',
-    batch_size: 100
+    batchSize: 100
   })
 }
 </script>

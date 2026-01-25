@@ -22,7 +22,7 @@ await analyticsApi.createAnalyticsEvent({
     name: 'product_search',
     data: {
       q: 'laptop',
-      user_id: '123'
+      userId: '123'
     }
   }
 })
@@ -55,7 +55,7 @@ await collectionsApi.createCollection({
       { name: 'name', type: 'string' },
       { name: 'price', type: 'float' }
     ],
-    default_sorting_field: 'id'
+    defaultSortingField: 'id'
   }
 })
 
@@ -78,7 +78,7 @@ await collectionsApi.deleteCollection({
 await collectionsApi.upsertCollectionAlias({
   aliasName: 'products',
   collectionAliasSchema: {
-    collection_name: 'products_v1'
+    collectionName: 'products_v1'
   }
 })
 ```
@@ -95,11 +95,11 @@ const results = await documentsApi.multiSearch({
   searches: [{
     collection: 'products',
     q: 'laptop',
-    query_by: 'name,description',
-    filter_by: 'price:<1000',
-    sort_by: 'price:asc',
+    queryBy: 'name,description',
+    filterBy: 'price:<1000',
+    sortBy: 'price:asc',
     page: 1,
-    per_page: 20
+    perPage: 20
   }]
 })
 
@@ -157,7 +157,7 @@ await documentsApi.importDocuments({
   collectionName: 'products',
   body: jsonl,
   action: 'upsert',
-  batch_size: 100
+  batchSize: 100
 })
 
 // Export documents
@@ -197,7 +197,7 @@ await keysApi.createKey({
     description: 'Search-only key',
     actions: ['documents:search'],
     collections: ['*'],
-    expires_at: Math.floor(Date.now() / 1000) + 86400
+    expiresAt: Math.floor(Date.now() / 1000) + 86400
   }
 })
 
@@ -208,8 +208,8 @@ await keysApi.deleteKey({ keyId: 123 })
 const scopedKey = await keysApi.generateScopedSearchKey(
   'parent-search-key',
   {
-    filter_by: 'user_id:=123',
-    expires_at: Math.floor(Date.now() / 1000) + 3600
+    filterBy: 'userId:=123',
+    expiresAt: Math.floor(Date.now() / 1000) + 3600
   }
 )
 ```
@@ -382,8 +382,8 @@ await presetsApi.upsertPreset({
     value: {
       searches: [{
         collection: 'products',
-        query_by: 'name,description',
-        sort_by: 'price:asc'
+        queryBy: 'name,description',
+        sortBy: 'price:asc'
       }]
     }
   }

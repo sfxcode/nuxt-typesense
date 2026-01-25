@@ -44,7 +44,7 @@ await analyticsApi.createAnalyticsEvent({
     name: 'product_search',
     data: {
       q: 'laptop',
-      user_id: '123'
+      userId: '123'
     }
   }
 })
@@ -85,7 +85,7 @@ const results = await documentsApi.multiSearch({
   searches: [{
     collection: 'products',
     q: 'laptop',
-    query_by: 'name,description'
+    queryBy: 'name,description'
   }]
 })
 
@@ -158,8 +158,8 @@ await keysApi.deleteKey({ keyId: 123 })
 const scopedKey = await keysApi.generateScopedSearchKey(
   'parent-key',
   {
-    filter_by: 'user_id:=123',
-    expires_at: Math.floor(Date.now() / 1000) + 3600
+    filterBy: 'userId:=123',
+    expiresAt: Math.floor(Date.now() / 1000) + 3600
   }
 })
 ```
@@ -405,7 +405,7 @@ async function performSearch() {
     searches: [{
       collection: 'products',
       q: query.value,
-      query_by: 'name,description'
+      queryBy: 'name,description'
     }]
   })
   
@@ -436,8 +436,8 @@ const results = await documentsApi.multiSearch({
   searches: [{
     collection: 'products',
     q: 'laptop',
-    query_by: 'name',  // Type-safe string
-    per_page: 20       // Type-safe number
+    queryBy: 'name',  // Type-safe string
+    perPage: 20       // Type-safe number
   }]
 })
 

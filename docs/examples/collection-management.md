@@ -19,11 +19,11 @@ async function createProductsCollection() {
         { name: 'price', type: 'float', sort: true },
         { name: 'category', type: 'string', facet: true },
         { name: 'tags', type: 'string[]', facet: true },
-        { name: 'in_stock', type: 'bool', facet: true },
+        { name: 'inStock', type: 'bool', facet: true },
         { name: 'rating', type: 'float', optional: true, sort: true },
-        { name: 'created_at', type: 'int64', sort: true }
+        { name: 'createdAt', type: 'int64', sort: true }
       ],
-      default_sorting_field: 'created_at'
+      defaultSortingField: 'created_at'
     }
   })
 }

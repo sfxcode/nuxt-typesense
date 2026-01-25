@@ -22,10 +22,10 @@ const schema = {
     { name: 'description', type: 'string' },
     { name: 'price', type: 'float' },
     { name: 'category', type: 'string', facet: true },
-    { name: 'in_stock', type: 'bool' },
-    { name: 'created_at', type: 'int64' }
+    { name: 'inStock', type: 'bool' },
+    { name: 'createdAt', type: 'int64' }
   ],
-  default_sorting_field: 'created_at'
+  defaultSortingField: 'created_at'
 }
 
 // Create the collection
@@ -122,7 +122,7 @@ const advancedSchema = {
       sort: true
     }
   ],
-  default_sorting_field: 'created_at'
+  defaultSortingField: 'created_at'
 }
 ```
 
@@ -143,7 +143,7 @@ const { data: collections } = await useAsyncData(
 <template>
   <ul>
     <li v-for="collection in collections" :key="collection.name">
-      {{ collection.name }} - {{ collection.num_documents }} documents
+      {{ collection.name }} - {{ collection.numDocuments }} documents
     </li>
   </ul>
 </template>
@@ -184,7 +184,7 @@ const collection = await collectionsApi.getCollection({
 })
 
 console.log(collection.name)
-console.log(collection.num_documents)
+console.log(collection.numDocuments)
 console.log(collection.fields)
 ```
 
@@ -239,7 +239,7 @@ const { collectionsApi } = useTypesenseApi()
 await collectionsApi.upsertCollectionAlias({
   aliasName: 'products',
   collectionAliasSchema: {
-    collection_name: 'products_v1'
+    collectionName: 'products_v1'
   }
 })
 ```
@@ -251,7 +251,7 @@ await collectionsApi.upsertCollectionAlias({
 await collectionsApi.upsertCollectionAlias({
   aliasName: 'products',
   collectionAliasSchema: {
-    collection_name: 'products_v2'
+    collectionName: 'products_v2'
   }
 })
 ```
@@ -281,7 +281,7 @@ Here's a complete example of collection management:
     <div v-else>
       <div v-for="col in collections" :key="col.name">
         <h3>{{ col.name }}</h3>
-        <p>Documents: {{ col.num_documents }}</p>
+        <p>Documents: {{ col.numDocuments }}</p>
         <button @click="deleteCollection(col.name)">Delete</button>
       </div>
     </div>
@@ -308,9 +308,9 @@ async function createCollection() {
       fields: [
         { name: 'id', type: 'string' },
         { name: 'title', type: 'string' },
-        { name: 'created_at', type: 'int64' }
+        { name: 'createdAt', type: 'int64' }
       ],
-      default_sorting_field: 'created_at'
+      defaultSortingField: 'created_at'
     }
   })
   await refresh()
@@ -350,7 +350,7 @@ await collectionsApi.createCollection({
 // Update alias to point to new version
 await collectionsApi.upsertCollectionAlias({
   aliasName: 'products',
-  collectionAliasSchema: { collection_name: 'products_v2' }
+  collectionAliasSchema: { collectionName: 'products_v2' }
 })
 
 // Delete old version after verification
@@ -381,7 +381,7 @@ Always specify a `default_sorting_field` for consistent results:
 {
   name: 'products',
   fields: [...],
-  default_sorting_field: 'created_at'  // or 'popularity', 'rating', etc.
+  defaultSortingField: 'created_at'  // or 'popularity', 'rating', etc.
 }
 ```
 

@@ -13,9 +13,9 @@ const { data } = await useAsyncData('faceted-search', async () => {
     searches: [{
       collection: 'products',
       q: 'laptop',
-      query_by: 'name,description',
-      facet_by: 'category,brand,price',
-      max_facet_values: 10
+      queryBy: 'name,description',
+      facetBy: 'category,brand,price',
+      maxFacetValues: 10
     }]
   })
   return response.results[0]

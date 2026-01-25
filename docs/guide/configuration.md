@@ -155,8 +155,8 @@ export default defineEventHandler(async (event) => {
   const scopedKey = await keysApi.generateScopedSearchKey(
     'parent-search-key',
     {
-      filter_by: `user_id:${userId}`,
-      expires_at: Math.floor(Date.now() / 1000) + 3600 // 1 hour
+      filterBy: `userId:${userId}`,
+      expiresAt: Math.floor(Date.now() / 1000) + 3600 // 1 hour
     }
   )
   

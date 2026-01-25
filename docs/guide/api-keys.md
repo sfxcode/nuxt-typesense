@@ -48,7 +48,7 @@ const key = await keysApi.createKey({
     description: 'Temporary key',
     actions: ['documents:search'],
     collections: ['*'],
-    expires_at: Math.floor(Date.now() / 1000) + 86400  // 24 hours
+    expiresAt: Math.floor(Date.now() / 1000) + 86400  // 24 hours
   }
 })
 ```
@@ -119,8 +119,8 @@ const parentKey = 'your-search-only-key'
 const scopedKey = await keysApi.generateScopedSearchKey(
   parentKey,
   {
-    filter_by: 'user_id:=123',
-    expires_at: Math.floor(Date.now() / 1000) + 3600  // 1 hour
+    filterBy: 'userId:=123',
+    expiresAt: Math.floor(Date.now() / 1000) + 3600  // 1 hour
   }
 )
 
@@ -129,7 +129,7 @@ const results = await documentsApi.multiSearch({
   searches: [{
     collection: 'documents',
     q: 'query',
-    query_by: 'content'
+    queryBy: 'content'
   }]
 }, {
   headers: {
@@ -161,8 +161,8 @@ export default defineEventHandler(async (event) => {
   const scopedKey = await keysApi.generateScopedSearchKey(
     config.typesense.searchKey,
     {
-      filter_by: `user_id:=${session.user.id}`,
-      expires_at: Math.floor(Date.now() / 1000) + 3600
+      filterBy: `userId:=${session.user.id}`,
+      expiresAt: Math.floor(Date.now() / 1000) + 3600
     }
   )
   
@@ -183,7 +183,7 @@ const searchWithScopedKey = async () => {
     searches: [{
       collection: 'documents',
       q: 'query',
-      query_by: 'content'
+      queryBy: 'content'
     }]
   }, {
     headers: {
@@ -250,8 +250,8 @@ Available actions for API keys:
         <p><strong>ID:</strong> {{ key.id }}</p>
         <p><strong>Actions:</strong> {{ key.actions.join(', ') }}</p>
         <p><strong>Collections:</strong> {{ key.collections.join(', ') }}</p>
-        <p v-if="key.expires_at">
-          <strong>Expires:</strong> {{ new Date(key.expires_at * 1000).toLocaleString() }}
+        <p v-if="key.expiresAt">
+          <strong>Expires:</strong> {{ new Date(key.expiresAt * 1000).toLocaleString() }}
         </p>
         <button @click="copyKeyValue(key.value_prefix)" class="btn-copy">
           Copy Key Prefix
@@ -295,7 +295,7 @@ async function createKey() {
       description: newKey.value.description,
       actions: newKey.value.actions,
       collections: collections.length ? collections : ['*'],
-      expires_at: expiresAt
+      expiresAt: expiresAt
     }
   })
   
@@ -372,8 +372,8 @@ export default defineNuxtConfig({
 const scopedKey = await keysApi.generateScopedSearchKey(
   searchKey,
   {
-    filter_by: `tenant_id:=${tenantId}`,
-    expires_at: Math.floor(Date.now() / 1000) + 3600
+    filterBy: `tenant_id:=${tenantId}`,
+    expiresAt: Math.floor(Date.now() / 1000) + 3600
   }
 )
 ```
@@ -398,7 +398,7 @@ const guestKey = await keysApi.createKey({
     description: 'Guest access',
     actions: ['documents:search'],
     collections: ['public'],
-    expires_at: Math.floor(Date.now() / 1000) + 86400  // 24 hours
+    expiresAt: Math.floor(Date.now() / 1000) + 86400  // 24 hours
   }
 })
 ```

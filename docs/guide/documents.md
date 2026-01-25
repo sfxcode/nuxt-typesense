@@ -96,7 +96,7 @@ const results = await documentsApi.multiSearch({
   searches: [{
     collection: 'products',
     q: 'laptop',
-    query_by: 'name,description'
+    queryBy: 'name,description'
   }]
 })
 
@@ -239,7 +239,7 @@ const { data: products, pending, error, refresh } = await useAsyncData(
     searches: [{
       collection: 'products',
       q: '*',
-      query_by: 'name'
+      queryBy: 'name'
     }]
   })
 )
@@ -308,7 +308,7 @@ for (let i = 0; i < products.length; i += batchSize) {
     collectionName: 'products',
     body: jsonl,
     action: 'upsert',
-    batch_size: batchSize
+    batchSize: batchSize
   })
   
   console.log(`Imported ${i + batch.length} of ${products.length}`)

@@ -89,7 +89,7 @@ const results = await documentsApi.multiSearch({
   searches: [{
     collection: 'products',
     q: 'laptop',
-    query_by: 'name,description'
+    queryBy: 'name,description'
   }]
 })
 </script>

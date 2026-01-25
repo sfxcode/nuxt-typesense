@@ -121,7 +121,7 @@ async function search() {
       searches: [{
         collection: 'products',
         q: query.value,
-        query_by: 'name,description'
+        queryBy: 'name,description'
       }]
     })
     results.value = response.results[0]
@@ -149,7 +149,7 @@ const { data: searchResults, pending, error, refresh } = await useAsyncData(
       searches: [{
         collection: 'products',
         q: searchQuery.value,
-        query_by: 'name,description'
+        queryBy: 'name,description'
       }]
     })
     return response.results[0]
@@ -193,7 +193,7 @@ async function searchWithErrorHandling() {
       searches: [{
         collection: 'products',
         q: 'laptop',
-        query_by: 'name'
+        queryBy: 'name'
       }]
     })
     return results
@@ -237,17 +237,17 @@ const { data } = await useAsyncData(
         {
           collection: 'products',
           q: 'laptop',
-          query_by: 'name,description'
+          queryBy: 'name,description'
         },
         {
           collection: 'articles',
           q: 'laptop',
-          query_by: 'title,content'
+          queryBy: 'title,content'
         },
         {
           collection: 'reviews',
           q: 'laptop',
-          query_by: 'text'
+          queryBy: 'text'
         }
       ]
     })
@@ -309,8 +309,8 @@ const { data: results, pending } = await useAsyncData(
       searches: [{
         collection: 'products',
         q: debouncedQuery.value,
-        query_by: 'name,description',
-        per_page: 10
+        queryBy: 'name,description',
+        perPage: 10
       }]
     })
     return response.results[0]
@@ -337,10 +337,10 @@ export default defineEventHandler(async (event) => {
     searches: [{
       collection: 'products',
       q: query.q as string || '*',
-      query_by: 'name,description',
-      filter_by: query.filter as string || undefined,
+      queryBy: 'name,description',
+      filterBy: query.filter as string || undefined,
       page: Number(query.page) || 1,
-      per_page: 20
+      perPage: 20
     }]
   })
   
@@ -392,7 +392,7 @@ Here's a complete, production-ready component:
     
     <div v-else-if="searchResults" class="results">
       <div class="results-header">
-        <p>Found {{ searchResults.found }} results in {{ searchResults.search_time_ms }}ms</p>
+        <p>Found {{ searchResults.found }} results in {{ searchResults.searchTimeMs }}ms</p>
       </div>
       
       <div v-if="searchResults.hits?.length" class="results-list">
@@ -434,8 +434,8 @@ const {
       searches: [{
         collection: 'products',
         q: query.value,
-        query_by: 'name,description',
-        per_page: 20
+        queryBy: 'name,description',
+        perPage: 20
       }]
     })
     

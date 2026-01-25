@@ -41,10 +41,10 @@ Schema for creating a new collection.
 interface CollectionSchema {
   name: string
   fields: Field[]
-  default_sorting_field?: string
-  enable_nested_fields?: boolean
-  token_separators?: string[]
-  symbols_to_index?: string[]
+  defaultSortingField?: string
+  enableNestedFields?: boolean
+  tokenSeparators?: string[]
+  symbolsToIndex?: string[]
 }
 
 interface Field {
@@ -83,10 +83,10 @@ Response when retrieving collection information.
 ```typescript
 interface CollectionResponse {
   name: string
-  num_documents: number
+  numDocuments: number
   fields: Field[]
-  default_sorting_field: string
-  created_at: number
+  defaultSortingField: string
+  createdAt: number
 }
 ```
 
@@ -102,85 +102,85 @@ interface SearchParameters {
   q: string
 
   /** Fields to search in (comma-separated) */
-  query_by: string
+  queryBy: string
 
   /** Field weights (comma-separated numbers) */
-  query_by_weights?: string
+  queryByWeights?: string
 
   /** Filter results using filter expressions */
-  filter_by?: string
+  filterBy?: string
 
   /** Fields to facet by (comma-separated) */
-  facet_by?: string
+  facetBy?: string
 
   /** Maximum number of facet values to return */
-  max_facet_values?: number
+  maxFacetValues?: number
 
   /** Sort results by fields */
-  sort_by?: string
+  sortBy?: string
 
   /** Page number (starts at 1) */
   page?: number
 
   /** Number of results per page */
-  per_page?: number
+  perPage?: number
 
   /** Group results by a field */
-  group_by?: string
+  groupBy?: string
 
   /** Number of results per group */
-  group_limit?: number
+  groupLimit?: number
 
   /** Enable prefix search */
   prefix?: boolean | string
 
   /** Number of typos to tolerate */
-  num_typos?: number | string
+  numTypos?: number | string
 
   /** Minimum word length for typo tolerance */
-  min_len_1typo?: number
+  minLen1typo?: number
 
   /** Minimum word length for 2 typos */
-  min_len_2typo?: number
+  minLen2typo?: number
 
   /** Enable exhaustive search */
-  exhaustive_search?: boolean
+  exhaustiveSearch?: boolean
 
   /** Highlight matching terms */
-  highlight_full_fields?: string
+  highlightFullFields?: string
 
   /** Tag to wrap highlighted text */
-  highlight_start_tag?: string
+  highlightStartTag?: string
 
   /** Closing tag for highlighted text */
-  highlight_end_tag?: string
+  highlightEndTag?: string
 
   /** Fields to include in response */
-  include_fields?: string
+  includeFields?: string
 
   /** Fields to exclude from response */
-  exclude_fields?: string
+  excludeFields?: string
 
   /** Prioritize exact matches */
-  prioritize_exact_match?: boolean
+  prioritizeExactMatch?: boolean
 
   /** Prioritize token order */
-  prioritize_token_position?: boolean
+  prioritizeTokenPosition?: boolean
 
   /** Enable pinned hits */
-  pinned_hits?: string
+  pinnedHits?: string
 
   /** Enable hidden hits */
-  hidden_hits?: string
+  hiddenHits?: string
 
   /** Search cutoff in milliseconds */
-  search_cutoff_ms?: number
+  searchCutoffMs?: number
 
   /** Use cache */
-  use_cache?: boolean
+  useCache?: boolean
 
   /** Cache TTL in seconds */
-  cache_ttl?: number
+  cacheTtl?: number
 }
 ```
 
@@ -190,33 +190,33 @@ Response from a search operation.
 
 ```typescript
 interface SearchResponse<T = any> {
-  facet_counts?: FacetCounts[]
+  facetCounts?: FacetCounts[]
   found: number
-  out_of: number
+  outOf: number
   page: number
-  request_params: SearchParameters
-  search_time_ms: number
-  search_cutoff: boolean
+  requestParams: SearchParameters
+  searchTimeMs: number
+  searchCutoff: boolean
   hits?: SearchHit<T>[]
-  grouped_hits?: GroupedHit<T>[]
+  groupedHits?: GroupedHit<T>[]
 }
 
 interface SearchHit<T = any> {
   document: T
   highlights?: Highlight[]
-  text_match: number
-  text_match_info?: TextMatchInfo
+  textMatch: number
+  textMatchInfo?: TextMatchInfo
 }
 
 interface Highlight {
   field: string
   snippet?: string
   snippets?: string[]
-  matched_tokens: string[]
+  matchedTokens: string[]
 }
 
 interface FacetCounts {
-  field_name: string
+  fieldName: string
   counts: FacetCount[]
   stats?: FacetStats
 }
@@ -247,8 +247,8 @@ interface Product extends Document {
   description: string
   price: number
   category: string
-  in_stock: boolean
-  created_at: number
+  inStock: boolean
+  createdAt: number
   tags?: string[]
 }
 ```
@@ -262,10 +262,10 @@ interface ImportDocumentsParameters {
   collectionName: string
   body: string  // JSONL format
   action?: 'create' | 'update' | 'upsert' | 'emplace'
-  batch_size?: number
-  dirty_values?: 'coerce_or_reject' | 'coerce_or_drop' | 'drop' | 'reject'
-  return_id?: boolean
-  return_doc?: boolean
+  batchSize?: number
+  dirtyValues?: 'coerce_or_reject' | 'coerce_or_drop' | 'drop' | 'reject'
+  returnId?: boolean
+  returnDoc?: boolean
 }
 ```
 
@@ -280,7 +280,7 @@ interface ApiKeySchema {
   description: string
   actions: Action[]
   collections: string[]
-  expires_at?: number
+  expiresAt?: number
   value?: string
 }
 
@@ -311,8 +311,8 @@ interface ApiKey {
   description: string
   actions: Action[]
   collections: string[]
-  value_prefix: string
-  expires_at?: number
+  valuePrefix: string
+  expiresAt?: number
   autodelete: boolean
 }
 ```
@@ -342,10 +342,10 @@ interface SearchOverrideSchema {
   rule: Rule
   includes?: Include[]
   excludes?: Exclude[]
-  filter_by?: string
-  remove_matched_tokens?: boolean
-  effective_from_ts?: number
-  effective_to_ts?: number
+  filterBy?: string
+  removeMatchedTokens?: boolean
+  effectiveFromTs?: number
+  effectiveToTs?: number
 }
 
 interface Rule {
@@ -394,9 +394,9 @@ export interface Product {
   price: number
   category: string
   tags: string[]
-  in_stock: boolean
+  inStock: boolean
   rating?: number
-  created_at: number
+  createdAt: number
 }
 ```
 
@@ -416,7 +416,7 @@ const { data } = await useAsyncData(
       searches: [{
         collection: 'products',
         q: 'laptop',
-        query_by: 'name,description'
+        queryBy: 'name,description'
       }]
     })
     return response.results[0]
@@ -445,13 +445,13 @@ import type { SearchParameters } from '@sfxcode/nuxt-typesense'
 
 const searchParams: SearchParameters = {
   q: 'laptop',
-  query_by: 'name,description',
-  filter_by: 'price:<1000',
-  sort_by: 'price:asc',
+  queryBy: 'name,description',
+  filterBy: 'price:<1000',
+  sortBy: 'price:asc',
   page: 1,
-  per_page: 20,
-  facet_by: 'category,brand',
-  highlight_full_fields: 'name,description'
+  perPage: 20,
+  facetBy: 'category,brand',
+  highlightFullFields: 'name,description'
 }
 ```
 

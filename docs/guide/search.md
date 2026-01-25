@@ -13,7 +13,7 @@ const results = await documentsApi.multiSearch({
   searches: [{
     collection: 'products',
     q: 'laptop',
-    query_by: 'name,description'
+    queryBy: 'name,description'
   }]
 })
 
@@ -28,12 +28,12 @@ const results = await documentsApi.multiSearch({
     {
       collection: 'products',
       q: 'laptop',
-      query_by: 'name,description'
+      queryBy: 'name,description'
     },
     {
       collection: 'articles',
       q: 'laptop review',
-      query_by: 'title,content'
+      queryBy: 'title,content'
     }
   ]
 })
@@ -52,8 +52,8 @@ Specify which fields to search in:
 {
   collection: 'products',
   q: 'laptop',
-  query_by: 'name,description,tags',  // Search in multiple fields
-  query_by_weights: '3,2,1'            // Weight fields differently
+  queryBy: 'name,description,tags',  // Search in multiple fields
+  queryByWeights: '3,2,1'            // Weight fields differently
 }
 ```
 
@@ -65,8 +65,8 @@ Filter results using boolean expressions:
 {
   collection: 'products',
   q: 'laptop',
-  query_by: 'name,description',
-  filter_by: 'price:<1000 && in_stock:true && category:=Electronics'
+  queryBy: 'name,description',
+  filterBy: 'price:<1000 && in_stock:true && category:=Electronics'
 }
 ```
 
@@ -86,22 +86,22 @@ Examples:
 
 ```typescript
 // Price range
-filter_by: 'price:[10..100]'
+filterBy: 'price:[10..100]'
 
 // Multiple categories
-filter_by: 'category:=[Electronics, Computers]'
+filterBy: 'category:=[Electronics, Computers]'
 
 // Date range
-filter_by: 'created_at:[1640000000..1650000000]'
+filterBy: 'created_at:[1640000000..1650000000]'
 
 // Boolean
-filter_by: 'in_stock:true'
+filterBy: 'in_stock:true'
 
 // Geo search
-filter_by: 'location:(48.8566, 2.3522, 10 km)'
+filterBy: 'location:(48.8566, 2.3522, 10 km)'
 
 // Complex query
-filter_by: '(category:=Electronics || category:=Computers) && price:<500 && in_stock:true'
+filterBy: '(category:=Electronics || category:=Computers) && price:<500 && in_stock:true'
 ```
 
 ### Faceting
@@ -112,9 +112,9 @@ Get aggregated counts for fields:
 {
   collection: 'products',
   q: 'laptop',
-  query_by: 'name',
-  facet_by: 'category,brand,color',
-  max_facet_values: 10
+  queryBy: 'name',
+  facetBy: 'category,brand,color',
+  maxFacetValues: 10
 }
 ```
 
@@ -142,8 +142,8 @@ Sort results by one or more fields:
 {
   collection: 'products',
   q: 'laptop',
-  query_by: 'name',
-  sort_by: 'price:desc,created_at:desc'  // Sort by price, then date
+  queryBy: 'name',
+  sortBy: 'price:desc,created_at:desc'  // Sort by price, then date
 }
 ```
 
@@ -153,9 +153,9 @@ Sort results by one or more fields:
 {
   collection: 'products',
   q: 'laptop',
-  query_by: 'name',
+  queryBy: 'name',
   page: 1,
-  per_page: 20
+  perPage: 20
 }
 ```
 
@@ -167,7 +167,7 @@ Highlight matched terms in results:
 {
   collection: 'products',
   q: 'laptop',
-  query_by: 'name,description',
+  queryBy: 'name,description',
   highlight_full_fields: 'name,description',
   highlight_start_tag: '<mark>',
   highlight_end_tag: '</mark>'
@@ -184,8 +184,8 @@ Typesense automatically handles typos:
 {
   collection: 'products',
   q: 'lapto',  // Typo: missing 'p'
-  query_by: 'name',
-  num_typos: 2  // Allow up to 2 typos (default: 2)
+  queryBy: 'name',
+  numTypos: 2  // Allow up to 2 typos (default: 2)
 }
 ```
 
@@ -197,7 +197,7 @@ Enable prefix searching for autocomplete:
 {
   collection: 'products',
   q: 'lap',
-  query_by: 'name',
+  queryBy: 'name',
   prefix: true  // Matches "laptop", "lapel", etc.
 }
 ```
@@ -210,7 +210,7 @@ Search for exact phrases:
 {
   collection: 'products',
   q: '"gaming laptop"',  // Exact phrase
-  query_by: 'name,description'
+  queryBy: 'name,description'
 }
 ```
 
@@ -222,8 +222,8 @@ Group results by a field:
 {
   collection: 'products',
   q: 'laptop',
-  query_by: 'name',
-  group_by: 'brand',
+  queryBy: 'name',
+  groupBy: 'brand',
   group_limit: 3  // Show 3 products per brand
 }
 ```
@@ -236,9 +236,9 @@ Search by geographic proximity:
 {
   collection: 'stores',
   q: '*',
-  query_by: 'name',
-  filter_by: 'location:(48.8566, 2.3522, 10 km)',
-  sort_by: 'location(48.8566, 2.3522):asc'  // Sort by distance
+  queryBy: 'name',
+  filterBy: 'location:(48.8566, 2.3522, 10 km)',
+  sortBy: 'location(48.8566, 2.3522):asc'  // Sort by distance
 }
 ```
 
@@ -290,7 +290,7 @@ Search by geographic proximity:
     <div v-if="pending">Searching...</div>
     <div v-else-if="error">Error: {{ error.message }}</div>
     <div v-else-if="results">
-      <p>Found {{ results.found }} results in {{ results.search_time_ms }}ms</p>
+      <p>Found {{ results.found }} results in {{ results.searchTimeMs }}ms</p>
       
       <div v-for="hit in results.hits" :key="hit.document.id" class="result">
         <h3 v-html="hit.highlights?.[0]?.snippet || hit.document.name"></h3>
@@ -366,14 +366,14 @@ async function performSearchQuery() {
     searches: [{
       collection: 'products',
       q: searchQuery.value || '*',
-      query_by: 'name,description,tags',
-      query_by_weights: '3,2,1',
-      filter_by: filterBy || undefined,
-      facet_by: 'category,brand',
-      max_facet_values: 10,
-      sort_by: sortBy.value || undefined,
+      queryBy: 'name,description,tags',
+      queryByWeights: '3,2,1',
+      filterBy: filterBy || undefined,
+      facetBy: 'category,brand',
+      maxFacetValues: 10,
+      sortBy: sortBy.value || undefined,
       page: page.value,
-      per_page: perPage.value,
+      perPage: perPage.value,
       highlight_full_fields: 'name,description',
       highlight_start_tag: '<mark>',
       highlight_end_tag: '</mark>'
@@ -477,18 +477,18 @@ const { data: results } = await useAsyncData(
 
 ```typescript
 // ❌ Searching too many fields is slow
-query_by: 'name,description,content,tags,author,category'
+queryBy: 'name,description,content,tags,author,category'
 
 // ✅ Search relevant fields with proper weights
-query_by: 'name,description,tags',
-query_by_weights: '3,2,1'
+queryBy: 'name,description,tags',
+queryByWeights: '3,2,1'
 ```
 
 ### 4. Use Pagination
 
 ```typescript
 // Always paginate large result sets
-per_page: 20,
+perPage: 20,
 page: currentPage.value
 ```
 
@@ -497,7 +497,7 @@ page: currentPage.value
 ```typescript
 // Use '*' for "show all" queries
 q: searchQuery.value || '*',
-query_by: 'name'
+queryBy: 'name'
 ```
 
 ## Next Steps
