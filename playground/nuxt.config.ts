@@ -20,9 +20,12 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-01-15',
 
+  debug: false,
+
   typesense: {
     url: process.env.TYPESENSE_URL,
     apiKey: process.env.TYPESENSE_API_KEY,
+    clientMode: false,
   },
 
 })
