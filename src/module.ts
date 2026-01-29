@@ -88,6 +88,9 @@ export default defineNuxtModule<ModuleOptions>({
       { route: '/api/typesense/keys/:id', method: 'get', handler: './runtime/server/api/typesense/keys/[id].get' },
       { route: '/api/typesense/keys/:id', method: 'delete', handler: './runtime/server/api/typesense/keys/[id].delete' },
 
+      // scoped key
+      { route: '/api/typesense/key/scoped/:key', method: 'post', handler: './runtime/server/api/typesense/key/scoped/[key].post' },
+
     ]
     // Register all server routes
     serverRoutes.forEach(({ route, method, handler }) => {
