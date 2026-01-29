@@ -203,15 +203,6 @@ await keysApi.createKey({
 
 // Delete key
 await keysApi.deleteKey({ keyId: 123 })
-
-// Generate scoped key
-const scopedKey = await keysApi.generateScopedSearchKey(
-  'parent-search-key',
-  {
-    filterBy: 'userId:=123',
-    expiresAt: Math.floor(Date.now() / 1000) + 3600
-  }
-)
 ```
 
 ### SynonymsApi

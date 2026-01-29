@@ -8,7 +8,6 @@ Typesense uses API keys for authentication. There are different types of keys wi
 
 - **Admin Key**: Full access to all operations
 - **Search-Only Key**: Read-only access for searches
-- **Scoped Key**: Limited access with filters and expiration
 
 ## Creating API Keys
 
@@ -99,100 +98,6 @@ await keysApi.deleteKey({
 })
 ```
 
-## Scoped Search Keys
-
-Scoped keys allow you to create temporary, filtered search keys from a parent key. This is useful for:
-
-- Multi-tenant applications
-- User-specific filtering
-- Time-limited access
-
-### Generate a Scoped Key
-
-```typescript
-const { keysApi } = useTypesenseApi()
-
-// Parent search-only key
-const parentKey = 'your-search-only-key'
-
-// Generate scoped key
-const scopedKey = await keysApi.generateScopedSearchKey(
-  parentKey,
-  {
-    filterBy: 'userId:=123',
-    expiresAt: Math.floor(Date.now() / 1000) + 3600  // 1 hour
-  }
-)
-
-// Use scoped key for searches
-const results = await documentsApi.multiSearch({
-  searches: [{
-    collection: 'documents',
-    q: 'query',
-    queryBy: 'content'
-  }]
-}, {
-  headers: {
-    'X-TYPESENSE-API-KEY': scopedKey
-  }
-})
-```
-
-### Server-Side Scoped Key Generation
-
-Create an API endpoint to generate scoped keys:
-
-```typescript
-// server/api/typesense/scoped-key.ts
-export default defineEventHandler(async (event) => {
-  const session = await useUserSession(event)
-  
-  if (!session.user) {
-    throw createError({
-      statusCode: 401,
-      message: 'Unauthorized'
-    })
-  }
-  
-  const { keysApi } = useTypesenseApi()
-  const config = useRuntimeConfig()
-  
-  // Generate scoped key for this user
-  const scopedKey = await keysApi.generateScopedSearchKey(
-    config.typesense.searchKey,
-    {
-      filterBy: `userId:=${session.user.id}`,
-      expiresAt: Math.floor(Date.now() / 1000) + 3600
-    }
-  )
-  
-  return { key: scopedKey }
-})
-```
-
-Use in your frontend:
-
-```vue
-<script setup lang="ts">
-const { data: scopedKeyData } = await useFetch('/api/typesense/scoped-key')
-
-const searchWithScopedKey = async () => {
-  const { documentsApi } = useTypesenseApi()
-  
-  const results = await documentsApi.multiSearch({
-    searches: [{
-      collection: 'documents',
-      q: 'query',
-      queryBy: 'content'
-    }]
-  }, {
-    headers: {
-      'X-TYPESENSE-API-KEY': scopedKeyData.value.key
-    }
-  })
-}
-</script>
-```
 
 ## Key Actions
 
@@ -365,20 +270,7 @@ export default defineNuxtConfig({
 })
 ```
 
-### 2. Use Scoped Keys for Multi-Tenant Apps
-
-```typescript
-// Generate user-specific keys
-const scopedKey = await keysApi.generateScopedSearchKey(
-  searchKey,
-  {
-    filterBy: `tenant_id:=${tenantId}`,
-    expiresAt: Math.floor(Date.now() / 1000) + 3600
-  }
-)
-```
-
-### 3. Rotate Keys Regularly
+### 2. Rotate Keys Regularly
 
 ```typescript
 // Create new key
@@ -389,7 +281,7 @@ const newKey = await keysApi.createKey({ ... })
 await keysApi.deleteKey({ keyId: oldKeyId })
 ```
 
-### 4. Set Expiration for Temporary Access
+### 3. Set Expiration for Temporary Access
 
 ```typescript
 // Create temporary key for guest access
@@ -403,7 +295,7 @@ const guestKey = await keysApi.createKey({
 })
 ```
 
-### 5. Limit Permissions
+### 4. Limit Permissions
 
 ```typescript
 // Only grant necessary permissions

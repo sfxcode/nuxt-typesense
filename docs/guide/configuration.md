@@ -49,7 +49,6 @@ The API key for authenticating with Typesense.
 For production applications:
 - Use **search-only API keys** in your frontend
 - Keep admin keys on the server side only
-- Use scoped API keys when possible
 :::
 
 ### `clientMode`
@@ -142,27 +141,6 @@ console.log('API Key:', apiKey.substring(0, 5) + '...')
 </script>
 ```
 
-## Using Scoped API Keys
-
-For multi-tenant applications, you can generate scoped API keys:
-
-```typescript
-// server/api/scoped-key.ts
-export default defineEventHandler(async (event) => {
-  const { keysApi } = useTypesenseApi()
-  
-  // Create a scoped key for a specific user
-  const scopedKey = await keysApi.generateScopedSearchKey(
-    'parent-search-key',
-    {
-      filterBy: `userId:${userId}`,
-      expiresAt: Math.floor(Date.now() / 1000) + 3600 // 1 hour
-    }
-  )
-  
-  return scopedKey
-})
-```
 
 ## Best Practices
 
@@ -208,7 +186,6 @@ Create separate keys for different purposes:
 
 - **Admin Key**: Server-side operations only
 - **Search-Only Key**: Client-side searches
-- **Scoped Keys**: User-specific or filtered access
 
 ### 5. Document Required Variables
 
