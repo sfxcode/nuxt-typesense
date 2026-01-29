@@ -491,28 +491,7 @@ const { data: results } = await useFetch('/api/products/search', {
 </script>
 ```
 
-### Pattern 4: Scoped Keys (Multi-Tenant)
-
-```typescript
-// server/api/user-key.get.ts
-export default defineEventHandler(async (event) => {
-  const session = await getUserSession(event)
-  const { keysApi } = useTypesenseApi()
-  
-  // Generate user-specific search key
-  const scopedKey = await keysApi.generateScopedSearchKey(
-    process.env.TYPESENSE_SEARCH_KEY!,
-    {
-      filter_by: `user_id:=${session.userId}`,
-      expires_at: Math.floor(Date.now() / 1000) + 3600
-    }
-  )
-  
-  return { key: scopedKey }
-})
-```
-
-### Pattern 5: Real-Time Updates
+### Pattern 4: Real-Time Updates
 
 ```typescript
 // server/api/products/[id].put.ts

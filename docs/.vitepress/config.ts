@@ -48,6 +48,7 @@ export default defineConfig({
           text: 'API Reference',
           items: [
             { text: 'Composables', link: '/api/composables' },
+            { text: 'Server Routes', link: '/api/server-routes' },
             { text: 'API Clients', link: '/api/clients' },
             { text: 'Type Definitions', link: '/api/types' },
           ],

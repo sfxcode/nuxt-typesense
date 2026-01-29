@@ -522,8 +522,85 @@ onUnmounted(() => {
 </style>
 ```
 
+## Using Server Routes
+
+The module provides built-in server routes that you can use directly with `useFetch` or `$fetch`:
+
+### Get Server Status
+
+```vue
+<template>
+  <div>
+    <h2>Typesense Status</h2>
+    <div v-if="status">
+      <p>Version: {{ status.version }}</p>
+      <p>Health: {{ status.healthy ? '✅ Healthy' : '❌ Down' }}</p>
+      <p>URL: {{ status.url }}</p>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+const { data: status } = await useFetch('/api/typesense/status')
+</script>
+```
+
+### Search via Server Route
+
+```vue
+<template>
+  <div>
+    <input v-model="query" placeholder="Search products..." />
+    <button @click="performSearch">Search</button>
+    
+    <div v-if="pending">Loading...</div>
+    <div v-else-if="results">
+      <p>Found {{ results.found }} results</p>
+      <div v-for="hit in results.hits" :key="hit.document.id">
+        <h3>{{ hit.document.name }}</h3>
+        <p>{{ hit.document.description }}</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+const query = ref('')
+const { data: results, pending, execute: performSearch } = useFetch(
+  '/api/typesense/documents/products/search',
+  {
+    method: 'POST',
+    body: computed(() => ({
+      q: query.value,
+      query_by: 'name,description',
+      per_page: 10
+    })),
+    immediate: false,
+    watch: false
+  }
+)
+</script>
+```
+
+### List Collections
+
+```vue
+<script setup lang="ts">
+const { data: collections } = await useFetch('/api/typesense/collections')
+
+console.log('Available collections:', collections.value)
+</script>
+```
+
+::: tip Why Use Server Routes?
+Server routes keep your API keys secure on the server side and provide a consistent API interface. They're especially useful when you need to perform operations that require admin privileges.
+
+For more details, see the [Server Routes API Reference](/api/server-routes).
+:::
+
 ## Next Steps
 
 - Learn about [Collection Management](/examples/collection-management)
 - Explore [Document Operations](/examples/document-operations)
 - Check [Search Queries](/examples/search-queries)
+- Read the [Server Routes API Reference](/api/server-routes)

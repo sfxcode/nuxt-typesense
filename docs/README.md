@@ -46,6 +46,7 @@ docs/
 │   └── api-keys.md
 ├── api/
 │   ├── composables.md
+│   ├── server-routes.md
 │   ├── clients.md
 │   └── types.md
 └── examples/

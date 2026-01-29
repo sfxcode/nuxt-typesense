@@ -134,6 +134,52 @@ export default defineNuxtConfig({
 })
 ```
 
+## 🛣️ Built-in Server Routes
+
+The module automatically registers these API routes:
+
+### Status & Health
+- `GET /api/typesense/status` - Get Typesense server status
+
+### Collections
+- `GET /api/typesense/collections` - List all collections
+- `POST /api/typesense/collections` - Create collection
+- `GET /api/typesense/collections/:name` - Get collection details
+- `PATCH /api/typesense/collections/:name` - Update collection
+- `DELETE /api/typesense/collections/:name` - Delete collection
+
+### Aliases
+- `GET /api/typesense/alias/:alias` - Get alias details
+- `PUT /api/typesense/alias/:alias` - Create/update alias
+- `DELETE /api/typesense/alias/:alias` - Delete alias
+
+### Documents
+- `POST /api/typesense/documents/:collection` - Create document
+- `POST /api/typesense/documents/:collection/search` - Search documents
+- `POST /api/typesense/documents/:collection/multi-search` - Multi-search
+- `GET /api/typesense/documents/:collection/export` - Export documents
+- `POST /api/typesense/documents/:collection/import` - Import documents
+- `POST /api/typesense/documents/:collection/delete` - Delete by filter
+- `POST /api/typesense/documents/:collection/update` - Update by filter
+- `GET /api/typesense/documents/:collection/id/:id` - Get document by ID
+- `PATCH /api/typesense/documents/:collection/id/:id` - Update document
+- `DELETE /api/typesense/documents/:collection/id/:id` - Delete document
+
+### API Keys
+- `GET /api/typesense/keys` - List API keys
+- `POST /api/typesense/keys` - Create API key
+- `GET /api/typesense/keys/:id` - Get key details
+- `DELETE /api/typesense/keys/:id` - Delete key
+- `POST /api/typesense/key/scoped/:key` - Generate scoped key
+
+💡 **Usage Example:**
+```typescript
+// In any component or page
+const { data } = await useFetch('/api/typesense/collections')
+```
+
+📖 **Full Documentation**: See `docs/api/server-routes.md`
+
 ## 🚀 Getting Started Paths
 
 ### Path 1: Just Search (Easiest)
@@ -173,9 +219,6 @@ export default defineNuxtConfig({
 
 ### Task: Secure Admin Operations
 → See "Pattern 3: Server API" in README
-
-### Task: Multi-Tenant Setup
-→ See "Pattern 4: Scoped Keys" in README
 
 ### Task: Real-Time Sync
 → See "Pattern 5: Real-Time Updates" in README
