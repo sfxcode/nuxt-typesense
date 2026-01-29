@@ -1,6 +1,6 @@
 {
   "name": "@sfxcode/nuxt-typesense",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "license": "MIT",
   "type": "module",
   "exports": {

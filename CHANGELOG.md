@@ -1,4 +1,38 @@
 
+## v1.1.0
+
+[compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v1.0.1...v1.1.0)
+
+### 🚀 Enhancements
+
+- Add useTypesenseDocuments hook for searching collections and multi-search functionality ([2e5aa1c](https://github.com/sfxcode/nuxt-typesense/commit/2e5aa1c))
+- Add CRUD operations for collection and document management in Typesense API ([2a23e26](https://github.com/sfxcode/nuxt-typesense/commit/2a23e26))
+- Add CRUD operations for collection and document management in Typesense API ([3ff3c76](https://github.com/sfxcode/nuxt-typesense/commit/3ff3c76))
+- Enhance Typesense module with client mode support and server routes configuration ([d81a476](https://github.com/sfxcode/nuxt-typesense/commit/d81a476))
+- Add Typesense collections and keys management components with search functionality ([66b3b15](https://github.com/sfxcode/nuxt-typesense/commit/66b3b15))
+- Add initial documentation and examples for Typesense integration, including CRUD operations and configuration guides ([a10eaea](https://github.com/sfxcode/nuxt-typesense/commit/a10eaea))
+- Update package.json and .gitignore for VitePress integration and add new scripts ([d4663cc](https://github.com/sfxcode/nuxt-typesense/commit/d4663cc))
+- Add scoped key endpoint for Typesense integration ([55b1500](https://github.com/sfxcode/nuxt-typesense/commit/55b1500))
+
+### 🩹 Fixes
+
+- Refactor query parameter handling in DocumentsApi to remove undefined values and ensure correct queryParameters ([f16cb7f](https://github.com/sfxcode/nuxt-typesense/commit/f16cb7f))
+- Update release script to use minor versioning for changelogen ([81d2196](https://github.com/sfxcode/nuxt-typesense/commit/81d2196))
+
+### 💅 Refactors
+
+- Standardize query and field naming conventions across documentation ([b3b91dc](https://github.com/sfxcode/nuxt-typesense/commit/b3b91dc))
+- Docs ([282430b](https://github.com/sfxcode/nuxt-typesense/commit/282430b))
+
+### 📖 Documentation
+
+- Add quick reference guide and enhance README with security patterns and usage examples ([62555df](https://github.com/sfxcode/nuxt-typesense/commit/62555df))
+- Add server routes documentation and update navigation links ([5cab948](https://github.com/sfxcode/nuxt-typesense/commit/5cab948))
+
+### ❤️ Contributors
+
+- Sfxcode ([@sfxcode](https://github.com/sfxcode))
+
 ## v1.0.1
 
 [compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v0.8.2...v1.0.1)
