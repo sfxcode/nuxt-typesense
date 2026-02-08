@@ -35,27 +35,27 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
-    "@nuxt/kit": "^4.2.2",
+    "@nuxt/kit": "^4.3.1",
     "consola": "^3.4.2",
     "defu": "^6.1.4"
   },
   "devDependencies": {
     "@iconify-json/bx": "^1.2.2",
-    "@iconify-json/lucide": "^1.2.86",
-    "@iconify-json/simple-icons": "^1.2.67",
+    "@iconify-json/lucide": "^1.2.89",
+    "@iconify-json/simple-icons": "^1.2.70",
     "@nuxt/devtools": "^3.1.1",
-    "@nuxt/eslint-config": "^1.12.1",
+    "@nuxt/eslint-config": "^1.14.0",
     "@nuxt/module-builder": "^1.0.2",
-    "@nuxt/schema": "^4.2.2",
-    "@nuxt/test-utils": "^3.23.0",
-    "@nuxt/ui": "^4.3.0",
-    "@openapitools/openapi-generator-cli": "^2.28.0",
-    "@types/node": "^25.0.9",
+    "@nuxt/schema": "^4.3.1",
+    "@nuxt/test-utils": "^4.0.0",
+    "@nuxt/ui": "^4.4.0",
+    "@openapitools/openapi-generator-cli": "^2.28.2",
+    "@types/node": "^25.2.2",
     "changelogen": "^0.6.2",
-    "eslint": "^9.39.2",
-    "nuxt": "^4.2.2",
+    "eslint": "^10.0.0",
+    "nuxt": "^4.3.1",
     "vitepress": "^1.6.4",
-    "vitest": "^4.0.17"
+    "vitest": "^4.0.18"
   },
   "packageManager": "pnpm@10.28.1+sha512.7d7dbbca9e99447b7c3bf7a73286afaaf6be99251eb9498baefa7d406892f67b879adb3a1d7e687fc4ccc1a388c7175fbaae567a26ab44d1067b54fcb0d6a316"
 }
