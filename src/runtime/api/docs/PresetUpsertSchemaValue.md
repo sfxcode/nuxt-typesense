@@ -50,12 +50,12 @@ Name | Type
 `synonymNumTypos` | number
 `pinnedHits` | string
 `hiddenHits` | string
-`overrideTags` | string
+`curationTags` | string
 `highlightFields` | string
 `splitJoinTokens` | string
 `preSegmentedQuery` | boolean
 `preset` | string
-`enableOverrides` | boolean
+`enableCurations` | boolean
 `prioritizeExactMatch` | boolean
 `maxCandidates` | number
 `prioritizeTokenPosition` | boolean
@@ -131,12 +131,12 @@ const example = {
   "synonymNumTypos": null,
   "pinnedHits": null,
   "hiddenHits": null,
-  "overrideTags": null,
+  "curationTags": null,
   "highlightFields": null,
   "splitJoinTokens": null,
   "preSegmentedQuery": null,
   "preset": null,
-  "enableOverrides": null,
+  "enableCurations": null,
   "prioritizeExactMatch": null,
   "maxCandidates": null,
   "prioritizeTokenPosition": null,

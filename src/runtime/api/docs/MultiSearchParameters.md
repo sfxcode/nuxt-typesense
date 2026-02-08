@@ -46,11 +46,11 @@ Name | Type
 `synonymNumTypos` | number
 `pinnedHits` | string
 `hiddenHits` | string
-`overrideTags` | string
+`curationTags` | string
 `highlightFields` | string
 `preSegmentedQuery` | boolean
 `preset` | string
-`enableOverrides` | boolean
+`enableCurations` | boolean
 `prioritizeExactMatch` | boolean
 `prioritizeTokenPosition` | boolean
 `prioritizeNumMatchingFields` | boolean
@@ -118,11 +118,11 @@ const example = {
   "synonymNumTypos": null,
   "pinnedHits": null,
   "hiddenHits": null,
-  "overrideTags": null,
+  "curationTags": null,
   "highlightFields": null,
   "preSegmentedQuery": null,
   "preset": null,
-  "enableOverrides": null,
+  "enableCurations": null,
   "prioritizeExactMatch": null,
   "prioritizeTokenPosition": null,
   "prioritizeNumMatchingFields": null,

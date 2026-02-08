@@ -232,7 +232,7 @@ export interface MultiSearchParameters {
      */
     enableTyposForAlphaNumericalTokens?: boolean;
     /**
-     * Whether the filter_by condition of the search query should be applicable to curated results (override definitions, pinned hits, hidden hits, etc.). Default: false
+     * Whether the filter_by condition of the search query should be applicable to curated results (curation definitions, pinned hits, hidden hits, etc.). Default: false
      * 
      * @type {boolean}
      * @memberof MultiSearchParameters
@@ -268,7 +268,7 @@ export interface MultiSearchParameters {
     synonymNumTypos?: number;
     /**
      * A list of records to unconditionally include in the search results at specific positions. An example use case would be to feature or promote certain items on the top of search results. A list of `record_id:hit_position`. Eg: to include a record with ID 123 at Position 1 and another record with ID 456 at Position 5, you'd specify `123:1,456:5`.
-     * You could also use the Overrides feature to override search results based on rules. Overrides are applied first, followed by `pinned_hits` and finally `hidden_hits`.
+     * You could also use the Curation feature to override search results based on rules. Curations are applied first, followed by `pinned_hits` and finally `hidden_hits`.
      * 
      * @type {string}
      * @memberof MultiSearchParameters
@@ -276,7 +276,7 @@ export interface MultiSearchParameters {
     pinnedHits?: string;
     /**
      * A list of records to unconditionally hide from search results. A list of `record_id`s to hide. Eg: to hide records with IDs 123 and 456, you'd specify `123,456`.
-     * You could also use the Overrides feature to override search results based on rules. Overrides are applied first, followed by `pinned_hits` and finally `hidden_hits`.
+     * You could also use the Curation feature to override search results based on rules. Curations are applied first, followed by `pinned_hits` and finally `hidden_hits`.
      * 
      * @type {string}
      * @memberof MultiSearchParameters
@@ -287,7 +287,7 @@ export interface MultiSearchParameters {
      * @type {string}
      * @memberof MultiSearchParameters
      */
-    overrideTags?: string;
+    curationTags?: string;
     /**
      * A list of custom fields that must be highlighted even if you don't query for them
      * 
@@ -311,12 +311,12 @@ export interface MultiSearchParameters {
      */
     preset?: string;
     /**
-     * If you have some overrides defined but want to disable all of them during query time, you can do that by setting this parameter to false
+     * If you have some curation sets defined but want to disable all of them during query time, you can do that by setting this parameter to false
      * 
      * @type {boolean}
      * @memberof MultiSearchParameters
      */
-    enableOverrides?: boolean;
+    enableCurations?: boolean;
     /**
      * Set this parameter to true to ensure that an exact match is ranked above the others
      * 
@@ -517,11 +517,11 @@ export function MultiSearchParametersFromJSONTyped(json: any, ignoreDiscriminato
         'synonymNumTypos': json['synonym_num_typos'] == null ? undefined : json['synonym_num_typos'],
         'pinnedHits': json['pinned_hits'] == null ? undefined : json['pinned_hits'],
         'hiddenHits': json['hidden_hits'] == null ? undefined : json['hidden_hits'],
-        'overrideTags': json['override_tags'] == null ? undefined : json['override_tags'],
+        'curationTags': json['curation_tags'] == null ? undefined : json['curation_tags'],
         'highlightFields': json['highlight_fields'] == null ? undefined : json['highlight_fields'],
         'preSegmentedQuery': json['pre_segmented_query'] == null ? undefined : json['pre_segmented_query'],
         'preset': json['preset'] == null ? undefined : json['preset'],
-        'enableOverrides': json['enable_overrides'] == null ? undefined : json['enable_overrides'],
+        'enableCurations': json['enable_curations'] == null ? undefined : json['enable_curations'],
         'prioritizeExactMatch': json['prioritize_exact_match'] == null ? undefined : json['prioritize_exact_match'],
         'prioritizeTokenPosition': json['prioritize_token_position'] == null ? undefined : json['prioritize_token_position'],
         'prioritizeNumMatchingFields': json['prioritize_num_matching_fields'] == null ? undefined : json['prioritize_num_matching_fields'],
@@ -595,11 +595,11 @@ export function MultiSearchParametersToJSONTyped(value?: MultiSearchParameters |
         'synonym_num_typos': value['synonymNumTypos'],
         'pinned_hits': value['pinnedHits'],
         'hidden_hits': value['hiddenHits'],
-        'override_tags': value['overrideTags'],
+        'curation_tags': value['curationTags'],
         'highlight_fields': value['highlightFields'],
         'pre_segmented_query': value['preSegmentedQuery'],
         'preset': value['preset'],
-        'enable_overrides': value['enableOverrides'],
+        'enable_curations': value['enableCurations'],
         'prioritize_exact_match': value['prioritizeExactMatch'],
         'prioritize_token_position': value['prioritizeTokenPosition'],
         'prioritize_num_matching_fields': value['prioritizeNumMatchingFields'],

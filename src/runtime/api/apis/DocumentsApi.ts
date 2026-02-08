@@ -514,10 +514,10 @@ export class DocumentsApi extends runtime.BaseAPI {
             );
         }
 
-        let queryParameters: any = {};
+        const queryParameters: any = {};
 
         if (requestParameters['searchParameters'] != null) {
-          queryParameters = removeUndefined(SearchParametersToJSON(requestParameters.searchParameters));
+            queryParameters['searchParameters'] = requestParameters['searchParameters'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
