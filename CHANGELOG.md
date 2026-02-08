@@ -1,4 +1,18 @@
 
+## v1.2.0
+
+[compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v1.1.0...v1.2.0)
+
+### 🏡 Chore
+
+- Update dependencies and openapi generator version ([d352172](https://github.com/sfxcode/nuxt-typesense/commit/d352172))
+- Update version to 7.19.0 and rename overrideTags to curationTags ([c65ecc4](https://github.com/sfxcode/nuxt-typesense/commit/c65ecc4))
+- Update package manager version to pnpm@10.29.1 ([2460b80](https://github.com/sfxcode/nuxt-typesense/commit/2460b80))
+
+### ❤️ Contributors
+
+- Sfxcode ([@sfxcode](https://github.com/sfxcode))
+
 ## v1.1.0
 
 [compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v1.0.1...v1.1.0)
