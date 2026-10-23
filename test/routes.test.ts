@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
-import { filterTypesenseRoutes, typesenseServerRoutes } from '../src/module'
+import { filterTypesenseRoutes, typesenseServerRoutes } from '../src/routes'
 
 const srcDir = resolve(__dirname, '../src')
 const apiDir = join(srcDir, 'runtime/server/api/typesense')

@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "@nuxt/kit": "^4.6.2",
-    "consola": "^3.4.2",
     "defu": "^6.1.7"
   },
   "devDependencies": {
