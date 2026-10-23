@@ -1,11 +1,12 @@
 <template>
-  <UCard>
+  <!-- Not a UCard: its overflow-hidden would clip the dropdown panels -->
+  <div class="rounded-lg border border-default bg-default px-4 py-3">
     <UNavigationMenu
       :items="items"
       orientation="horizontal"
       content-orientation="vertical"
     />
-  </UCard>
+  </div>
 </template>
 
 <script setup lang="ts">

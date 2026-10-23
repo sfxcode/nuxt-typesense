@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { consola } from 'consola'
 import type { SearchParameters } from '../../../src/runtime/api'
 
 interface SearchHit {
@@ -66,8 +65,6 @@ async function search() {
     if (activeFilter.value) {
       params = { ...params, filterBy: activeFilter.value }
     }
-
-    consola.error(params)
 
     searchResult.value = await $fetch<SearchResult>('/api/typesense/documents/products/search', {
       method: 'POST',
