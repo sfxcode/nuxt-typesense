@@ -63,6 +63,7 @@ describe('filterTypesenseRoutes', () => {
     route('/api/typesense/documents/:collection/multi-search', 'post'),
     route('/api/typesense/documents/:collection/import', 'post'),
     route('/api/typesense/keys', 'get'),
+    route('/api/typesense/debug', 'get'),
     route('/api/typesense/key/scoped/:key', 'post'),
   ]
   const paths = (list: ReturnType<typeof route>[]) => list.map(r => `${r.method ?? 'all'} ${r.route}`)
@@ -72,13 +73,12 @@ describe('filterTypesenseRoutes', () => {
     expect(filterTypesenseRoutes(routes, {})).toEqual(routes)
   })
 
-  it('readOnly keeps reads, status, search and multi-search only', () => {
+  it('readOnly keeps reads, status, search and multi-search, but drops keys and debug', () => {
     expect(paths(filterTypesenseRoutes(routes, { readOnly: true }))).toEqual([
       'all /api/typesense/status',
       'get /api/typesense/collections',
       'post /api/typesense/documents/:collection/search',
       'post /api/typesense/documents/:collection/multi-search',
-      'get /api/typesense/keys',
     ])
   })
 
@@ -95,15 +95,23 @@ describe('filterTypesenseRoutes', () => {
   })
 
   it('combines readOnly and exclude', () => {
-    const kept = paths(filterTypesenseRoutes(routes, { readOnly: true, exclude: ['/api/typesense/keys'] }))
-    expect(kept).not.toContain('get /api/typesense/keys')
-    expect(kept).toContain('get /api/typesense/collections')
+    const kept = paths(filterTypesenseRoutes(routes, { readOnly: true, exclude: ['/api/typesense/collections'] }))
+    expect(kept).not.toContain('get /api/typesense/collections')
+    expect(kept).toContain('post /api/typesense/documents/:collection/search')
+  })
+
+  it('keeps keys and debug when readOnly is off', () => {
+    const kept = paths(filterTypesenseRoutes(routes, {}))
+    expect(kept).toContain('get /api/typesense/keys')
+    expect(kept).toContain('get /api/typesense/debug')
   })
 
   it('never lets a real read-only config expose a write route', () => {
     const writes = filterTypesenseRoutes(typesenseServerRoutes, { readOnly: true })
       .filter(r => r.method && r.method !== 'get')
       .map(r => `${r.method} ${r.route}`)
+    const all = filterTypesenseRoutes(typesenseServerRoutes, { readOnly: true }).map(r => r.route)
+    expect(all.some(r => r.startsWith('/api/typesense/keys') || r === '/api/typesense/debug')).toBe(false)
     expect(writes).toEqual([
       'post /api/typesense/documents/:collection/search',
       'post /api/typesense/documents/:collection/multi-search',

@@ -12,7 +12,7 @@ export interface ModuleOptions {
    * server API key, so every registered route is callable by anyone who can reach the app.
    */
   routes?: {
-    /** Only register read routes: GET requests plus search and multi-search. */
+    /** Only register read routes: GET requests plus search and multi-search. Key listing and debug info are dropped too. */
     readOnly?: boolean
     /** Route prefixes to skip, e.g. `['/api/typesense/keys', '/api/typesense/operations']`. */
     exclude?: string[]
@@ -160,11 +160,18 @@ const readOnlyPostRoutes = new Set([
   '/api/typesense/documents/:collection/multi-search',
 ])
 
+// GET routes that still return sensitive metadata, so readOnly drops them too
+const readOnlyBlockedPrefixes = ['/api/typesense/keys', '/api/typesense/debug']
+
+const matchesPrefix = (route: string, prefix: string) => route === prefix || route.startsWith(`${prefix}/`)
+
 export function filterTypesenseRoutes(routes: TypesenseRoute[], options: ModuleOptions['routes'] = {}) {
   const exclude = (options.exclude ?? []).map(prefix => prefix.replace(/\/+$/, ''))
 
   return routes.filter(({ route, method }) => {
-    if (exclude.some(prefix => route === prefix || route.startsWith(`${prefix}/`)))
+    if (exclude.some(prefix => matchesPrefix(route, prefix)))
+      return false
+    if (options.readOnly && readOnlyBlockedPrefixes.some(prefix => matchesPrefix(route, prefix)))
       return false
     if (options.readOnly && method && method !== 'get' && !(method === 'post' && readOnlyPostRoutes.has(route)))
       return false

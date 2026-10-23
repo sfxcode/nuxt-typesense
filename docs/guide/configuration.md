@@ -83,7 +83,7 @@ export default defineNuxtConfig({
 })
 ```
 
-- `readOnly` keeps `GET` routes, `/api/typesense/status`, and the `search` and `multi-search` POST routes.
+- `readOnly` keeps `GET` routes, `/api/typesense/status`, and the `search` and `multi-search` POST routes. Key listing (`/api/typesense/keys`) and `/api/typesense/debug` are dropped as well, because they return sensitive metadata.
 - `exclude` removes a route and everything beneath it, so `/api/typesense/key` does not match `/api/typesense/keys`.
 
 For public sites, combine `readOnly` with your own Nitro middleware (for example session or token checks on `/api/typesense/**`), or use [`clientMode`](#clientmode) with a search-only key.
