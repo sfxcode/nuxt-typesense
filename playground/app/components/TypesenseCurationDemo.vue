@@ -17,6 +17,9 @@ const pinPosition = ref(1)
 const excludeId = ref('')
 
 const sets = ref<CurationSet[]>([])
+const linked = ref<string[]>([])
+const testQuery = ref('water')
+const testHits = ref<string[] | null>(null)
 const error = ref<string | null>(null)
 
 function fail(e: unknown) {
@@ -27,6 +30,8 @@ async function refresh() {
   error.value = null
   try {
     sets.value = await $fetch<CurationSet[]>('/api/typesense/curation_sets')
+    const products = await $fetch<{ curationSets?: string[] }>('/api/typesense/collections/products')
+    linked.value = products.curationSets ?? []
   }
   catch (e) {
     fail(e)
@@ -47,6 +52,31 @@ async function save() {
       body: { description: description.value, items: [item] },
     })
     await refresh()
+  }
+  catch (e) {
+    fail(e)
+  }
+}
+
+// A curation set only affects searches once it is linked to the collection
+async function setLinked(name: string, link: boolean) {
+  const next = link ? [...new Set([...linked.value, name])] : linked.value.filter(n => n !== name)
+  try {
+    await $fetch('/api/typesense/collections/products', { method: 'PATCH', body: { curationSets: next } })
+    await refresh()
+  }
+  catch (e) {
+    fail(e)
+  }
+}
+
+async function runTest() {
+  try {
+    const res = await $fetch<{ hits?: Array<{ document: { id: string, name: string } }> }>('/api/typesense/documents/products/search', {
+      method: 'POST',
+      body: { q: testQuery.value, queryBy: 'name,description,tags' },
+    })
+    testHits.value = res.hits?.map(h => `#${h.document.id} ${h.document.name}`) ?? []
   }
   catch (e) {
     fail(e)
@@ -134,15 +164,32 @@ onMounted(refresh)
         class="rounded-lg border p-3 text-sm space-y-1"
       >
         <div class="flex items-center justify-between">
-          <span><b>{{ set.name }}</b><span v-if="set.description"> – {{ set.description }}</span></span>
-          <UButton
-            size="xs"
-            color="error"
-            variant="ghost"
-            @click="remove(set.name)"
-          >
-            Delete
-          </UButton>
+          <span>
+            <b>{{ set.name }}</b><span v-if="set.description"> – {{ set.description }}</span>
+            <UBadge
+              v-if="linked.includes(set.name)"
+              class="ml-2"
+              color="success"
+              variant="subtle"
+            >linked to products</UBadge>
+          </span>
+          <div class="flex gap-1">
+            <UButton
+              size="xs"
+              variant="soft"
+              @click="setLinked(set.name, !linked.includes(set.name))"
+            >
+              {{ linked.includes(set.name) ? 'Unlink' : 'Link to products' }}
+            </UButton>
+            <UButton
+              size="xs"
+              color="error"
+              variant="ghost"
+              @click="remove(set.name)"
+            >
+              Delete
+            </UButton>
+          </div>
         </div>
         <p
           v-for="(item, i) in set.items"
@@ -150,6 +197,37 @@ onMounted(refresh)
           class="text-gray-600 dark:text-gray-400"
         >
           {{ describeItem(item) }}
+        </p>
+      </div>
+      <div class="rounded-lg border p-3 space-y-2">
+        <p class="text-sm font-semibold">
+          Try it on <code>products</code>
+        </p>
+        <div class="flex gap-2">
+          <UInput
+            v-model="testQuery"
+            class="flex-1"
+          />
+          <UButton @click="runTest">
+            Search
+          </UButton>
+        </div>
+        <ol
+          v-if="testHits"
+          class="list-decimal list-inside text-sm"
+        >
+          <li
+            v-for="hit in testHits"
+            :key="hit"
+          >
+            {{ hit }}
+          </li>
+        </ol>
+        <p
+          v-if="testHits && !testHits.length"
+          class="text-sm text-gray-500"
+        >
+          No results.
         </p>
       </div>
       <p

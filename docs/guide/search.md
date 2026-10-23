@@ -505,3 +505,19 @@ queryBy: 'name'
 - Learn about [API Keys](/guide/api-keys)
 - Check [Complete Examples](/examples/search-queries)
 - Explore [API Reference](/api/clients)
+
+## Synonym and curation sets
+
+Synonym sets and curation sets only affect a collection once they are linked to it:
+
+```typescript
+// link when updating (or creating) the collection
+await $fetch('/api/typesense/collections/products', {
+  method: 'PATCH',
+  body: { synonymSets: ['my_synonyms'], curationSets: ['my_curation'] },
+})
+```
+
+A single search can also apply synonym sets for that request only with `synonymSets: 'my_synonyms'`. Per-query `curationSets` and `synonymSets` inside multi-search entries are accepted by the client but ignored by Typesense 30.2, so link those sets to the collection instead.
+
+Typesense 30 requires an `id` on every synonym item and curation item.

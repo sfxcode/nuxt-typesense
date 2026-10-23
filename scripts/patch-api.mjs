@@ -57,3 +57,27 @@ patch('models/CreateAnalyticsRule200ResponseOneOfInner.ts', src =>
     `/**\n * Check if a given object implements the CreateAnalyticsRule200ResponseOneOfInner interface.\n */\nexport function instanceOfCreateAnalyticsRule200ResponseOneOfInner(value: object): value is CreateAnalyticsRule200ResponseOneOfInner {\n    return instanceOfAnalyticsRule(value) || instanceOfCreateAnalyticsRule200ResponseOneOfInnerOneOf(value);\n}\n\nexport function CreateAnalyticsRule200ResponseOneOfInnerFromJSON(`,
     'models/CreateAnalyticsRule200ResponseOneOfInner.ts',
   ))
+
+// 5. Fields the Typesense server supports that the OpenAPI spec lacks
+// Adds `prop` to a model (interface, FromJSON and ToJSON), placed after the property `after`.
+function addField(file, { after, prop, json, type, doc }) {
+  patch(`models/${file}.ts`, (src) => {
+    if (src.includes(`    ${prop}?: ${type};`)) return src
+    const iface = new RegExp(`(    ${after}\\?: [^;]+;\\n)`)
+    const fromJson = new RegExp(`(        '${after}': json\\['[a-z_]+'\\][^\\n]*\\n)`)
+    const toJson = new RegExp(`(        '[a-z_]+': value\\['${after}'\\],\\n)`)
+    for (const re of [iface, fromJson, toJson]) {
+      if (!re.test(src)) throw new Error(`models/${file}.ts: anchor for "${after}" not found (${re})`)
+    }
+    return src
+      .replace(iface, `$1    /**\n     * ${doc}\n     */\n    ${prop}?: ${type};\n`)
+      .replace(fromJson, `$1        '${prop}': json['${json}'] == null ? undefined : json['${json}'],\n`)
+      .replace(toJson, `$1        '${json}': value['${prop}'],\n`)
+  })
+}
+
+// Linking a curation set to a collection works on the server (verified against Typesense 30.2: the
+// collection returns `curation_sets` and applies the pins). A per-query `curation_sets` search parameter
+// and `synonym_sets` inside multi-search entries are accepted but ignored, so they are not added here.
+for (const file of ['CollectionSchema', 'CollectionUpdateSchema', 'CollectionResponse'])
+  addField(file, { after: 'synonymSets', prop: 'curationSets', json: 'curation_sets', type: 'Array<string>', doc: 'Names of the curation sets linked to this collection.' })

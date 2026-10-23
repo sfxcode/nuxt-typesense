@@ -147,6 +147,23 @@ async function initializeTestData() {
       }
     }
 
+    // Sets only take effect once linked to the collection
+    if (results.tuning.includes('synonym set') || results.tuning.includes('curation set')) {
+      try {
+        await $fetch('/api/typesense/collections/products', {
+          method: 'PATCH',
+          body: {
+            ...(results.tuning.includes('synonym set') && { synonymSets: [demoSets.synonyms.name] }),
+            ...(results.tuning.includes('curation set') && { curationSets: [demoSets.curation.name] }),
+          },
+        })
+        results.tuning.push('collection link')
+      }
+      catch (error: unknown) {
+        results.errors!.push({ collection: 'collection link', message: `Failed to link sets: ${errorMessage(error, 'Unknown error')}` })
+      }
+    }
+
     result.value = {
       success: true,
       message: 'Test data initialized successfully',
@@ -372,7 +389,7 @@ async function clearTestData() {
           <li><strong>Products:</strong> 10 sample products with electronics, furniture, and sports items</li>
           <li><strong>Books:</strong> 8 sample books across various genres</li>
           <li><strong>Users:</strong> 5 sample users from different countries</li>
-          <li><strong>Search tuning:</strong> a synonym set, a stopword set, and a curation set (see Search Tuning and Curation pages)</li>
+          <li><strong>Search tuning:</strong> a synonym set, a stopword set, and a curation set, with the synonym and curation sets linked to products (see Search Tuning and Curation pages)</li>
         </ul>
       </div>
     </div>

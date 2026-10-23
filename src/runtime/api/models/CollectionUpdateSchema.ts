@@ -40,6 +40,10 @@ export interface CollectionUpdateSchema {
      */
     synonymSets?: Array<string>;
     /**
+     * Names of the curation sets linked to this collection.
+     */
+    curationSets?: Array<string>;
+    /**
      * Optional details about the collection, e.g., when it was created, who created it etc.
      * 
      * @type {object}
@@ -67,6 +71,7 @@ export function CollectionUpdateSchemaFromJSONTyped(json: any, ignoreDiscriminat
 
         'fields': json['fields'] == null ? undefined : ((json['fields'] as Array<any>).map(FieldFromJSON)),
         'synonymSets': json['synonym_sets'] == null ? undefined : json['synonym_sets'],
+        'curationSets': json['curation_sets'] == null ? undefined : json['curation_sets'],
         'metadata': json['metadata'] == null ? undefined : json['metadata'],
     };
 }
@@ -84,6 +89,7 @@ export function CollectionUpdateSchemaToJSONTyped(value?: CollectionUpdateSchema
 
         'fields': value['fields'] == null ? undefined : ((value['fields'] as Array<any>).map(FieldToJSON)),
         'synonym_sets': value['synonymSets'],
+        'curation_sets': value['curationSets'],
         'metadata': value['metadata'],
     };
 }

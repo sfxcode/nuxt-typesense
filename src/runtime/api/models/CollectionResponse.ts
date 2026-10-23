@@ -66,6 +66,10 @@ export interface CollectionResponse {
      */
     synonymSets?: Array<string>;
     /**
+     * Names of the curation sets linked to this collection.
+     */
+    curationSets?: Array<string>;
+    /**
      * Enables experimental support at a collection level for nested object or object array fields. This field is only available if the Typesense server is version `0.24.0.rcn34` or later.
      * @type {boolean}
      * @memberof CollectionResponse
@@ -131,6 +135,7 @@ export function CollectionResponseFromJSONTyped(json: any, ignoreDiscriminator: 
         'defaultSortingField': json['default_sorting_field'] == null ? undefined : json['default_sorting_field'],
         'tokenSeparators': json['token_separators'] == null ? undefined : json['token_separators'],
         'synonymSets': json['synonym_sets'] == null ? undefined : json['synonym_sets'],
+        'curationSets': json['curation_sets'] == null ? undefined : json['curation_sets'],
         'enableNestedFields': json['enable_nested_fields'] == null ? undefined : json['enable_nested_fields'],
         'symbolsToIndex': json['symbols_to_index'] == null ? undefined : json['symbols_to_index'],
         'voiceQueryModel': json['voice_query_model'] == null ? undefined : VoiceQueryModelCollectionConfigFromJSON(json['voice_query_model']),
@@ -156,6 +161,7 @@ export function CollectionResponseToJSONTyped(value?: Omit<CollectionResponse, '
         'default_sorting_field': value['defaultSortingField'],
         'token_separators': value['tokenSeparators'],
         'synonym_sets': value['synonymSets'],
+        'curation_sets': value['curationSets'],
         'enable_nested_fields': value['enableNestedFields'],
         'symbols_to_index': value['symbolsToIndex'],
         'voice_query_model': VoiceQueryModelCollectionConfigToJSON(value['voiceQueryModel']),

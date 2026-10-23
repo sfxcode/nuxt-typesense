@@ -11,7 +11,7 @@ Set `TYPESENSE_URL` and `TYPESENSE_API_KEY` (an admin key, since the demos write
 
 ## Seed the test data
 
-On the **Overview** page, **Initialize Test Data** creates the `products`, `books` and `users` collections with sample documents, plus a synonym set, a stopword set and a curation set (`demo_synonyms`, `demo_stopwords`, `demo_curation`). **Clear All Data** removes them again.
+On the **Overview** page, **Initialize Test Data** creates the `products`, `books` and `users` collections with sample documents, plus a synonym set, a stopword set and a curation set (`demo_synonyms`, `demo_stopwords`, `demo_curation`). The synonym and curation sets are linked to `products`, because Typesense only applies them to a collection once they are linked. **Clear All Data** removes them again.
 
 ## Pages
 
@@ -20,7 +20,7 @@ On the **Overview** page, **Initialize Test Data** creates the `products`, `book
 | Search | Search Demo | Live product search with filters |
 | Search | Search Presets | Running a search with a stored preset |
 | Tuning | Synonyms & Stopwords | Create, list and delete synonym and stopword sets, then search with stopwords applied |
-| Tuning | Curation | Pin or hide documents for a query with a curation set |
+| Tuning | Curation | Create a curation set, link it to `products`, and see pinned or hidden results change |
 | Data | Collections | Browse, create and delete collections |
 | Data | Analytics | Analytics rules and events |
 | Admin | Info | Server status and runtime configuration |
