@@ -1,0 +1,10 @@
+# Playground deployment. Set TYPESENSE_URL and TYPESENSE_API_KEY in the Netlify site environment.
+[build]
+  # The Nitro netlify preset writes the site to playground/dist and the server function to
+  # playground/.netlify; Netlify only looks for the function in the repository root.
+  command = "pnpm dev:prepare && pnpm dev:build && rm -rf .netlify && cp -R playground/.netlify .netlify"
+  publish = "playground/dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+  NITRO_PRESET = "netlify"
