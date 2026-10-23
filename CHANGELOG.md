@@ -1,4 +1,28 @@
 
+## v1.3.0
+
+[compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v1.2.0...v1.3.0)
+
+### 🚀 Enhancements
+
+- Add new parameters and update existing schemas in API documentation ([95dee4c](https://github.com/sfxcode/nuxt-typesense/commit/95dee4c))
+- Implement patching script for OpenAPI generator output and update api-codegen script ([9c52361](https://github.com/sfxcode/nuxt-typesense/commit/9c52361))
+
+### 🏡 Chore
+
+- Update release script to use patch versioning ([71dec7f](https://github.com/sfxcode/nuxt-typesense/commit/71dec7f))
+- Update devDependencies to latest versions ([4f64970](https://github.com/sfxcode/nuxt-typesense/commit/4f64970))
+- Fix typecheck and lint for Nuxt 4.6 ([5427579](https://github.com/sfxcode/nuxt-typesense/commit/5427579))
+- Update release script to use minor versioning for changelogen ([f87e724](https://github.com/sfxcode/nuxt-typesense/commit/f87e724))
+
+### ✅ Tests
+
+- Add unit tests for removeUndefined and server api composable ([3d5f430](https://github.com/sfxcode/nuxt-typesense/commit/3d5f430))
+
+### ❤️ Contributors
+
+- Sfxcode ([@sfxcode](https://github.com/sfxcode))
+
 ## v1.2.0
 
 [compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v1.1.0...v1.2.0)
