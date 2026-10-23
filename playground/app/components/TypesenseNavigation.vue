@@ -30,6 +30,7 @@ const groups = [
     children: [
       { label: 'Synonyms & Stopwords', to: '/tuning', icon: 'i-lucide-wand-sparkles', description: 'Query rewriting sets' },
       { label: 'Curation', to: '/curation', icon: 'i-lucide-pin', description: 'Pin or hide results' },
+      { label: 'Stemming', to: '/stemming', icon: 'i-lucide-scissors', description: 'Word form dictionaries' },
     ],
   },
   {
@@ -37,6 +38,7 @@ const groups = [
     icon: 'i-lucide-database',
     children: [
       { label: 'Collections', to: '/collections', icon: 'i-lucide-database', description: 'Schemas and documents' },
+      { label: 'Aliases', to: '/aliases', icon: 'i-lucide-link', description: 'Stable names for collections' },
       { label: 'Analytics', to: '/analytics', icon: 'i-lucide-chart-column', description: 'Rules and events' },
     ],
   },
@@ -46,6 +48,7 @@ const groups = [
     children: [
       { label: 'Info', to: '/info', icon: 'i-lucide-info', description: 'Server health and metrics' },
       { label: 'Key Management', to: '/keys', icon: 'i-lucide-key-round', description: 'API and scoped keys' },
+      { label: 'AI Models', to: '/models', icon: 'i-lucide-bot', description: 'NL search and conversation models' },
       { label: 'Operations', to: '/operations', icon: 'i-lucide-wrench', description: 'Snapshots, cache, compaction' },
     ],
   },

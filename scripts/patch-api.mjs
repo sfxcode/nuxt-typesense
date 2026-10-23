@@ -85,3 +85,15 @@ for (const file of ['CollectionSchema', 'CollectionUpdateSchema', 'CollectionRes
 // 6. Typesense 30 rejects curation items without an id, but the spec marks it optional
 patch('models/CurationItemCreateSchema.ts', src =>
   src.includes('    id: string;') ? src : replaceOnce(src, '    id?: string;', '    id: string;', 'models/CurationItemCreateSchema.ts'))
+
+// 7. The stemming import body is JSON Lines text, but the spec declares application/json, so the
+// generated client JSON-encodes the string and Typesense rejects it. Send it as plain text instead.
+patch('apis/StemmingApi.ts', (src) => {
+  const marker = 'async importStemmingDictionaryRaw('
+  const start = src.indexOf(marker)
+  if (start === -1) throw new Error('apis/StemmingApi.ts: importStemmingDictionaryRaw not found')
+  const from = `headerParameters['Content-Type'] = 'application/json';`
+  const at = src.indexOf(from, start)
+  if (at === -1) return src // already patched
+  return src.slice(0, at) + `headerParameters['Content-Type'] = 'text/plain';` + src.slice(at + from.length)
+})

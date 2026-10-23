@@ -112,7 +112,7 @@ export class StemmingApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'application/json';
+        headerParameters['Content-Type'] = 'text/plain';
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["X-TYPESENSE-API-KEY"] = await this.configuration.apiKey("X-TYPESENSE-API-KEY"); // api_key_header authentication

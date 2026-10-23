@@ -555,6 +555,32 @@ const { data: scopedKey } = await useFetch('/api/typesense/key/scoped/xyz123abc'
 Scoped keys are perfect for multi-tenant applications where you need to ensure users can only search their own data without revealing the filtering logic to the client.
 :::
 
+## Stemming Dictionaries
+
+### GET `/api/typesense/stemming/dictionaries`
+
+Returns `{ dictionaries: string[] }`.
+
+### GET `/api/typesense/stemming/dictionaries/:dictionaryId`
+
+Returns `{ id, words: [{ word, root }] }`.
+
+### POST `/api/typesense/stemming/dictionaries/import`
+
+Creates or replaces a dictionary. `body` is JSON Lines text with one `word` and `root` pair per line.
+
+```typescript
+await $fetch('/api/typesense/stemming/dictionaries/import', {
+  method: 'POST',
+  body: {
+    id: 'my_stems',
+    body: '{"word":"people","root":"person"}\n{"word":"mice","root":"mouse"}',
+  },
+})
+```
+
+Typesense has no endpoint to delete a dictionary once it is imported.
+
 ## Error Handling
 
 All routes may return errors with the following structure:

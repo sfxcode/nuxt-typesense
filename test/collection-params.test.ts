@@ -46,3 +46,16 @@ describe('collection curationSets added by patch-api', () => {
     expect(JSON.parse(String(lastCall(fetchMock)[1].body))).not.toHaveProperty('curation_sets')
   })
 })
+
+describe('stemming dictionary import patched by patch-api', () => {
+  it('sends the JSON Lines body as plain text, not JSON-encoded', async () => {
+    const fetchMock = stubFetch('ok')
+    const lines = '{"word":"people","root":"person"}\n{"word":"mice","root":"mouse"}'
+    await useTypesenseServerApi('http://typesense.test', 'key').stemmingApi.importStemmingDictionary({ id: 'demo', body: lines })
+
+    const [url, init] = lastCall(fetchMock)
+    expect(new URL(url).searchParams.get('id')).toBe('demo')
+    expect(new Headers(init.headers).get('Content-Type')).toBe('text/plain')
+    expect(init.body).toBe(lines)
+  })
+})

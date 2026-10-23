@@ -21,10 +21,13 @@ On the **Overview** page, **Initialize Test Data** creates the `products`, `book
 | Search | Search Presets | Running a search with a stored preset |
 | Tuning | Synonyms & Stopwords | Create, list and delete synonym and stopword sets, then search with stopwords applied |
 | Tuning | Curation | Create a curation set, link it to `products`, and see pinned or hidden results change |
+| Tuning | Stemming | Import a word to root dictionary and view its mappings (dictionaries cannot be deleted in Typesense) |
 | Data | Collections | Browse, create and delete collections |
+| Data | Aliases | Create, repoint and delete collection aliases |
 | Data | Analytics | Analytics rules and events |
 | Admin | Info | Server status and runtime configuration |
 | Admin | Key Management | List, create and delete API keys |
+| Admin | AI Models | List natural language search and conversation models (creating them needs a provider API key) |
 | Admin | Operations | Metrics and stats, plus buttons for clear cache, compact DB, debug info and snapshot |
 | | Examples | Runnable snippets for the main routes |
 
