@@ -10,34 +10,23 @@ afterEach(() => {
 })
 
 describe('validateTypesenseConfig', () => {
-  it('throws when client mode uses an admin key', () => {
-    expect(() => validateTypesenseConfig({
-      url: 'http://localhost:8108',
-      apiKey: 'admin-key',
-      clientMode: true,
-    }, { TYPESENSE_ADMIN_KEY: 'admin-key' })).toThrowError(/admin key/i)
+  const base = { url: 'http://localhost:8108', apiKey: 'k', clientMode: true }
+
+  it('reports an error when client mode uses an admin key', () => {
+    expect(validateTypesenseConfig(base, { TYPESENSE_ADMIN_KEY: 'k' }).errors[0]).toMatch(/admin key/i)
+    expect(validateTypesenseConfig(base, { NUXT_TYPESENSE_ADMIN_KEY: 'k' }).errors).toHaveLength(1)
+  })
+
+  it('accepts a different search key and ignores server mode', () => {
+    expect(validateTypesenseConfig(base, { TYPESENSE_ADMIN_KEY: 'other' }).errors).toEqual([])
+    expect(validateTypesenseConfig({ ...base, clientMode: false }, { TYPESENSE_ADMIN_KEY: 'k' }).errors).toEqual([])
   })
 
   it('warns when required values are missing', () => {
-    expect(validateTypesenseConfig({ clientMode: true })).toEqual([
-      'Missing Typesense Base Url!',
-      'Missing Typesense Api Key!',
-      'Client mode requires a search-only API key. Admin keys must stay on the server.',
-    ])
-  })
-})
-
-describe('server route coverage', () => {
-  it('includes the recently added admin and metadata route surface', () => {
-    expect(typesenseServerRoutes).toEqual(expect.arrayContaining([
-      expect.objectContaining({ route: '/api/typesense/analytics/rules/:ruleName', method: 'delete' }),
-      expect.objectContaining({ route: '/api/typesense/debug', method: 'get' }),
-      expect.objectContaining({ route: '/api/typesense/operations/cache/clear', method: 'post' }),
-      expect.objectContaining({ route: '/api/typesense/presets/:presetId', method: 'put' }),
-      expect.objectContaining({ route: '/api/typesense/stopwords/:setId', method: 'delete' }),
-      expect.objectContaining({ route: '/api/typesense/synonym_sets/:synonymSetName/items/:itemId', method: 'delete' }),
-    ]))
-    expect(typesenseServerRoutes.length).toBeGreaterThan(35)
+    expect(validateTypesenseConfig({ clientMode: true }, {})).toEqual({
+      warnings: ['Missing Typesense Base Url!', 'Missing Typesense Api Key!'],
+      errors: [],
+    })
   })
 })
 

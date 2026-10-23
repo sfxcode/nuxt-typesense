@@ -52,6 +52,11 @@ const items = [
     icon: 'i-lucide-sliders-horizontal',
   },
   {
+    label: 'Search Tuning',
+    to: '/tuning',
+    icon: 'i-lucide-wand-sparkles',
+  },
+  {
     label: 'Examples',
     to: '/examples',
     icon: 'i-lucide-code-2',

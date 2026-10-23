@@ -73,7 +73,7 @@ The two modes decide where the key lives and what is available:
 
 > **⚠️ Important**: `clientMode` changes where the key is exposed. In browser mode the key is shipped to every visitor, so use only a **search-only API key** there. Keep admin or write-capable keys in server mode and use the registered `/api/typesense/*` proxy routes or `useTypesenseServerApi()` for private operations.
 >
-> The module now validates this setup at startup and throws when `clientMode: true` is paired with a configured `TYPESENSE_ADMIN_KEY` or any matching admin key.
+> At build time the module throws if `clientMode: true` uses an `apiKey` equal to `TYPESENSE_ADMIN_KEY` or `NUXT_TYPESENSE_ADMIN_KEY`. Other ways of supplying an admin key are not detected.
 
 ## Usage
 

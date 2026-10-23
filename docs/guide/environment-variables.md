@@ -276,7 +276,7 @@ TYPESENSE_SEARCH_KEY=search-only-key
 TYPESENSE_ADMIN_KEY=admin-key-with-full-access
 ```
 
-When `clientMode: true`, prefer `TYPESENSE_SEARCH_KEY` or `TYPESENSE_SEARCH_ONLY_KEY` and never reuse the admin key. The module will warn or throw if the browser config is accidentally paired with a write-capable key.
+When `clientMode: true`, prefer `TYPESENSE_SEARCH_KEY` and never reuse the admin key. The module throws at build time if the configured key equals `TYPESENSE_ADMIN_KEY` or `NUXT_TYPESENSE_ADMIN_KEY` in client mode; it cannot detect other write-capable keys.
 
 ### 3. Validate Required Variables
 
