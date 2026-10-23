@@ -3,6 +3,7 @@ import defu from 'defu'
 import { name, version } from '../package.json'
 import type { ModuleOptions } from './options'
 import { validateTypesenseConfig } from './options'
+import { buildOpenApiDocument } from './openapi'
 import type { TypesenseRoute } from './routes'
 import { filterTypesenseRoutes, typesenseServerRoutes } from './routes'
 
@@ -71,7 +72,19 @@ export default defineNuxtModule<ModuleOptions>({
       addServerImportsDir(resolver.resolve('./runtime/server/composables'))
     }
 
-    registerTypesenseRoutes(filterTypesenseRoutes(typesenseServerRoutes, options.routes), resolver)
+    const routes = filterTypesenseRoutes(typesenseServerRoutes, options.routes)
+    registerTypesenseRoutes(routes, resolver)
+
+    if (options.openAPI && !options.clientMode) {
+      const { path = '/api/typesense/openapi.json', ...info } = options.openAPI === true ? {} : options.openAPI
+      const document = buildOpenApiDocument(routes, { version, ...info })
+
+      nuxt.hook('nitro:config', (nitroConfig) => {
+        nitroConfig.virtual ||= {}
+        nitroConfig.virtual['#typesense/openapi'] = () => `export default ${JSON.stringify(document)}`
+      })
+      addServerHandler({ route: path, method: 'get', handler: resolver.resolve('./runtime/server/openapi.get') })
+    }
 
     logger.success('Typesense routes registered')
   },

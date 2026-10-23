@@ -6,6 +6,10 @@ The module automatically registers server API routes that proxy requests to your
 Server routes use the API key configured in your `nuxt.config.ts` server runtime config, keeping your credentials secure. Never expose your admin API key to the client.
 :::
 
+## OpenAPI description
+
+With `openAPI: true` the module also serves `GET /api/typesense/openapi.json`, an OpenAPI 3.1 document of every route on this page that is registered. See [Module Options](/guide/configuration#openapi).
+
 ## Error responses
 
 Errors from Typesense are passed through with their original status code and message, so clients can handle them normally:

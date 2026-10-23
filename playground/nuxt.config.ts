@@ -45,6 +45,7 @@ export default defineNuxtConfig({
     url: process.env.TYPESENSE_URL,
     apiKey: process.env.TYPESENSE_API_KEY,
     clientMode: false,
+    openAPI: true,
   },
 
 })

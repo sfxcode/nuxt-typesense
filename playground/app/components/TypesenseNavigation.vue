@@ -49,6 +49,7 @@ const groups = [
       { label: 'Info', to: '/info', icon: 'i-lucide-info', description: 'Server health and metrics' },
       { label: 'Key Management', to: '/keys', icon: 'i-lucide-key-round', description: 'API and scoped keys' },
       { label: 'AI Models', to: '/models', icon: 'i-lucide-bot', description: 'NL search and conversation models' },
+      { label: 'OpenAPI', to: '/openapi', icon: 'i-lucide-file-json', description: 'Description of the proxy routes' },
       { label: 'Operations', to: '/operations', icon: 'i-lucide-wrench', description: 'Snapshots, cache, compaction' },
     ],
   },

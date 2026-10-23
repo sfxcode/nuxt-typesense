@@ -12,6 +12,16 @@ export interface ModuleOptions {
     /** Route prefixes to skip, e.g. `['/api/typesense/keys', '/api/typesense/operations']`. */
     exclude?: string[]
   }
+  /**
+   * Serve an OpenAPI 3.1 description of the registered proxy routes (server mode).
+   * `true` serves it at `/api/typesense/openapi.json`; pass an object to change the path or info.
+   */
+  openAPI?: boolean | {
+    path?: string
+    title?: string
+    version?: string
+    description?: string
+  }
 }
 
 export function validateTypesenseConfig(options: ModuleOptions, env: Record<string, string | undefined> = process.env) {

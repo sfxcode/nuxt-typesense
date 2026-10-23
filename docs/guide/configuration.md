@@ -88,6 +88,31 @@ export default defineNuxtConfig({
 
 For public sites, combine `readOnly` with your own Nitro middleware (for example session or token checks on `/api/typesense/**`), or use [`clientMode`](#clientmode) with a search-only key.
 
+### `openAPI`
+
+- **Type:** `boolean | { path?: string, title?: string, version?: string, description?: string }`
+- **Default:** `false`
+
+Serves an [OpenAPI 3.1](https://spec.openapis.org/oas/v3.1.0) description of the registered proxy routes, at `/api/typesense/openapi.json` or the `path` you set. Server mode only.
+
+```typescript
+export default defineNuxtConfig({
+  modules: ['@sfxcode/nuxt-typesense'],
+  typesense: {
+    url: process.env.TYPESENSE_URL,
+    apiKey: process.env.TYPESENSE_API_KEY,
+    openAPI: true, // or { path: '/docs/typesense.json', title: 'Search API' }
+  },
+})
+```
+
+- The document is generated from the routes that are actually registered, so [`routes.readOnly` and `routes.exclude`](#routes) shrink it too.
+- Operations are grouped by tag, with their path parameters and an `Error` response schema. Request and response bodies are the plain Typesense JSON shapes and are described as generic objects. See the [Typesense API reference](https://typesense.org/docs/latest/api/) for the fields.
+- Nuxt's own `nitro.experimental.openAPI` cannot describe these routes in detail, because Nitro only reads metadata written inside each handler file.
+- The endpoint itself is unauthenticated like the other proxy routes. Turn it off in production, or protect it with your own middleware, if you do not want to publish your route layout.
+
+Import the file into Postman, Insomnia, or a client generator.
+
 ### Runtime config behavior
 
 The module stores credentials in different Nuxt runtime config locations depending on `clientMode`:

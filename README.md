@@ -60,6 +60,7 @@ interface ModuleOptions {
   apiKey?: string // Typesense API key
   clientMode?: boolean // default: false
   routes?: { readOnly?: boolean, exclude?: string[] } // limit the proxy routes (server mode)
+  openAPI?: boolean | { path?: string, title?: string, version?: string, description?: string } // serve /api/typesense/openapi.json (server mode)
 }
 ```
 

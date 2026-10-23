@@ -28,6 +28,7 @@ On the **Overview** page, **Initialize Test Data** creates the `products`, `book
 | Admin | Info | Server status and runtime configuration |
 | Admin | Key Management | List, create and delete API keys |
 | Admin | AI Models | List natural language search and conversation models (creating them needs a provider API key) |
+| Admin | OpenAPI | The generated OpenAPI description of the proxy routes, with a link to the JSON (enabled with `openAPI: true`) |
 | Admin | Operations | Metrics and stats, plus buttons for clear cache, compact DB, debug info and snapshot |
 | | Examples | Runnable snippets for the main routes |
 
