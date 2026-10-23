@@ -29,7 +29,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "api-codegen": "openapi-generator-cli generate -i https://raw.githubusercontent.com/typesense/typesense-api-spec/master/openapi.yml -g typescript-fetch -o src/runtime/api --additional-properties=typescriptThreePlus=true,supportsES6=true",
+    "api-codegen": "openapi-generator-cli generate -i https://raw.githubusercontent.com/typesense/typesense-api-spec/master/openapi.yml -g typescript-fetch -o src/runtime/api --additional-properties=typescriptThreePlus=true,supportsES6=true && node scripts/patch-api.mjs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
