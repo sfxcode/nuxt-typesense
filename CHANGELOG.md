@@ -1,4 +1,29 @@
 
+## v1.4.0
+
+[compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v1.3.1...v1.4.0)
+
+### 🚀 Enhancements
+
+- Share API client factory, add useTypesenseError and alias list route; docs for playground ([4d65f2c](https://github.com/sfxcode/nuxt-typesense/commit/4d65f2c))
+- Support curationSets on collections, link sets in the playground ([b20df50](https://github.com/sfxcode/nuxt-typesense/commit/b20df50))
+
+### 🩹 Fixes
+
+- Send item ids when saving synonym and curation sets in the playground ([d8f29dc](https://github.com/sfxcode/nuxt-typesense/commit/d8f29dc))
+
+### 🏡 Chore
+
+- Let changelogen infer the release version ([d05ce66](https://github.com/sfxcode/nuxt-typesense/commit/d05ce66))
+
+### ✅ Tests
+
+- Type playground set bodies, require curation item id, test alias route ([262d55c](https://github.com/sfxcode/nuxt-typesense/commit/262d55c))
+
+### ❤️ Contributors
+
+- Sfxcode ([@sfxcode](https://github.com/sfxcode))
+
 ## v1.3.1
 
 [compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v1.3.0...v1.3.1)
