@@ -15,7 +15,7 @@ const title = header.title
       <ColorModeButton />
 
       <UButton
-        to="https://github.com/nuxt-ui-templates/starter"
+        to="https://github.com/sfxcode/nuxt-typesense"
         target="_blank"
         icon="i-simple-icons-github"
         aria-label="GitHub"

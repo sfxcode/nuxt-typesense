@@ -1,7 +1,7 @@
 export default defineAppConfig({
   header: {
-    title: 'Typesense',
-    description: 'Typesense API.',
+    title: 'Nuxt Typesense',
+    description: 'Nuxt Module for using Typesense API.',
   },
   ui: {
     colors: {
