@@ -1,8 +1,9 @@
-import { createError, defineEventHandler, getRouterParam, readBody } from 'h3'
+import { createError, getRouterParam, readBody } from 'h3'
 import type { SearchParameters } from '../../../../../api/models'
 import { createHmac } from 'node:crypto'
+import { defineTypesenseHandler } from '../../../../composables/typesenseHandler'
 
-export default defineEventHandler(async (event) => {
+export default defineTypesenseHandler(async (event) => {
   const keyIdParam = getRouterParam(event, 'key')
   if (!keyIdParam) {
     throw createError({

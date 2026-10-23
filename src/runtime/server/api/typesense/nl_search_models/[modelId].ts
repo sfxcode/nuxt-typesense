@@ -1,8 +1,9 @@
 import { useRuntimeConfig } from '#imports'
-import { createError, defineEventHandler, getMethod, getRouterParam, readBody } from 'h3'
+import { createError, getMethod, getRouterParam, readBody } from 'h3'
 import { useTypesenseServerApi } from '../../../composables/typesenseServerApi'
+import { defineTypesenseHandler } from '../../../composables/typesenseHandler'
 
-export default defineEventHandler(async (event) => {
+export default defineTypesenseHandler(async (event) => {
   const config = useRuntimeConfig(event)
   const { searchModelsApi } = useTypesenseServerApi(config.typesense.url, config.typesense.apiKey)
 

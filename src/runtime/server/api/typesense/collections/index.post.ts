@@ -1,9 +1,10 @@
 import { useRuntimeConfig } from '#imports'
-import { defineEventHandler, readBody } from 'h3'
+import { readBody } from 'h3'
 import { useTypesenseServerApi } from '../../../composables/typesenseServerApi'
 import type { CollectionSchema } from '../../../../api'
+import { defineTypesenseHandler } from '../../../composables/typesenseHandler'
 
-export default defineEventHandler(async (event) => {
+export default defineTypesenseHandler(async (event) => {
   const config = useRuntimeConfig(event)
   const { collectionsApi } = useTypesenseServerApi(config.typesense.url, config.typesense.apiKey)
 
