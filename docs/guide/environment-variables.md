@@ -88,47 +88,50 @@ For enhanced security, use different keys for different operations:
 
 ```bash
 # .env
-# Public search key (can be exposed to client)
+# Public search key (can be exposed to client in client mode)
 TYPESENSE_SEARCH_KEY=search-only-key-xyz
 
-# Admin key (server-side only)
+# Server-only admin key for write operations and key management
 TYPESENSE_ADMIN_KEY=admin-key-keep-secret
-
-# Optional: Separate keys for specific collections
-TYPESENSE_PRODUCTS_KEY=products-search-key
-TYPESENSE_USERS_KEY=users-search-key
 ```
 
-Configure in `nuxt.config.ts`:
+Configure the server or browser mode depending on where the key should live:
 
 ```typescript
 export default defineNuxtConfig({
+  modules: ['@sfxcode/nuxt-typesense'],
+
   typesense: {
     url: process.env.TYPESENSE_URL,
-    // Use search-only key by default
-    apiKey: process.env.TYPESENSE_SEARCH_KEY,
+    // Default server mode keeps this key private.
+    apiKey: process.env.TYPESENSE_ADMIN_KEY,
   },
-  
-  // Make admin key available on server
-  runtimeConfig: {
-    typesense: {
-      adminKey: process.env.TYPESENSE_ADMIN_KEY
-    }
-  }
 })
 ```
 
-Access the admin key server-side:
+For client-side-only searches, keep a search-only key in public runtime config instead:
 
 ```typescript
-// server/api/admin/collections.ts
+export default defineNuxtConfig({
+  modules: ['@sfxcode/nuxt-typesense'],
+
+  typesense: {
+    url: process.env.TYPESENSE_URL,
+    apiKey: process.env.TYPESENSE_SEARCH_KEY,
+    clientMode: true,
+  },
+})
+```
+
+When you need to call privileged APIs from a server route, use the private runtime config and the server helper instead of the browser composables:
+
+```typescript
+// server/api/admin/collections.get.ts
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
-  const adminKey = config.typesense.adminKey
-  
-  // Use admin key for privileged operations
-  const { collectionsApi } = useTypesenseApi()
-  // ... perform admin operations
+  const { collectionsApi } = useTypesenseServerApi(config.typesense.url, config.typesense.apiKey)
+
+  return collectionsApi.getCollections()
 })
 ```
 

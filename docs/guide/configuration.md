@@ -56,7 +56,18 @@ For production applications:
 - **Type:** `boolean`
 - **Default:** `false`
 
-When set to `true`, the module runs in client-side only mode. This is useful for certain deployment scenarios.
+When set to `true`, the module switches from server-side runtime config to public runtime config and exposes the browser composables. This mode is intended for search-only usage and should never be used with admin keys.
+
+### Runtime config behavior
+
+The module stores credentials in different Nuxt runtime config locations depending on `clientMode`:
+
+| Mode | Runtime config location | Intended use |
+|------|-------------------------|--------------|
+| `clientMode: false` | `runtimeConfig.typesense` | Private server-side access and proxy routes |
+| `clientMode: true` | `runtimeConfig.public.typesense` | Browser-based searching with a search-only key |
+
+This means the module keeps the key out of the client bundle by default. If you need to perform privileged actions (creating collections, managing keys, writing documents), prefer the server-side proxy routes or `useTypesenseServerApi()` instead of exposing the key in public runtime config.
 
 ## Configuration Examples
 

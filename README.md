@@ -4,615 +4,270 @@
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
 
-A Nuxt module for integrating [Typesense](https://typesense.org/) - a fast, typo-tolerant search engine - into your Nuxt 3 application.
+A Nuxt module for integrating [Typesense](https://typesense.org/) - a fast, typo-tolerant search engine - into your Nuxt 4 application.
 
 > 📖 **[Read the full documentation](./docs/README.md)** for detailed guides, API references, and examples.
 
 ## Features
 
-- 🚀 **Full Typesense API Support** - Complete TypeScript API client auto-generated from Typesense OpenAPI spec
-- 🎯 **Auto-imported Composables** - Ready-to-use composables for all Typesense operations
-- ⚡️ **Type Safety** - Full TypeScript support with type definitions
-- 🔧 **Zero Config** - Simple setup with module configuration
-- 🎨 **SSR Compatible** - Works seamlessly with Nuxt's SSR
+- 🚀 **Full Typesense API Support** - TypeScript API client generated from the Typesense OpenAPI spec
+- 🔒 **Server mode by default** - API key stays on the server, the module registers `/api/typesense/*` proxy routes
+- 🖥️ **Optional client mode** - auto-imported composables that talk to Typesense directly from the browser
+- ⚡️ **Type Safety** - Full TypeScript support, including typed `runtimeConfig.typesense`
+- 🎨 **SSR Compatible** - Works with Nuxt's SSR
+
+## Requirements
+
+- Nuxt `^4.x`
+- Node.js `^22.22.3 || ^24.15.0` (the versions Nuxt 4.6 supports)
 
 ## Quick Setup
 
-1. Add `@sfxcode/nuxt-typesense` dependency to your project:
+1. Add the module to your project:
 
 ```bash
-# Using pnpm
 pnpm add @sfxcode/nuxt-typesense
-
-# Using yarn
-yarn add @sfxcode/nuxt-typesense
-
-# Using npm
-npm install @sfxcode/nuxt-typesense
+# or: yarn add @sfxcode/nuxt-typesense
+# or: npm install @sfxcode/nuxt-typesense
 ```
 
-2. Add `@sfxcode/nuxt-typesense` to the `modules` section of `nuxt.config.ts`:
+2. Add it to the `modules` section of `nuxt.config.ts`:
 
 ```typescript
 export default defineNuxtConfig({
-  modules: [
-    '@sfxcode/nuxt-typesense'
-  ],
-  
-  typesense: {
-    url: 'http://localhost:8108',  // Your Typesense server URL
-    apiKey: 'xyz'                   // Your Typesense API key
-  }
-})
-```
+  modules: ['@sfxcode/nuxt-typesense'],
 
-3. You can also use environment variables:
-
-```typescript
-export default defineNuxtConfig({
-  modules: [
-    '@sfxcode/nuxt-typesense'
-  ],
-  
   typesense: {
-    url: process.env.TYPESENSE_URL,
+    url: process.env.TYPESENSE_URL, // e.g. http://localhost:8108
     apiKey: process.env.TYPESENSE_API_KEY,
-  }
+  },
 })
 ```
-
-Create a `.env` file:
 
 ```bash
+# .env
 TYPESENSE_URL=http://localhost:8108
 TYPESENSE_API_KEY=your-api-key-here
 ```
 
-That's it! You can now use Typesense in your Nuxt app ✨
+That's it ✨ The module logs a warning at startup if `url` or `apiKey` is missing.
 
-## Usage
-
-### 🔐 Security First: Client vs Server
-
-> **⚠️ Important**: Use **search-only API keys** on the client-side and **admin keys** only on the server-side.
-
-The module works seamlessly in both contexts:
-
-| Operation | Client-Side | Server-Side | Recommended Key |
-|-----------|-------------|-------------|-----------------|
-| Search documents | ✅ | ✅ | Search-only key |
-| Get collections | ✅ | ✅ | Search-only key |
-| Create collections | ❌ | ✅ | Admin key |
-| Manage API keys | ❌ | ✅ | Admin key |
-| Import documents | ❌ | ✅ | Admin key |
-
-### 🖥️ Client-Side Usage (Components & Pages)
-
-Use composables in your Vue components for search and read operations:
-
-```vue
-<template>
-  <div>
-    <input v-model="query" placeholder="Search products..." />
-    
-    <div v-if="pending">Searching...</div>
-    <div v-else-if="error">Error: {{ error.message }}</div>
-    <div v-else>
-      <p>Found {{ results?.found }} products</p>
-      <div v-for="hit in results?.hits" :key="hit.document.id">
-        <h3>{{ hit.document.name }}</h3>
-        <p>${{ hit.document.price }}</p>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script setup lang="ts">
-const { documentsApi } = useTypesenseApi()
-const query = ref('')
-
-// Reactive search with useAsyncData
-const { data: searchResponse, pending, error } = await useAsyncData(
-  'product-search',
-  async () => {
-    if (!query.value) return null
-    
-    const response = await documentsApi.multiSearch({
-      searches: [{
-        collection: 'products',
-        q: query.value,
-        query_by: 'name,description',
-        per_page: 20
-      }]
-    })
-    return response.results[0]
-  },
-  { watch: [query] }
-)
-
-const results = computed(() => searchResponse.value)
-</script>
-```
-
-#### Helper Composables for Client-Side
-
-```vue
-<script setup lang="ts">
-// Get collections (read-only)
-const { collectionInfos } = useTypesenseCollections()
-const collections = await collectionInfos()
-
-// Access configuration
-const serverUrl = useTypesenseUrl()
-const apiKey = useTypesenseApiKey() // Use with caution, prefer server-side
-</script>
-```
-
-### 🔒 Server-Side Usage (API Routes)
-
-Use the full API in server routes for admin operations:
-
-```typescript
-// server/api/collections/create.post.ts
-export default defineEventHandler(async (event) => {
-  const { collectionsApi } = useTypesenseApi()
-  
-  // Use admin key for creating collections
-  const collection = await collectionsApi.createCollection({
-    collectionSchema: {
-      name: 'products',
-      fields: [
-        { name: 'id', type: 'string' },
-        { name: 'name', type: 'string' },
-        { name: 'price', type: 'float', sort: true },
-        { name: 'category', type: 'string', facet: true }
-      ],
-      default_sorting_field: 'id'
-    }
-  })
-  
-  return { success: true, collection }
-})
-```
-
-#### Import Documents (Server-Only)
-
-```typescript
-// server/api/products/import.post.ts
-export default defineEventHandler(async (event) => {
-  const { documentsApi } = useTypesenseApi()
-  const products = await readBody(event)
-  
-  // Convert to JSONL format
-  const jsonl = products.map((p: any) => JSON.stringify(p)).join('\n')
-  
-  // Batch import (requires admin key)
-  const result = await documentsApi.importDocuments({
-    collectionName: 'products',
-    body: jsonl,
-    action: 'upsert'
-  })
-  
-  return { success: true, result }
-})
-```
-
-#### Manage API Keys (Server-Only)
-
-```typescript
-// server/api/keys/create.post.ts
-export default defineEventHandler(async (event) => {
-  const { keysApi } = useTypesenseApi()
-  
-  // Create a search-only key (requires admin key)
-  const key = await keysApi.createKey({
-    apiKeySchema: {
-      description: 'Search-only key for frontend',
-      actions: ['documents:search'],
-      collections: ['products']
-    }
-  })
-  
-  return { key: key.value }
-})
-```
-
-### 🔄 Hybrid Pattern: Server API + Client Consumption
-
-**Recommended approach for production:**
-
-```typescript
-// server/api/search.ts - Server endpoint with admin key
-export default defineEventHandler(async (event) => {
-  const query = getQuery(event)
-  const { documentsApi } = useTypesenseApi()
-  
-  const results = await documentsApi.multiSearch({
-    searches: [{
-      collection: 'products',
-      q: query.q as string,
-      query_by: 'name,description',
-      filter_by: query.filter as string
-    }]
-  })
-  
-  return results.results[0]
-})
-```
-
-```vue
-<!-- pages/search.vue - Client-side component -->
-<script setup lang="ts">
-const query = ref('')
-
-// Call your server API instead of Typesense directly
-const { data: results } = await useFetch('/api/search', {
-  query: { q: query }
-})
-</script>
-```
-
-### 📦 Available API Clients
-
-All operations through `useTypesenseApi()`:
-
-```typescript
-const {
-  analyticsApi,      // Analytics and event tracking
-  collectionsApi,    // Collection management (server-side for create/delete)
-  conversationsApi,  // Conversation model management
-  curationSetsApi,   // Curation and overrides
-  debugApi,          // Debug operations
-  documentsApi,      // Document CRUD and search (search ok for client)
-  healthApi,         // Health check endpoint
-  keysApi,           // API key management (server-side only)
-  searchModelsApi,   // NL search models
-  operationsApi,     // Cluster operations (server-side only)
-  presetsApi,        // Search presets
-  stemmingApi,       // Stemming dictionaries
-  stopwordsApi,      // Stopwords management
-  synonymsApi,       // Synonyms management
-} = useTypesenseApi()
-```
-
-
-## Configuration
-
-### Module Options
+## Module Options
 
 ```typescript
 interface ModuleOptions {
-  url?: string      // Typesense server URL
-  apiKey?: string   // Typesense API key
+  url?: string // Typesense server URL
+  apiKey?: string // Typesense API key
+  clientMode?: boolean // default: false
 }
 ```
 
-### Basic Configuration (Search-Only)
+The two modes decide where the key lives and what is available:
 
-For client-side search operations, use a **search-only API key**:
+| | Server mode (`clientMode: false`, default) | Client mode (`clientMode: true`) |
+|---|---|---|
+| Key stored in | private `runtimeConfig.typesense` | **public** `runtimeConfig.public.typesense` |
+| Server routes `/api/typesense/*` | ✅ registered | ✅ registered |
+| Server util `useTypesenseServerApi(url, apiKey)` | ✅ auto-imported in Nitro | ✅ auto-imported in Nitro |
+| Composables (`useTypesenseApi`, …) | ❌ not available | ✅ auto-imported |
 
-```typescript
-// nuxt.config.ts
-export default defineNuxtConfig({
-  modules: ['@sfxcode/nuxt-typesense'],
-  
-  typesense: {
-    url: process.env.TYPESENSE_URL,
-    apiKey: process.env.TYPESENSE_SEARCH_KEY  // Search-only key
-  }
-})
-```
+> **⚠️ Important**: `clientMode` changes where the key is exposed. In browser mode the key is shipped to every visitor, so use only a **search-only API key** there. Keep admin or write-capable keys in server mode and use the registered `/api/typesense/*` proxy routes or `useTypesenseServerApi()` for private operations.
 
-```bash
-# .env
-TYPESENSE_URL=https://xxx.a1.typesense.net
-TYPESENSE_SEARCH_KEY=search-only-api-key-here
-```
+## Usage
 
-### Advanced Configuration (Server + Client)
+### Server mode: call the proxy routes
 
-For applications with both search and admin operations:
-
-```typescript
-// nuxt.config.ts
-export default defineNuxtConfig({
-  modules: ['@sfxcode/nuxt-typesense'],
-  
-  // Public search key (exposed to client)
-  typesense: {
-    url: process.env.TYPESENSE_URL,
-    apiKey: process.env.TYPESENSE_SEARCH_KEY
-  },
-  
-  // Private admin key (server-only)
-  runtimeConfig: {
-    typesense: {
-      adminKey: process.env.TYPESENSE_ADMIN_KEY
-    }
-  }
-})
-```
-
-```bash
-# .env
-TYPESENSE_URL=https://xxx.a1.typesense.net
-TYPESENSE_SEARCH_KEY=search-only-key     # Client-safe
-TYPESENSE_ADMIN_KEY=admin-key-secret     # Server-only
-```
-
-Use the admin key in server routes:
-
-```typescript
-// server/api/admin/collection.post.ts
-export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig(event)
-  
-  // Override with admin key for this request
-  const { collectionsApi } = useTypesenseApi()
-  
-  // Note: You may need to create a new API instance with admin key
-  // or implement a server-side only composable
-  const collection = await collectionsApi.createCollection({
-    collectionSchema: { /* ... */ }
-  })
-  
-  return collection
-})
-```
-
-### Security Best Practices
-
-| ✅ Do | ❌ Don't |
-|-------|----------|
-| Use search-only keys in `nuxt.config.ts` | Expose admin keys to the client |
-| Store admin keys in `runtimeConfig` | Hardcode API keys in source code |
-| Use server API routes for admin operations | Perform admin operations from client |
-| Create scoped keys per user/tenant | Share API keys between environments |
-| Rotate keys regularly | Commit keys to version control |
-
-> **🔒 Security Rule**: If it modifies data, it belongs on the server with an admin key.
-
-## Common Patterns
-
-### Pattern 1: Search Page (Client-Side)
+Use the registered routes from components (`useFetch`) or other server code:
 
 ```vue
-<!-- pages/search.vue -->
-<template>
-  <div>
-    <input v-model="searchQuery" placeholder="Search..." />
-    <div v-if="pending">Loading...</div>
-    <div v-else-if="results?.hits">
-      <p>{{ results.found }} results</p>
-      <div v-for="hit in results.hits" :key="hit.document.id">
-        {{ hit.document.name }}
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-const { documentsApi } = useTypesenseApi()
-const searchQuery = ref('')
-
-const { data: searchData, pending } = await useAsyncData(
-  'search',
-  async () => {
-    if (!searchQuery.value) return null
-    const res = await documentsApi.multiSearch({
-      searches: [{
-        collection: 'products',
-        q: searchQuery.value,
-        query_by: 'name,description'
-      }]
-    })
-    return res.results[0]
-  },
-  { watch: [searchQuery] }
-)
-
-const results = computed(() => searchData.value)
+const { data: status } = await useFetch('/api/typesense/status')
+const { data: collections } = await useFetch('/api/typesense/collections')
 </script>
 ```
 
-### Pattern 2: Data Import (Server-Side)
+Search a collection (the body is the search parameters):
 
 ```typescript
-// server/api/seed.post.ts
-export default defineEventHandler(async (event) => {
-  const { collectionsApi, documentsApi } = useTypesenseApi()
-  
-  // 1. Create collection (if not exists)
-  try {
-    await collectionsApi.createCollection({
-      collectionSchema: {
-        name: 'products',
-        fields: [
-          { name: 'id', type: 'string' },
-          { name: 'name', type: 'string' },
-          { name: 'price', type: 'float' }
-        ],
-        default_sorting_field: 'id'
-      }
-    })
-  } catch (e) {
-    // Collection might already exist
-  }
-  
-  // 2. Import data
-  const products = [
-    { id: '1', name: 'Laptop', price: 999 },
-    { id: '2', name: 'Mouse', price: 29 }
-  ]
-  
-  const jsonl = products.map(p => JSON.stringify(p)).join('\n')
-  await documentsApi.importDocuments({
-    collectionName: 'products',
-    body: jsonl,
-    action: 'upsert'
-  })
-  
-  return { success: true }
+const results = await $fetch('/api/typesense/documents/products/search', {
+  method: 'POST',
+  body: { q: 'laptop', query_by: 'name,description', per_page: 20 },
 })
 ```
 
-### Pattern 3: Server API with Client Consumption
+Routes registered by the module:
 
-**Best for production - keeps admin key secure:**
+| Area | Routes |
+|------|--------|
+| Status | `GET /api/typesense/status` |
+| Collections | `GET`/`POST /api/typesense/collections`, `GET`/`PATCH`/`DELETE /api/typesense/collections/:name` |
+| Aliases | `GET`/`PUT`/`DELETE /api/typesense/alias/:alias` |
+| Documents | `POST /api/typesense/documents/:collection` plus `/search`, `/multi-search`, `/export`, `/import`, `/delete`, `/update`, and `/id/:id` (`GET`/`PATCH`/`DELETE`) |
+| API keys | `GET`/`POST /api/typesense/keys`, `GET`/`DELETE /api/typesense/keys/:id`, `POST /api/typesense/key/scoped/:key` |
+
+See [Server Routes](./docs/api/server-routes.md) for request and response details.
+
+### Server mode: use the API client in your own server routes
+
+`useTypesenseServerApi` is auto-imported in Nitro and returns all generated API clients:
 
 ```typescript
 // server/api/products/search.get.ts
 export default defineEventHandler(async (event) => {
-  const query = getQuery(event)
-  const { documentsApi } = useTypesenseApi()
-  
-  const results = await documentsApi.multiSearch({
-    searches: [{
-      collection: 'products',
-      q: (query.q as string) || '*',
-      query_by: 'name,description',
-      filter_by: query.category ? `category:=${query.category}` : undefined,
-      per_page: 20
-    }]
+  const config = useRuntimeConfig(event)
+  const { documentsApi } = useTypesenseServerApi(config.typesense.url, config.typesense.apiKey)
+  const { q } = getQuery(event)
+
+  return await documentsApi.searchCollection({
+    collectionName: 'products',
+    searchParameters: { q: String(q ?? '*'), queryBy: 'name,description' },
   })
-  
-  return results.results[0]
+})
+```
+
+### Client mode: composables
+
+```typescript
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['@sfxcode/nuxt-typesense'],
+  typesense: {
+    url: process.env.TYPESENSE_URL,
+    apiKey: process.env.TYPESENSE_SEARCH_KEY, // search-only key!
+    clientMode: true,
+  },
 })
 ```
 
 ```vue
-<!-- pages/products.vue -->
 <script setup lang="ts">
-const category = ref('electronics')
+const { searchCollection } = useTypesenseDocuments()
+const { collectionInfos } = useTypesenseCollections()
 
-const { data: results } = await useFetch('/api/products/search', {
-  query: { q: '*', category }
-})
+const results = await searchCollection('products', { q: 'laptop', queryBy: 'name' })
+const collections = await collectionInfos()
+
+// Or use the full API client set
+const { documentsApi, healthApi } = useTypesenseApi()
+
+// Access configuration
+const url = useTypesenseUrl()
+const apiKey = useTypesenseApiKey()
 </script>
 ```
 
-### Pattern 4: Real-Time Updates
+Available composables: `useTypesenseApi`, `useTypesenseDocuments`, `useTypesenseCollections`, `useTypesenseUrl`, `useTypesenseApiKey`.
+
+### Available API clients
+
+`useTypesenseApi()` (client) and `useTypesenseServerApi(url, apiKey)` (server) both return:
 
 ```typescript
-// server/api/products/[id].put.ts
-export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, 'id')
-  const updates = await readBody(event)
-  const { documentsApi } = useTypesenseApi()
-  
-  // Update in your database first
-  await updateProductInDB(id, updates)
-  
-  // Then sync to Typesense
-  await documentsApi.updateDocument({
-    collectionName: 'products',
-    documentId: id!,
-    body: updates
-  })
-  
-  return { success: true }
-})
+{
+  analyticsApi, // Analytics and event tracking
+  collectionsApi, // Collection management
+  conversationsApi, // Conversation models
+  curationSetsApi, // Curation sets
+  debugApi, // Debug operations
+  documentsApi, // Document CRUD and search
+  healthApi, // Health check
+  keysApi, // API key management
+  searchModelsApi, // NL search models
+  operationsApi, // Cluster operations
+  presetsApi, // Search presets
+  stemmingApi, // Stemming dictionaries
+  stopwordsApi, // Stopwords
+  synonymsApi, // Synonyms
+}
 ```
+
+Note that the generated clients use camelCase parameter names (`queryBy`, `filterBy`, `perPage`), not Typesense's snake_case. The proxy routes forward the request body as search parameters, so use the same camelCase names there.
+
+### Security best practices
+
+| ✅ Do | ❌ Don't |
+|-------|----------|
+| Use server mode with an admin or scoped key | Put an admin key in `clientMode` |
+| Use search-only keys for client mode | Hardcode API keys in source code |
+| Create scoped keys per user/tenant | Share API keys between environments |
+| Rotate keys regularly | Commit keys to version control |
+
+> **🔒 Security Rule**: If it modifies data, it belongs on the server.
 
 ## Development
 
-### Setup Development Environment
-
 ```bash
-# Clone the repository
 git clone https://github.com/sfxcode/nuxt-typesense.git
 cd nuxt-typesense
 
-# Install dependencies
-pnpm install
-
-# Generate type stubs
-pnpm run dev:prepare
-
-# Start the playground in development mode
-pnpm run dev
+pnpm install          # pnpm 12 (see "packageManager" in package.json)
+pnpm run dev:prepare  # generate type stubs
+pnpm run dev          # start the playground
 ```
 
-### Available Scripts
+The playground reads `TYPESENSE_URL` and `TYPESENSE_API_KEY` from the environment.
+
+### Available scripts
 
 ```bash
-# Run playground in development mode
-pnpm run dev
-
-# Build the playground
-pnpm run dev:build
-
-# Build the module
-pnpm run prepack
-
-# Run tests
-pnpm run test
-
-# Run tests in watch mode
-pnpm run test:watch
-
-# Lint code
-pnpm run lint
-
-# Regenerate API client from OpenAPI spec
-pnpm run api-codegen
-
-# Release a new version
-pnpm run release
+pnpm run dev          # run the playground
+pnpm run dev:build    # build the playground
+pnpm run prepack      # build the module
+pnpm run test         # run tests (vitest)
+pnpm run test:watch   # tests in watch mode
+pnpm run lint         # eslint
+pnpm run api-codegen  # regenerate the API client, then apply patches
+pnpm run release      # lint, test, build, version, publish
+pnpm run docs:dev     # documentation dev server
 ```
 
-### Project Structure
+For a full type check, run `npx nuxi typecheck playground`.
+
+### Project structure
 
 ```
 nuxt-typesense/
 ├── src/
-│   ├── module.ts                    # Module definition
+│   ├── module.ts                 # Module definition and route registration
+│   ├── types.ts                  # Shared types
 │   └── runtime/
-│       ├── api/                     # Auto-generated Typesense API clients
-│       ├── composables/             # Auto-imported composables
-│       │   ├── typesenseApi.ts
-│       │   ├── typesenseApiKey.ts
-│       │   ├── typesenseUrl.ts
-│       │   └── typeSenseCollection.ts
-│       └── model/                   # TypeScript models
-├── playground/                      # Development playground app
-└── test/                           # Test files
+│       ├── api/                  # Generated Typesense API client (do not edit by hand)
+│       ├── composables/          # Client-mode composables
+│       ├── server/
+│       │   ├── api/typesense/    # Server route handlers
+│       │   └── composables/      # useTypesenseServerApi
+│       ├── model/                # TypeScript models
+│       └── utils/                # Helpers (removeUndefined)
+├── scripts/patch-api.mjs         # Fixes applied after api-codegen
+├── playground/                   # Development playground app
+├── docs/                         # VitePress documentation
+└── test/                         # Vitest tests
 ```
 
-### Regenerating API Client
-
-The API client is auto-generated from the Typesense OpenAPI specification. To update it:
+### Regenerating the API client
 
 ```bash
 pnpm run api-codegen
 ```
 
-This will fetch the latest OpenAPI spec from Typesense and regenerate all TypeScript API clients.
+This fetches the latest Typesense OpenAPI spec, regenerates `src/runtime/api`, and then runs `scripts/patch-api.mjs`. The generator output needs a few manual fixes, and the script applies them (it is safe to run repeatedly):
+
+- `DocumentsApi`: send `searchParameters` and `multiSearchParameters` as query parameters and drop `undefined` values (`removeUndefined`)
+- `runtime.ts`: add the `override` modifier on `FetchError.cause`
+- `CreateAnalyticsRuleRequest`: remove a duplicated import
+- `CreateAnalyticsRule200ResponseOneOfInner`: re-add the missing `instanceOf…` type guard
+
+If the generator output changes so a patch no longer matches, the script fails with the missing snippet, so you can update it. Afterwards run `pnpm run lint`, `pnpm run test` and `npx nuxi typecheck playground`.
 
 ## Documentation
 
-Full documentation is available in the `docs/` directory and includes:
-
-- **Getting Started Guide** - Installation and setup instructions
-- **Configuration** - Module options and environment variables
-- **Core Concepts** - Collections, documents, search, and API keys
-- **API Reference** - Complete composables and client documentation
-- **Examples** - Real-world usage examples
-
-### Running Documentation Locally
+Full documentation is in the `docs/` directory (Getting Started, Configuration, Core Concepts, API Reference, Examples).
 
 ```bash
-# Start documentation dev server
-pnpm run docs:dev
-
-# Build documentation
+pnpm run docs:dev      # dev server (http://localhost:5173)
 pnpm run docs:build
-
-# Preview built documentation
 pnpm run docs:preview
 ```
-
-Visit http://localhost:5173 to view the documentation.
 
 ## Contributing
 
