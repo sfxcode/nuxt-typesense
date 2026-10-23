@@ -41,16 +41,29 @@ onMounted(() => {
         <h2 class="text-xl font-bold">
           Analytics Overview
         </h2>
-        <UButton size="xs" icon="i-lucide-refresh-cw" :loading="loading" @click="fetchAnalytics">
+        <UButton
+          size="xs"
+          icon="i-lucide-refresh-cw"
+          :loading="loading"
+          @click="fetchAnalytics"
+        >
           Refresh
         </UButton>
       </div>
     </template>
 
     <div class="space-y-5">
-      <UAlert v-if="error" color="error" title="Analytics request failed" :description="error" />
+      <UAlert
+        v-if="error"
+        color="error"
+        title="Analytics request failed"
+        :description="error"
+      />
 
-      <div v-if="status" class="rounded-lg border bg-gray-50 p-4 dark:bg-gray-900/40">
+      <div
+        v-if="status"
+        class="rounded-lg border bg-gray-50 p-4 dark:bg-gray-900/40"
+      >
         <p class="text-sm font-semibold mb-2">
           Analytics status
         </p>
@@ -62,16 +75,29 @@ onMounted(() => {
           Rules
         </p>
 
-        <div v-if="rules.length" class="space-y-3">
-          <div v-for="(rule, index) in rules" :key="`${String(rule.name || rule.ruleName || 'rule')}-${index}`" class="rounded-md border p-3">
+        <div
+          v-if="rules.length"
+          class="space-y-3"
+        >
+          <div
+            v-for="(rule, index) in rules"
+            :key="`${String(rule.name || rule.ruleName || 'rule')}-${index}`"
+            class="rounded-md border p-3"
+          >
             <p class="font-mono text-sm">
               {{ rule.name || rule.ruleName || 'rule' }}
             </p>
-            <pre v-if="rule" class="mt-2 overflow-auto text-xs text-gray-600 dark:text-gray-400">{{ JSON.stringify(rule, null, 2) }}</pre>
+            <pre
+              v-if="rule"
+              class="mt-2 overflow-auto text-xs text-gray-600 dark:text-gray-400"
+            >{{ JSON.stringify(rule, null, 2) }}</pre>
           </div>
         </div>
 
-        <p v-else class="text-sm text-gray-500">
+        <p
+          v-else
+          class="text-sm text-gray-500"
+        >
           No analytics rules are currently configured.
         </p>
       </div>

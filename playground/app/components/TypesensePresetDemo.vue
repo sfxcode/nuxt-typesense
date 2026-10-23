@@ -24,7 +24,7 @@ const error = ref<string | null>(null)
 const result = ref<SearchResult | null>(null)
 const serverPresets = ref<string[]>([])
 
-const presetCatalog = [
+const presetCatalog: Array<{ label: string, value: string, description?: string }> = [
   { label: 'No preset', value: 'none', description: 'Build a custom query with your own filters and ranking.' },
   { label: 'products_search', value: 'products_search', description: 'General product discovery across names, descriptions, and tags.' },
   { label: 'products_listing', value: 'products_listing', description: 'Catalog browsing with broad relevance and layout-friendly ordering.' },
@@ -53,7 +53,7 @@ const presetOptions = computed(() => {
 
 async function loadAvailablePresets() {
   try {
-    const response = await $fetch<{ presets?: Array<{ id?: string; presetId?: string }> }>('/api/typesense/presets')
+    const response = await $fetch<{ presets?: Array<{ id?: string, presetId?: string }> }>('/api/typesense/presets')
     const foundPresets = response.presets?.map(preset => preset.id || preset.presetId).filter((preset): preset is string => Boolean(preset)) ?? []
     serverPresets.value = [...new Set(foundPresets)]
   }
@@ -106,7 +106,10 @@ onMounted(async () => {
         <h2 class="text-xl font-bold">
           Search Presets Demo
         </h2>
-        <UBadge v-if="result" color="primary">
+        <UBadge
+          v-if="result"
+          color="primary"
+        >
           {{ result.found }} results
         </UBadge>
       </div>
@@ -114,11 +117,22 @@ onMounted(async () => {
 
     <div class="space-y-4">
       <div class="grid gap-4 md:grid-cols-2">
-        <UInput v-model="searchQuery" placeholder="Search query" />
-        <USelect v-model="selectedPreset" :items="presetOptions" value-key="value" label-key="label" />
+        <UInput
+          v-model="searchQuery"
+          placeholder="Search query"
+        />
+        <USelect
+          v-model="selectedPreset"
+          :items="presetOptions"
+          value-key="value"
+          label-key="label"
+        />
       </div>
 
-      <UButton :loading="loading" @click="runDemo">
+      <UButton
+        :loading="loading"
+        @click="runDemo"
+      >
         Run preset search
       </UButton>
 
@@ -138,14 +152,29 @@ onMounted(async () => {
         body = { q: "{{ searchQuery }}", queryBy: "name,description,tags", filterBy: "inStock:=true", preset: "{{ selectedPreset }}" }
       </div>
 
-      <UAlert v-if="error" color="error" :title="error" />
+      <UAlert
+        v-if="error"
+        color="error"
+        :title="error"
+      />
 
-      <div v-if="result && result.hits?.length" class="space-y-3">
-        <div v-for="hit in result.hits" :key="hit.document.id" class="rounded-lg border p-3">
+      <div
+        v-if="result && result.hits?.length"
+        class="space-y-3"
+      >
+        <div
+          v-for="hit in result.hits"
+          :key="hit.document.id"
+          class="rounded-lg border p-3"
+        >
           <div class="flex items-center justify-between gap-2">
             <div>
-              <p class="font-semibold">{{ hit.document.name }}</p>
-              <p class="text-sm text-gray-500">{{ hit.document.category || 'General' }}</p>
+              <p class="font-semibold">
+                {{ hit.document.name }}
+              </p>
+              <p class="text-sm text-gray-500">
+                {{ hit.document.category || 'General' }}
+              </p>
             </div>
             <UBadge :color="hit.document.inStock ? 'success' : 'error'">
               {{ hit.document.inStock ? 'In Stock' : 'Out of Stock' }}
@@ -160,7 +189,10 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div v-else-if="result" class="text-sm text-gray-500">
+      <div
+        v-else-if="result"
+        class="text-sm text-gray-500"
+      >
         No matching results for the selected preset.
       </div>
     </div>

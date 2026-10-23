@@ -1,5 +1,6 @@
 import { useRuntimeConfig } from '#imports'
 import { createError, getMethod, getRouterParam, readBody } from 'h3'
+import type { SynonymItemUpsertSchema } from '../../../../../../api/models'
 import { useTypesenseServerApi } from '../../../../../composables/typesenseServerApi'
 import { defineTypesenseHandler } from '../../../../../composables/typesenseHandler'
 
@@ -16,10 +17,12 @@ export default defineTypesenseHandler(async (event) => {
     case 'GET':
       return await synonymsApi.retrieveSynonymSetItems({ synonymSetName })
     case 'POST': {
-      const synonymItemUpsertSchema = await readBody(event)
+      const synonymItemUpsertSchema = await readBody<SynonymItemUpsertSchema & { id?: string }>(event)
+      if (!synonymItemUpsertSchema?.id)
+        throw createError({ statusCode: 400, message: 'Synonym item id is required' })
       return await synonymsApi.upsertSynonymSetItem({
         synonymSetName,
-        itemId: String((synonymItemUpsertSchema as any)?.id || ''),
+        itemId: String(synonymItemUpsertSchema.id || ''),
         synonymItemUpsertSchema,
       })
     }

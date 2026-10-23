@@ -7,9 +7,9 @@ export default defineTypesenseHandler(async (event) => {
   const config = useRuntimeConfig(event)
   const { stemmingApi } = useTypesenseServerApi(config.typesense.url, config.typesense.apiKey)
 
-  const importDictionary = await readBody(event)
+  const importDictionary = await readBody<{ id?: string, body?: string }>(event)
   return await stemmingApi.importStemmingDictionary({
-    id: String((importDictionary as any)?.id || ''),
-    body: (importDictionary as any)?.body,
+    id: String(importDictionary?.id || ''),
+    body: importDictionary?.body ?? '',
   })
 })

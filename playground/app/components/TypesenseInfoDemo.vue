@@ -12,7 +12,7 @@ const runtimeSummary = computed(() => {
     url: (publicCfg?.url as string | undefined) || (serverCfg?.url as string | undefined) || 'Not configured',
     clientMode: Boolean(publicCfg?.clientMode ?? false),
     apiKey: publicCfg?.apiKey || serverCfg?.apiKey ? 'configured' : 'missing',
-    publicRuntime: ['typesense'] in (runtimeConfig.public || {}),
+    publicRuntime: 'typesense' in (runtimeConfig.public || {}),
   }
 })
 
@@ -44,7 +44,12 @@ onMounted(() => {
         <h2 class="text-xl font-bold">
           Info & Configuration
         </h2>
-        <UButton size="xs" icon="i-lucide-refresh-cw" :loading="loading" @click="fetchStatus">
+        <UButton
+          size="xs"
+          icon="i-lucide-refresh-cw"
+          :loading="loading"
+          @click="fetchStatus"
+        >
           Refresh
         </UButton>
       </div>
@@ -88,14 +93,28 @@ onMounted(() => {
         </ul>
       </div>
 
-      <UAlert v-if="error" color="error" title="Status request failed" :description="error" />
+      <UAlert
+        v-if="error"
+        color="error"
+        title="Status request failed"
+        :description="error"
+      />
 
-      <div v-if="status" class="space-y-3">
+      <div
+        v-if="status"
+        class="space-y-3"
+      >
         <div class="flex items-center gap-2">
-          <UBadge :color="status.healthy ? 'success' : 'error'" size="lg">
+          <UBadge
+            :color="status.healthy ? 'success' : 'error'"
+            size="lg"
+          >
             {{ status.healthy ? 'Healthy' : 'Unhealthy' }}
           </UBadge>
-          <span v-if="status.version" class="text-sm text-gray-500">Version {{ status.version }}</span>
+          <span
+            v-if="status.version"
+            class="text-sm text-gray-500"
+          >Version {{ status.version }}</span>
         </div>
 
         <pre class="overflow-auto rounded-md bg-gray-100 p-3 text-xs dark:bg-gray-800">{{ JSON.stringify(status, null, 2) }}</pre>

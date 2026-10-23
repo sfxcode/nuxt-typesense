@@ -7,6 +7,6 @@ export default defineTypesenseHandler(async (event) => {
   const config = useRuntimeConfig(event)
   const { operationsApi } = useTypesenseServerApi(config.typesense.url, config.typesense.apiKey)
 
-  const snapshotPath = await readBody(event)
-  return await operationsApi.takeSnapshot({ snapshotPath: String((snapshotPath as any)?.snapshotPath || '') })
+  const body = await readBody<{ snapshotPath?: string }>(event)
+  return await operationsApi.takeSnapshot({ snapshotPath: String(body?.snapshotPath || '') })
 })

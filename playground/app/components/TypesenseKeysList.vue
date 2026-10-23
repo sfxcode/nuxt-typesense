@@ -13,7 +13,10 @@
             <h4 class="font-semibold">
               Search-only
             </h4>
-            <UBadge color="success" variant="subtle">
+            <UBadge
+              color="success"
+              variant="subtle"
+            >
               Browser-safe
             </UBadge>
           </div>
@@ -29,7 +32,10 @@
             <h4 class="font-semibold">
               Scoped key
             </h4>
-            <UBadge color="primary" variant="subtle">
+            <UBadge
+              color="primary"
+              variant="subtle"
+            >
               Limited
             </UBadge>
           </div>
@@ -45,7 +51,10 @@
             <h4 class="font-semibold">
               Admin key
             </h4>
-            <UBadge color="error" variant="subtle">
+            <UBadge
+              color="error"
+              variant="subtle"
+            >
               Server-only
             </UBadge>
           </div>

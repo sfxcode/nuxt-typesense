@@ -21,7 +21,7 @@ const examples = [
   },
 })
 
-return results`
+return results`,
   },
   {
     id: 'generated-client',
@@ -46,7 +46,7 @@ return results`
   })
 
   return { collections, products }
-})`
+})`,
   },
   {
     id: 'collection-schema',
@@ -66,7 +66,7 @@ return results`
     ],
     defaultSortingField: 'price',
   },
-})`
+})`,
   },
   {
     id: 'facet-search',
@@ -86,7 +86,7 @@ return results`
 
 const electronics = results.facet_counts?.find(
   facet => facet.field_name === 'category',
-)`
+)`,
   },
   {
     id: 'client-composables',
@@ -106,7 +106,7 @@ const collections = await collectionInfos()
 const health = await documentsApi.searchCollection({
   collectionName: 'products',
   searchParameters: { q: '*', queryBy: 'name', perPage: 5 },
-})`
+})`,
   },
 ] as const
 
@@ -241,9 +241,12 @@ function formatResult(value: unknown) {
               {{ executionState[example.id]?.message }}
             </p>
 
-            <pre v-if="executionState[example.id]?.data" class="overflow-x-auto rounded bg-gray-900 p-3 text-xs text-gray-100"><code>{{ formatResult(executionState[example.id]?.data) }}</code></pre>
+            <pre
+              v-if="executionState[example.id]?.data"
+              class="overflow-x-auto rounded bg-gray-900 p-3 text-xs text-gray-100"
+            ><code>{{ formatResult(executionState[example.id]?.data) }}</code></pre>
             <UAlert
-              v-else-if="executionState[example.id] && !executionState[example.id].ok"
+              v-else-if="executionState[example.id]?.ok === false"
               color="error"
               :title="executionState[example.id]?.message || 'Example failed'"
             />

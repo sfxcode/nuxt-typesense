@@ -109,7 +109,10 @@ onMounted(() => {
       <p>No collections found</p>
     </div>
 
-    <div v-else-if="collections" class="space-y-4">
+    <div
+      v-else-if="collections"
+      class="space-y-4"
+    >
       <UCard>
         <template #header>
           <h4 class="font-semibold text-lg">
@@ -123,12 +126,42 @@ onMounted(() => {
               Common field types
             </p>
             <div class="mt-3 flex flex-wrap gap-2">
-              <UBadge color="primary" variant="soft">string</UBadge>
-              <UBadge color="primary" variant="soft">int32</UBadge>
-              <UBadge color="primary" variant="soft">float</UBadge>
-              <UBadge color="primary" variant="soft">bool</UBadge>
-              <UBadge color="primary" variant="soft">geopoint</UBadge>
-              <UBadge color="primary" variant="soft">string[]</UBadge>
+              <UBadge
+                color="primary"
+                variant="soft"
+              >
+                string
+              </UBadge>
+              <UBadge
+                color="primary"
+                variant="soft"
+              >
+                int32
+              </UBadge>
+              <UBadge
+                color="primary"
+                variant="soft"
+              >
+                float
+              </UBadge>
+              <UBadge
+                color="primary"
+                variant="soft"
+              >
+                bool
+              </UBadge>
+              <UBadge
+                color="primary"
+                variant="soft"
+              >
+                geopoint
+              </UBadge>
+              <UBadge
+                color="primary"
+                variant="soft"
+              >
+                string[]
+              </UBadge>
             </div>
           </div>
 

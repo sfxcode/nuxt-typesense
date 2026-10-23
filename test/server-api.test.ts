@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { typesenseServerRoutes, validateTypesenseConfig } from '../src/module'
+import { validateTypesenseConfig } from '../src/module'
 import { useTypesenseServerApi } from '../src/runtime/server/composables/typesenseServerApi'
 
 const jsonResponse = (body: unknown) =>
