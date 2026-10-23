@@ -34,7 +34,8 @@ async function refresh() {
 }
 
 async function save() {
-  const item: CurationItem = { rule: { query: ruleQuery.value, match: ruleMatch.value } }
+  // Typesense 30 requires an id on every curation item
+  const item: CurationItem = { id: `${setName.value}_1`, rule: { query: ruleQuery.value, match: ruleMatch.value } }
   if (pinId.value)
     item.includes = [{ id: pinId.value, position: pinPosition.value }]
   if (excludeId.value)

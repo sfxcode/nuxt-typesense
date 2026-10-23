@@ -372,7 +372,10 @@ export const collectionSchemas = {
 export const demoSets = {
   synonyms: {
     name: 'demo_synonyms',
-    body: { items: [{ synonyms: ['laptop', 'notebook', 'computer'] }, { synonyms: ['headphones', 'earphones', 'headset'] }] },
+    body: { items: [
+      { id: 'laptops', synonyms: ['laptop', 'notebook', 'computer'] },
+      { id: 'headphones', synonyms: ['headphones', 'earphones', 'headset'] },
+    ] },
   },
   stopwords: {
     id: 'demo_stopwords',
@@ -383,8 +386,8 @@ export const demoSets = {
     body: {
       description: 'Pin the smart watch for "watch", hide the water bottle for "bottle"',
       items: [
-        { rule: { query: 'watch', match: 'contains' }, includes: [{ id: '2', position: 1 }] },
-        { rule: { query: 'bottle', match: 'contains' }, excludes: [{ id: '5' }] },
+        { id: 'pin-watch', rule: { query: 'watch', match: 'contains' }, includes: [{ id: '2', position: 1 }] },
+        { id: 'hide-bottle', rule: { query: 'bottle', match: 'contains' }, excludes: [{ id: '5' }] },
       ],
     },
   },

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface StopwordsSet { id: string, stopwords: string[] }
-interface SynonymSet { name: string, items: Array<{ synonyms: string[], root?: string }> }
+interface SynonymSet { name: string, items: Array<{ id?: string, synonyms: string[], root?: string }> }
 
 const setName = ref('demo_synonyms')
 const synonymList = ref('laptop, notebook, computer')
@@ -33,7 +33,8 @@ async function saveSynonyms() {
   try {
     await $fetch(`/api/typesense/synonym_sets/${setName.value}`, {
       method: 'PUT',
-      body: { items: [{ synonyms: split(synonymList.value) }] },
+      // Typesense 30 requires an id on every synonym item
+      body: { items: [{ id: `${setName.value}_1`, synonyms: split(synonymList.value) }] },
     })
     await refresh()
   }
@@ -67,6 +68,7 @@ async function runTest() {
         q: testQuery.value,
         queryBy: 'name,description,tags',
         stopwords: stopwordSets.value.map(s => s.id).join(','),
+        synonymSets: synonymSets.value.map(s => s.name).join(',') || undefined,
       },
     })
     hitCount.value = res.found
@@ -172,7 +174,7 @@ onMounted(refresh)
             class="flex-1"
           />
           <UButton @click="runTest">
-            Search with stopwords
+            Search with all sets
           </UButton>
         </div>
         <UBadge v-if="hitCount !== null">
