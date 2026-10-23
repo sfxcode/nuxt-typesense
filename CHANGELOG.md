@@ -1,4 +1,40 @@
 
+## v1.3.1
+
+[compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v1.3.0...v1.3.1)
+
+### 🚀 Enhancements
+
+- Add Typesense demo components for product search and navigation ([49c2c47](https://github.com/sfxcode/nuxt-typesense/commit/49c2c47))
+- Validate Typesense configuration for client mode to prevent admin key usage ([af3b655](https://github.com/sfxcode/nuxt-typesense/commit/af3b655))
+- Implement Typesense analytics and curation set APIs ([06c6797](https://github.com/sfxcode/nuxt-typesense/commit/06c6797))
+- Add Typesense server routes for analytics, curation sets, and more ([c14a659](https://github.com/sfxcode/nuxt-typesense/commit/c14a659))
+- Add demo components for Typesense analytics, info, and operations ([3e0b60f](https://github.com/sfxcode/nuxt-typesense/commit/3e0b60f))
+- Add search tuning demo and refine client mode key validation ([20ff754](https://github.com/sfxcode/nuxt-typesense/commit/20ff754))
+- Add curation demo, seed tuning sets, and group playground navigation ([6360b51](https://github.com/sfxcode/nuxt-typesense/commit/6360b51))
+- Add operations buttons, fix nav dropdown clipping, remove debug logging ([add70c2](https://github.com/sfxcode/nuxt-typesense/commit/add70c2))
+- Map Typesense client errors to proper HTTP errors in server handlers ([e7b7bf3](https://github.com/sfxcode/nuxt-typesense/commit/e7b7bf3))
+- Add routes option to restrict registered proxy routes ([7426308](https://github.com/sfxcode/nuxt-typesense/commit/7426308))
+- Drop key listing and debug routes in readOnly mode ([3bf8345](https://github.com/sfxcode/nuxt-typesense/commit/3bf8345))
+
+### 📖 Documentation
+
+- Update configuration and environment variable documentation for client mode ([d9c93aa](https://github.com/sfxcode/nuxt-typesense/commit/d9c93aa))
+- Update for Nuxt 4, document routes option and error responses; show upstream errors in playground ([5a38430](https://github.com/sfxcode/nuxt-typesense/commit/5a38430))
+
+### 🏡 Chore
+
+- Update release script to use patch versioning for changelogen ([4ac46bf](https://github.com/sfxcode/nuxt-typesense/commit/4ac46bf))
+- Fix lint and type errors, add typecheck script and CI workflow ([4512862](https://github.com/sfxcode/nuxt-typesense/commit/4512862))
+
+### ✅ Tests
+
+- Expand error handling tests for Typesense handler wrapper ([4e473fb](https://github.com/sfxcode/nuxt-typesense/commit/4e473fb))
+
+### ❤️ Contributors
+
+- Sfxcode ([@sfxcode](https://github.com/sfxcode))
+
 ## v1.3.0
 
 [compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v1.2.0...v1.3.0)
