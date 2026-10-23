@@ -1,4 +1,25 @@
 
+## v1.4.1
+
+[compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v1.4.0...v1.4.1)
+
+### 🚀 Enhancements
+
+- Add alias, stemming and AI model demos; fix stemming import content type ([d4094ff](https://github.com/sfxcode/nuxt-typesense/commit/d4094ff))
+- Serve an OpenAPI description of the proxy routes ([54dc4d4](https://github.com/sfxcode/nuxt-typesense/commit/54dc4d4))
+
+### 💅 Refactors
+
+- Move option validation and route table out of module.ts, use kit logger ([c0cb078](https://github.com/sfxcode/nuxt-typesense/commit/c0cb078))
+
+### 🏡 Chore
+
+- Update release script to use patch versioning with changelogen ([02f4ac9](https://github.com/sfxcode/nuxt-typesense/commit/02f4ac9))
+
+### ❤️ Contributors
+
+- Sfxcode ([@sfxcode](https://github.com/sfxcode))
+
 ## v1.4.0
 
 [compare changes](https://github.com/sfxcode/nuxt-typesense/compare/v1.3.1...v1.4.0)
