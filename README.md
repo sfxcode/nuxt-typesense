@@ -8,6 +8,10 @@ A Nuxt module for integrating [Typesense](https://typesense.org/) - a fast, typo
 
 > 📖 **[Read the full documentation](https://sfxcode.github.io/nuxt-typesense/)** for detailed guides, API references, and examples.
 
+## Live Demo
+
+Try the playground at **https://nuxt-typesense.netlify.app/**. The public demo is read-only (search, collections and examples). The write demos (tuning, curation, operations, keys, ...) are hidden there, so run the playground against your own Typesense instance to use them, see [Try the playground](#try-the-playground-with-your-own-typesense).
+
 ## Features
 
 - 🚀 **Full Typesense API Support** - TypeScript API client generated from the Typesense OpenAPI spec
@@ -222,7 +226,46 @@ pnpm run dev:prepare  # generate type stubs
 pnpm run dev          # start the playground
 ```
 
-The playground reads `TYPESENSE_URL` and `TYPESENSE_API_KEY` from the environment.
+### Try the playground with your own Typesense
+
+The playground talks to whichever Typesense instance `TYPESENSE_URL` and `TYPESENSE_API_KEY` point to.
+
+1. Start a Typesense server, for example with Docker (skip this if you already have one):
+
+```bash
+docker run -d --name typesense -p 8108:8108 -v typesense-data:/data \
+  typesense/typesense:30.2 --data-dir /data --api-key=xyz --enable-cors
+```
+
+2. Copy the example env file and edit it:
+
+```bash
+cp playground/.env.example playground/.env
+```
+
+```bash
+# playground/.env
+TYPESENSE_URL=http://localhost:8108   # your server, no trailing slash
+TYPESENSE_API_KEY=xyz                 # an admin key for local use
+```
+
+3. Run the playground and open http://localhost:3000:
+
+```bash
+pnpm run dev
+```
+
+Notes:
+
+- `playground/.env` is git-ignored. Use an **admin key** locally so every page works, including tuning, curation, operations and key management. Never use an admin key on a public deploy.
+- You can also set the variables inline: `TYPESENSE_URL=https://search.example.com TYPESENSE_API_KEY=... pnpm run dev`.
+- A server behind a reverse proxy usually exposes plain HTTPS on port 443, so use `https://host` without `:8108`. Port 8108 speaks plain HTTP only.
+- A fresh server has no collections. Create one on the **Collections** page, or via `POST /api/typesense/collections`, before using Search.
+- Browser-side calls to a remote server need CORS enabled on it (`--enable-cors`). Server mode, the default, is not affected because the Nuxt server makes the requests.
+
+### Deploying the playground publicly
+
+The Netlify build (`netlify.toml`) sets `NITRO_PRESET=netlify`, which switches the playground into public-demo mode: only read routes are registered, the OpenAPI route and the write demo pages are removed, and security headers are added. Set `TYPESENSE_URL` and a **search-only key** (actions `documents:search`, `documents:get`, `collections:get`, `collections:list`) in the Netlify site environment.
 
 ### Available scripts
 
