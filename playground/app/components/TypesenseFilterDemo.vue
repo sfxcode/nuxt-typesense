@@ -297,5 +297,40 @@ onMounted(() => {
         </div>
       </div>
     </UCard>
+
+    <UCard>
+      <template #header>
+        <h3 class="font-semibold">
+          Search tuning tips
+        </h3>
+      </template>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="rounded-lg border p-4">
+          <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+            Good patterns
+          </p>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+            <li>• Use field-weighted queries with queryBy</li>
+            <li>• Add facetBy for category and inventory filters</li>
+            <li>• Combine filterBy with numeric thresholds for pricing</li>
+            <li>• Keep search text short and user-intent focused</li>
+          </ul>
+        </div>
+
+        <div class="rounded-lg border p-4">
+          <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+            Example payload
+          </p>
+          <pre class="mt-3 overflow-auto text-xs">{{ JSON.stringify({
+            q: searchQuery || '*',
+            queryBy: 'name,description,tags',
+            filterBy: "category:=Electronics && inStock:=true && price:<100",
+            facetBy: 'category,brand,inStock',
+            perPage: 12,
+          }, null, 2) }}</pre>
+        </div>
+      </div>
+    </UCard>
   </div>
 </template>

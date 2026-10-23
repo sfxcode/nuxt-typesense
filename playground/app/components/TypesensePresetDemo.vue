@@ -22,13 +22,45 @@ const searchQuery = ref('laptop')
 const loading = ref(false)
 const error = ref<string | null>(null)
 const result = ref<SearchResult | null>(null)
+const serverPresets = ref<string[]>([])
 
-const presetOptions = [
-  { label: 'No preset', value: 'none' },
-  { label: 'products_search', value: 'products_search' },
-  { label: 'products_listing', value: 'products_listing' },
-  { label: 'electronics_only', value: 'electronics_only' },
+const presetCatalog = [
+  { label: 'No preset', value: 'none', description: 'Build a custom query with your own filters and ranking.' },
+  { label: 'products_search', value: 'products_search', description: 'General product discovery across names, descriptions, and tags.' },
+  { label: 'products_listing', value: 'products_listing', description: 'Catalog browsing with broad relevance and layout-friendly ordering.' },
+  { label: 'electronics_only', value: 'electronics_only', description: 'Restrict to electronics inventory in a filtered storefront flow.' },
+  { label: 'top_rated', value: 'top_rated', description: 'Surface highly rated products first for recommendation-heavy screens.' },
+  { label: 'budget_friendly', value: 'budget_friendly', description: 'Prioritize lower-cost items for deal or value-driven shoppers.' },
+  { label: 'in_stock_best_sellers', value: 'in_stock_best_sellers', description: 'Use when you want fast-moving, available items ahead of inventory gaps.' },
+  { label: 'new_arrivals', value: 'new_arrivals', description: 'Boost recently released products for launch or freshness campaigns.' },
 ]
+
+const presetMeta = Object.fromEntries(presetCatalog.map(preset => [preset.value, preset]))
+
+const selectedPresetMeta = computed(() => presetMeta[selectedPreset.value] ?? { label: selectedPreset.value, value: selectedPreset.value, description: 'Custom preset loaded from the server.' })
+
+const presetOptions = computed(() => {
+  const combined = [...presetCatalog]
+
+  for (const presetId of serverPresets.value) {
+    if (!combined.some(item => item.value === presetId)) {
+      combined.push({ label: presetId, value: presetId })
+    }
+  }
+
+  return combined
+})
+
+async function loadAvailablePresets() {
+  try {
+    const response = await $fetch<{ presets?: Array<{ id?: string; presetId?: string }> }>('/api/typesense/presets')
+    const foundPresets = response.presets?.map(preset => preset.id || preset.presetId).filter((preset): preset is string => Boolean(preset)) ?? []
+    serverPresets.value = [...new Set(foundPresets)]
+  }
+  catch {
+    serverPresets.value = []
+  }
+}
 
 async function runDemo() {
   loading.value = true
@@ -61,8 +93,9 @@ async function runDemo() {
   }
 }
 
-onMounted(() => {
-  runDemo()
+onMounted(async () => {
+  await loadAvailablePresets()
+  await runDemo()
 })
 </script>
 
@@ -88,6 +121,18 @@ onMounted(() => {
       <UButton :loading="loading" @click="runDemo">
         Run preset search
       </UButton>
+
+      <div class="rounded-lg border border-dashed p-3 bg-gray-50 dark:bg-gray-900/40">
+        <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+          Preset intent
+        </p>
+        <p class="mt-2 text-sm font-medium">
+          {{ selectedPresetMeta.label }}
+        </p>
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+          {{ selectedPresetMeta.description }}
+        </p>
+      </div>
 
       <div class="rounded-md bg-gray-100 dark:bg-gray-800 p-3 text-sm font-mono">
         body = { q: "{{ searchQuery }}", queryBy: "name,description,tags", filterBy: "inStock:=true", preset: "{{ selectedPreset }}" }

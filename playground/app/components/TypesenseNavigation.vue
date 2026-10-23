@@ -22,6 +22,11 @@ const items = [
     icon: 'i-lucide-search',
   },
   {
+    label: 'Info',
+    to: '/info',
+    icon: 'i-lucide-info',
+  },
+  {
     label: 'Collections',
     to: '/collections',
     icon: 'i-lucide-database',
@@ -30,6 +35,16 @@ const items = [
     label: 'Key Management',
     to: '/keys',
     icon: 'i-lucide-key-round',
+  },
+  {
+    label: 'Analytics',
+    to: '/analytics',
+    icon: 'i-lucide-chart-column',
+  },
+  {
+    label: 'Operations',
+    to: '/operations',
+    icon: 'i-lucide-wrench',
   },
   {
     label: 'Search Presets',

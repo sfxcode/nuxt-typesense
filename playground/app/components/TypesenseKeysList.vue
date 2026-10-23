@@ -1,83 +1,145 @@
 <template>
-  <div class="typesense-keys">
-    <h3 class="text-lg font-semibold mb-4">
-      API Keys Management
-    </h3>
+  <div class="space-y-6">
+    <UCard>
+      <template #header>
+        <h3 class="text-lg font-semibold">
+          Key privilege comparison
+        </h3>
+      </template>
 
-    <div
-      v-if="loading"
-      class="text-gray-500"
-    >
-      Loading keys...
-    </div>
-    <div
-      v-else-if="error"
-      class="text-red-500"
-    >
-      {{ error }}
-    </div>
+      <div class="grid gap-4 md:grid-cols-3">
+        <div class="rounded-lg border p-4">
+          <div class="flex items-center justify-between">
+            <h4 class="font-semibold">
+              Search-only
+            </h4>
+            <UBadge color="success" variant="subtle">
+              Browser-safe
+            </UBadge>
+          </div>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+            <li>• Search and browse</li>
+            <li>• Read-only access</li>
+            <li>• Best for client-side apps</li>
+          </ul>
+        </div>
 
-    <div
-      v-else-if="keys && keys.keys"
-      class="space-y-4"
-    >
-      <div class="mb-4">
-        <p class="text-sm text-gray-600">
-          Total Keys: {{ keys.keys.length }}
-        </p>
+        <div class="rounded-lg border p-4">
+          <div class="flex items-center justify-between">
+            <h4 class="font-semibold">
+              Scoped key
+            </h4>
+            <UBadge color="primary" variant="subtle">
+              Limited
+            </UBadge>
+          </div>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+            <li>• Restricts collections and actions</li>
+            <li>• Safer than admin access</li>
+            <li>• Good for app-specific APIs</li>
+          </ul>
+        </div>
+
+        <div class="rounded-lg border p-4">
+          <div class="flex items-center justify-between">
+            <h4 class="font-semibold">
+              Admin key
+            </h4>
+            <UBadge color="error" variant="subtle">
+              Server-only
+            </UBadge>
+          </div>
+          <ul class="mt-3 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+            <li>• Full write and management access</li>
+            <li>• Never expose in browser code</li>
+            <li>• Use only in trusted backend flows</li>
+          </ul>
+        </div>
+      </div>
+    </UCard>
+
+    <UCard>
+      <template #header>
+        <h3 class="text-lg font-semibold mb-4">
+          API Keys Management
+        </h3>
+      </template>
+
+      <div
+        v-if="loading"
+        class="text-gray-500"
+      >
+        Loading keys...
+      </div>
+      <div
+        v-else-if="error"
+        class="text-red-500"
+      >
+        {{ error }}
       </div>
 
       <div
-        v-for="key in keys.keys"
-        :key="key.id"
-        class="border rounded-lg p-4 space-y-2"
+        v-else-if="keys && keys.keys"
+        class="space-y-4"
       >
-        <div class="flex justify-between items-start">
-          <div class="flex-1">
-            <p class="font-medium">
-              Key ID: {{ key.id }}
-            </p>
-            <p class="text-sm text-gray-600">
-              {{ key.description }}
-            </p>
-          </div>
-          <button
-            class="px-3 py-1 text-sm text-red-600 hover:bg-red-50 rounded"
-            :disabled="deleting"
-            @click="key.id !== undefined && handleDeleteKey(key.id)"
-          >
-            Delete
-          </button>
-        </div>
-
-        <div class="text-xs space-y-1">
-          <p><span class="font-medium">Value Prefix:</span> {{ key.valuePrefix }}</p>
-          <p><span class="font-medium">Actions:</span> {{ key.actions.join(', ') }}</p>
-          <p><span class="font-medium">Collections:</span> {{ key.collections.join(', ') }}</p>
-          <p v-if="key.expiresAt">
-            <span class="font-medium">Expires:</span>
-            {{ new Date(key.expiresAt * 1000).toLocaleString() }}
+        <div class="mb-4">
+          <p class="text-sm text-gray-600">
+            Total Keys: {{ keys.keys.length }}
           </p>
         </div>
+
+        <div
+          v-for="key in keys.keys"
+          :key="key.id"
+          class="border rounded-lg p-4 space-y-2"
+        >
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <p class="font-medium">
+                Key ID: {{ key.id }}
+              </p>
+              <p class="text-sm text-gray-600">
+                {{ key.description }}
+              </p>
+            </div>
+            <button
+              class="px-3 py-1 text-sm text-red-600 hover:bg-red-50 rounded"
+              :disabled="deleting"
+              @click="key.id !== undefined && handleDeleteKey(key.id)"
+            >
+              Delete
+            </button>
+          </div>
+
+          <div class="text-xs space-y-1">
+            <p><span class="font-medium">Value Prefix:</span> {{ key.valuePrefix }}</p>
+            <p><span class="font-medium">Actions:</span> {{ key.actions.join(', ') }}</p>
+            <p><span class="font-medium">Collections:</span> {{ key.collections.join(', ') }}</p>
+            <p v-if="key.expiresAt">
+              <span class="font-medium">Expires:</span>
+              {{ new Date(key.expiresAt * 1000).toLocaleString() }}
+            </p>
+          </div>
+        </div>
+
+        <div
+          v-if="keys.keys.length === 0"
+          class="text-gray-500 text-center py-8"
+        >
+          No API keys found
+        </div>
       </div>
 
-      <div
-        v-if="keys.keys.length === 0"
-        class="text-gray-500 text-center py-8"
-      >
-        No API keys found
+      <div class="mt-6">
+        <button
+          class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          :disabled="loading"
+          @click="refreshKeys"
+        >
+          Refresh Keys
+        </button>
       </div>
-    </div>
-
-    <div class="mt-6">
-      <button
-        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        :disabled="loading"
-        @click="refreshKeys"
-      >
-        Refresh Keys
-      </button>
-    </div>
+    </UCard>
   </div>
 </template>
 

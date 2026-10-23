@@ -109,10 +109,81 @@ onMounted(() => {
       <p>No collections found</p>
     </div>
 
-    <div
-      v-else-if="collections"
-      class="space-y-3"
-    >
+    <div v-else-if="collections" class="space-y-4">
+      <UCard>
+        <template #header>
+          <h4 class="font-semibold text-lg">
+            Schema preview
+          </h4>
+        </template>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="rounded-lg border p-4">
+            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Common field types
+            </p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <UBadge color="primary" variant="soft">string</UBadge>
+              <UBadge color="primary" variant="soft">int32</UBadge>
+              <UBadge color="primary" variant="soft">float</UBadge>
+              <UBadge color="primary" variant="soft">bool</UBadge>
+              <UBadge color="primary" variant="soft">geopoint</UBadge>
+              <UBadge color="primary" variant="soft">string[]</UBadge>
+            </div>
+          </div>
+
+          <div class="rounded-lg border p-4">
+            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Example collection schema
+            </p>
+            <pre class="mt-3 overflow-auto text-xs">{{ JSON.stringify({
+              name: 'products',
+              fields: [
+                { name: 'name', type: 'string', facet: false },
+                { name: 'category', type: 'string', facet: true },
+                { name: 'price', type: 'float', sort: true },
+                { name: 'in_stock', type: 'bool', facet: true },
+              ],
+              default_sorting_field: 'price',
+            }, null, 2) }}</pre>
+          </div>
+        </div>
+      </UCard>
+
+      <UCard>
+        <template #header>
+          <h4 class="font-semibold text-lg">
+            Collection design checklist
+          </h4>
+        </template>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="rounded-lg border p-4">
+            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Good defaults
+            </p>
+            <ul class="mt-3 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+              <li>• Use facet fields for category, brand, and status filters</li>
+              <li>• Mark sort-friendly fields explicitly</li>
+              <li>• Keep searchable text fields concise and relevant</li>
+              <li>• Prefer small, stable document payloads</li>
+            </ul>
+          </div>
+
+          <div class="rounded-lg border p-4">
+            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Watch for
+            </p>
+            <ul class="mt-3 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+              <li>• Over-indexing noisy text fields</li>
+              <li>• Large JSON payloads in every document</li>
+              <li>• Unnecessary facet fields that hurt performance</li>
+              <li>• Missing sort/filter fields for search UX</li>
+            </ul>
+          </div>
+        </div>
+      </UCard>
+
       <UCard
         v-for="collection in collections"
         :key="collection.name"
