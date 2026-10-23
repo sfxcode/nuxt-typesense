@@ -4,7 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'Nuxt Typesense',
   description: 'A Nuxt module for integrating Typesense search engine',
-  base: '/',
+  base: '/nuxt-typesense/',
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -90,12 +90,12 @@ export default defineConfig({
   },
 
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/nuxt-typesense/logo.svg' }],
     ['meta', { name: 'theme-color', content: '#3c8772' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:locale', content: 'en' }],
     ['meta', { property: 'og:title', content: 'Nuxt Typesense | Typesense integration for Nuxt 3' }],
     ['meta', { property: 'og:site_name', content: 'Nuxt Typesense' }],
-    ['meta', { property: 'og:url', content: 'https://nuxt-typesense.sfxcode.com/' }],
+    ['meta', { property: 'og:url', content: 'https://sfxcode.github.io/nuxt-typesense/' }],
   ],
 })
