@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { validateTypesenseConfig } from '../src/module'
+import { typesenseServerRoutes, validateTypesenseConfig } from '../src/module'
 import { useTypesenseServerApi } from '../src/runtime/server/composables/typesenseServerApi'
 
 const jsonResponse = (body: unknown) =>
@@ -24,6 +24,20 @@ describe('validateTypesenseConfig', () => {
       'Missing Typesense Api Key!',
       'Client mode requires a search-only API key. Admin keys must stay on the server.',
     ])
+  })
+})
+
+describe('server route coverage', () => {
+  it('includes the recently added admin and metadata route surface', () => {
+    expect(typesenseServerRoutes).toEqual(expect.arrayContaining([
+      expect.objectContaining({ route: '/api/typesense/analytics/rules/:ruleName', method: 'delete' }),
+      expect.objectContaining({ route: '/api/typesense/debug', method: 'get' }),
+      expect.objectContaining({ route: '/api/typesense/operations/cache/clear', method: 'post' }),
+      expect.objectContaining({ route: '/api/typesense/presets/:presetId', method: 'put' }),
+      expect.objectContaining({ route: '/api/typesense/stopwords/:setId', method: 'delete' }),
+      expect.objectContaining({ route: '/api/typesense/synonym_sets/:synonymSetName/items/:itemId', method: 'delete' }),
+    ]))
+    expect(typesenseServerRoutes.length).toBeGreaterThan(35)
   })
 })
 
