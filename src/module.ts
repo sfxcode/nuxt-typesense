@@ -9,6 +9,34 @@ export interface ModuleOptions {
   clientMode?: boolean
 }
 
+export function validateTypesenseConfig(options: ModuleOptions, env: Record<string, string | undefined> = process.env) {
+  const messages: string[] = []
+
+  if (!options.url || options.url.length === 0)
+    messages.push('Missing Typesense Base Url!')
+
+  if (!options.apiKey || options.apiKey.length === 0)
+    messages.push('Missing Typesense Api Key!')
+
+  if (options.clientMode) {
+    const adminCandidates = [
+      env.TYPESENSE_ADMIN_KEY,
+      env.NUXT_TYPESENSE_ADMIN_KEY,
+    ].filter((value): value is string => Boolean(value))
+
+    const matchesAdminKey = adminCandidates.some(candidate => candidate === options.apiKey)
+    if (matchesAdminKey) {
+      throw new Error('Client mode cannot use an admin key. Use only a search-only API key in browser code.')
+    }
+
+    if (!options.apiKey || options.apiKey.length === 0) {
+      messages.push('Client mode requires a search-only API key. Admin keys must stay on the server.')
+    }
+  }
+
+  return messages
+}
+
 declare module 'nuxt/schema' {
   interface RuntimeConfig {
     typesense: { url: string, apiKey: string }
@@ -28,10 +56,9 @@ export default defineNuxtModule<ModuleOptions>({
     configKey: 'typesense',
   },
   async setup(options, nuxt) {
-    if (!options.url || options.url.length === 0)
-      consola.warn('Missing Typesense Base Url !')
-    if (!options.apiKey || options.apiKey.length === 0)
-      consola.warn('Missing Typesense Api Key !')
+    const warnings = validateTypesenseConfig(options)
+
+    warnings.forEach(message => consola.warn(`[nuxt-typesense] ${message}`))
 
     if (options.clientMode) {
       nuxt.options.runtimeConfig.public.typesense = defu(nuxt.options.runtimeConfig.public.typesense,

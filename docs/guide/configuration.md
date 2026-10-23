@@ -58,6 +58,8 @@ For production applications:
 
 When set to `true`, the module switches from server-side runtime config to public runtime config and exposes the browser composables. This mode is intended for search-only usage and should never be used with admin keys.
 
+The module validates this at startup. If `clientMode` is enabled and the configured API key matches a `TYPESENSE_ADMIN_KEY`/`NUXT_TYPESENSE_ADMIN_KEY`, it throws an error to prevent shipping a write-capable key to the browser.
+
 ### Runtime config behavior
 
 The module stores credentials in different Nuxt runtime config locations depending on `clientMode`:

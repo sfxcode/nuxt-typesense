@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
+import { validateTypesenseConfig } from '../src/module'
 import { useTypesenseServerApi } from '../src/runtime/server/composables/typesenseServerApi'
 
 const jsonResponse = (body: unknown) =>
@@ -6,6 +7,24 @@ const jsonResponse = (body: unknown) =>
 
 afterEach(() => {
   vi.unstubAllGlobals()
+})
+
+describe('validateTypesenseConfig', () => {
+  it('throws when client mode uses an admin key', () => {
+    expect(() => validateTypesenseConfig({
+      url: 'http://localhost:8108',
+      apiKey: 'admin-key',
+      clientMode: true,
+    }, { TYPESENSE_ADMIN_KEY: 'admin-key' })).toThrowError(/admin key/i)
+  })
+
+  it('warns when required values are missing', () => {
+    expect(validateTypesenseConfig({ clientMode: true })).toEqual([
+      'Missing Typesense Base Url!',
+      'Missing Typesense Api Key!',
+      'Client mode requires a search-only API key. Admin keys must stay on the server.',
+    ])
+  })
 })
 
 describe('useTypesenseServerApi', () => {

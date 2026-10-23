@@ -276,6 +276,8 @@ TYPESENSE_SEARCH_KEY=search-only-key
 TYPESENSE_ADMIN_KEY=admin-key-with-full-access
 ```
 
+When `clientMode: true`, prefer `TYPESENSE_SEARCH_KEY` or `TYPESENSE_SEARCH_ONLY_KEY` and never reuse the admin key. The module will warn or throw if the browser config is accidentally paired with a write-capable key.
+
 ### 3. Validate Required Variables
 
 ```typescript
