@@ -13,6 +13,11 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute()
+const { publicDemo } = useRuntimeConfig().public
+
+// Pages that work with the read-only key on the public demo; the rest need write access.
+const publicPaths = ['/', '/search', '/collections', '/examples']
+const visible = (to: string) => !publicDemo || publicPaths.includes(to)
 
 // Groups keep the bar short; a group is highlighted when one of its pages is active.
 const groups = [
@@ -57,10 +62,13 @@ const groups = [
 
 const items = computed<NavigationMenuItem[]>(() => [
   { label: 'Overview', to: '/', icon: 'i-lucide-home' },
-  ...groups.map(group => ({
-    ...group,
-    active: group.children.some(child => route.path.startsWith(child.to)),
-  })),
+  ...groups
+    .map(group => ({ ...group, children: group.children.filter(child => visible(child.to)) }))
+    .filter(group => group.children.length)
+    .map(group => ({
+      ...group,
+      active: group.children.some(child => route.path.startsWith(child.to)),
+    })),
   { label: 'Examples', to: '/examples', icon: 'i-lucide-code-2' },
 ])
 </script>

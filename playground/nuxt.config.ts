@@ -33,6 +33,12 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  runtimeConfig: {
+    public: {
+      publicDemo: isPublicDemo,
+    },
+  },
+
   routeRules: {
     '/': { prerender: true },
   },
