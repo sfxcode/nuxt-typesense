@@ -1,7 +1,7 @@
 import { useRuntimeConfig } from '#imports'
 import { defineEventHandler, getRouterParam, readBody, createError } from 'h3'
 import { useTypesenseServerApi } from '../../../composables/typesenseServerApi'
-import type { CollectionUpdateSchema } from '~/src/runtime/api'
+import type { CollectionUpdateSchema } from '../../../../api'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)

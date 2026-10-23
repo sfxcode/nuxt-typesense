@@ -1,5 +1,5 @@
 import { addImportsDir, addServerImportsDir, addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
-import consola from 'consola'
+import { consola } from 'consola'
 import defu from 'defu'
 import { name, version } from '../package.json'
 
@@ -7,6 +7,15 @@ export interface ModuleOptions {
   url?: string
   apiKey?: string
   clientMode?: boolean
+}
+
+declare module 'nuxt/schema' {
+  interface RuntimeConfig {
+    typesense: { url: string, apiKey: string }
+  }
+  interface PublicRuntimeConfig {
+    typesense: { url: string, apiKey: string, clientMode: boolean }
+  }
 }
 
 export * from './types'

@@ -1,7 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "name": "nuxt-typesense-playground",
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }

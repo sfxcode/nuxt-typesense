@@ -137,7 +137,7 @@ onMounted(() => {
               </div>
             </div>
             <UButton
-              color="red"
+              color="error"
               variant="ghost"
               size="xs"
               icon="i-lucide-trash-2"

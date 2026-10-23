@@ -1,7 +1,7 @@
 import { useRuntimeConfig } from '#imports'
 import { defineEventHandler, readBody } from 'h3'
 import { useTypesenseServerApi } from '../../../composables/typesenseServerApi'
-import type { CollectionSchema } from '~/src/runtime/api'
+import type { CollectionSchema } from '../../../../api'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)

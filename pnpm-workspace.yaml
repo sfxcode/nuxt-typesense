@@ -1,0 +1,5 @@
+allowBuilds:
+  '@openapitools/openapi-generator-cli': false
+  esbuild: false
+  unrs-resolver: false
+  vue-demi: false

@@ -44,7 +44,7 @@
           <button
             class="px-3 py-1 text-sm text-red-600 hover:bg-red-50 rounded"
             :disabled="deleting"
-            @click="handleDeleteKey(key.id)"
+            @click="key.id !== undefined && handleDeleteKey(key.id)"
           >
             Delete
           </button>
@@ -83,7 +83,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import type { ApiKeysResponse } from '~/src/runtime/api'
+import type { ApiKeysResponse } from '../../../src/runtime/api'
 
 const keys = ref<ApiKeysResponse | null>(null)
 const loading = ref(false)

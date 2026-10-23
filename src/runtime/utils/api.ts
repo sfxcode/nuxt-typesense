@@ -4,7 +4,7 @@
  * @param obj - The object to clean
  * @returns A new object with undefined values removed
  */
-export function removeUndefined<T extends Record<string, unknown>>(obj: T): Partial<T> {
+export function removeUndefined<T extends object>(obj: T): Partial<T> {
   if (!obj || typeof obj !== 'object') {
     return obj
   }
