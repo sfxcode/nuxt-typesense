@@ -65,6 +65,7 @@ export const typesenseServerRoutes: TypesenseRoute[] = [
   { route: '/api/typesense/collections/:name', method: 'patch', handler: './runtime/server/api/typesense/collections/[name].patch' },
   { route: '/api/typesense/collections/:name', method: 'delete', handler: './runtime/server/api/typesense/collections/[name].delete' },
 
+  { route: '/api/typesense/alias', method: 'get', handler: './runtime/server/api/typesense/alias/index.get' },
   { route: '/api/typesense/alias/:alias', method: 'get', handler: './runtime/server/api/typesense/alias/[alias].get' },
   { route: '/api/typesense/alias/:alias', method: 'put', handler: './runtime/server/api/typesense/alias/[alias].put' },
   { route: '/api/typesense/alias/:alias', method: 'delete', handler: './runtime/server/api/typesense/alias/[alias].delete' },

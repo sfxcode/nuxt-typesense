@@ -149,6 +149,14 @@ await $fetch('/api/typesense/collections/old_products', {
 
 Collection aliases allow you to reference a collection by an alternative name, making it easier to switch between collections without changing your application code.
 
+### GET `/api/typesense/alias`
+
+List all collection aliases.
+
+```typescript
+const { aliases } = await $fetch('/api/typesense/alias')
+```
+
 ### GET `/api/typesense/alias/:alias`
 
 Get the collection associated with an alias.

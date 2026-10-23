@@ -228,6 +228,25 @@ Debug operations.
 const debug = await debugApi.debug()
 ```
 
+## useTypesenseError()
+
+Client mode only. Converts an error thrown by the browser API clients into the status and message Typesense returned.
+
+```typescript
+const { documentsApi } = useTypesenseApi()
+const { describeError } = useTypesenseError()
+
+try {
+  await documentsApi.searchCollection({ collectionName: 'missing', searchParameters: { q: '*', queryBy: 'name' } })
+}
+catch (error) {
+  const { statusCode, message } = await describeError(error)
+  // 404, 'Could not find a collection with name `missing`'
+}
+```
+
+Mapping: an upstream error keeps its status and message, a connection failure becomes `502`, a missing required parameter becomes `400`, anything else is `500`.
+
 ## useTypesenseUrl()
 
 Get the configured Typesense server URL.

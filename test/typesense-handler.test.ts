@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { describeTypesenseError } from '../src/runtime/server/composables/typesenseErrors'
+import { describeTypesenseError } from '../src/runtime/utils/typesenseErrors'
 import { defineTypesenseHandler } from '../src/runtime/server/composables/typesenseHandler'
 import { FetchError, RequiredError, ResponseError } from '../src/runtime/api/runtime'
 

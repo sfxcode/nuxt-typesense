@@ -121,6 +121,21 @@ TYPESENSE_URL=http://localhost:8108
 TYPESENSE_API_KEY=your-api-key-here
 ```
 
+## Restrict the Proxy Routes (optional)
+
+In server mode the module registers `/api/typesense/*` routes that use your server API key and have no built-in authentication. For a public site, expose only what you need:
+
+```typescript
+export default defineNuxtConfig({
+  typesense: {
+    // ...url and apiKey
+    routes: { readOnly: true },
+  },
+})
+```
+
+See [Module Options](/guide/configuration#routes) for `readOnly` and `exclude`.
+
 ## Verify Installation
 
 Create a simple component to verify everything is working:

@@ -40,6 +40,7 @@ export default defineConfig({
             { text: 'Documents', link: '/guide/documents' },
             { text: 'Search', link: '/guide/search' },
             { text: 'API Keys', link: '/guide/api-keys' },
+            { text: 'Playground', link: '/guide/playground' },
           ],
         },
       ],

@@ -1,4 +1,4 @@
-import { FetchError, RequiredError, ResponseError } from '../../api/runtime'
+import { FetchError, RequiredError, ResponseError } from '../api/runtime'
 
 export interface TypesenseErrorInfo {
   statusCode: number
