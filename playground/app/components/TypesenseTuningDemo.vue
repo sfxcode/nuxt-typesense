@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { SynonymSetCreateSchema } from '../../../src/runtime/api'
+
 interface StopwordsSet { id: string, stopwords: string[] }
 interface SynonymSet { name: string, items: Array<{ id?: string, synonyms: string[], root?: string }> }
 
@@ -31,11 +33,9 @@ async function refresh() {
 
 async function saveSynonyms() {
   try {
-    await $fetch(`/api/typesense/synonym_sets/${setName.value}`, {
-      method: 'PUT',
-      // Typesense 30 requires an id on every synonym item
-      body: { items: [{ id: `${setName.value}_1`, synonyms: split(synonymList.value) }] },
-    })
+    // Typesense 30 requires an id on every synonym item
+    const body: SynonymSetCreateSchema = { items: [{ id: `${setName.value}_1`, synonyms: split(synonymList.value) }] }
+    await $fetch(`/api/typesense/synonym_sets/${setName.value}`, { method: 'PUT', body })
     await refresh()
   }
   catch (e) { fail(e) }

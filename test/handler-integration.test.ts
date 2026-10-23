@@ -58,6 +58,23 @@ describe('server handlers end to end', () => {
     await expect(handler({ params: { name: 'products' } } as never)).rejects.toMatchObject({ statusCode: 502 })
   })
 
+  it('lists aliases through GET /alias', async () => {
+    const fetchMock = vi.fn(async () => jsonResponse(200, { aliases: [{ name: 'products_live', collection_name: 'products_v2' }] }))
+    vi.stubGlobal('fetch', fetchMock)
+    const { default: handler } = await import('../src/runtime/server/api/typesense/alias/index.get')
+
+    const result = await handler({} as never)
+    expect(new URL((fetchMock.mock.calls[0] as unknown as [string])[0]).pathname).toBe('/aliases')
+    expect(result).toMatchObject({ aliases: [{ name: 'products_live', collectionName: 'products_v2' }] })
+  })
+
+  it('maps alias list failures to the upstream status', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => jsonResponse(401, { message: 'Forbidden - a valid `x-typesense-api-key` header must be sent.' })))
+    const { default: handler } = await import('../src/runtime/server/api/typesense/alias/index.get')
+
+    await expect(handler({} as never)).rejects.toMatchObject({ statusCode: 401 })
+  })
+
   it('rejects a missing collection name with 400', async () => {
     const { default: handler } = await import('../src/runtime/server/api/typesense/documents/[collection]/search.post')
 

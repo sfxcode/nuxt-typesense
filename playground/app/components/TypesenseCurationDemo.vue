@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface CurationItem {
-  id?: string
+  id: string
   rule: { query?: string, match?: string }
   includes?: Array<{ id: string, position: number }>
   excludes?: Array<{ id: string }>

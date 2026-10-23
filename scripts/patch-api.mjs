@@ -81,3 +81,7 @@ function addField(file, { after, prop, json, type, doc }) {
 // and `synonym_sets` inside multi-search entries are accepted but ignored, so they are not added here.
 for (const file of ['CollectionSchema', 'CollectionUpdateSchema', 'CollectionResponse'])
   addField(file, { after: 'synonymSets', prop: 'curationSets', json: 'curation_sets', type: 'Array<string>', doc: 'Names of the curation sets linked to this collection.' })
+
+// 6. Typesense 30 rejects curation items without an id, but the spec marks it optional
+patch('models/CurationItemCreateSchema.ts', src =>
+  src.includes('    id: string;') ? src : replaceOnce(src, '    id?: string;', '    id: string;', 'models/CurationItemCreateSchema.ts'))

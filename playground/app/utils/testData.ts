@@ -1,3 +1,5 @@
+import type { CurationSetCreateSchema, StopwordsSetUpsertSchema, SynonymSetCreateSchema } from '../../../src/runtime/api'
+
 export interface Product {
   id: string
   name: string
@@ -369,17 +371,18 @@ export const collectionSchemas = {
 }
 
 // Search-tuning fixtures; names match the defaults on the /tuning and /curation pages.
+// Typed against the API models so a missing item id fails the type check.
 export const demoSets = {
   synonyms: {
     name: 'demo_synonyms',
     body: { items: [
       { id: 'laptops', synonyms: ['laptop', 'notebook', 'computer'] },
       { id: 'headphones', synonyms: ['headphones', 'earphones', 'headset'] },
-    ] },
+    ] } satisfies SynonymSetCreateSchema,
   },
   stopwords: {
     id: 'demo_stopwords',
-    body: { stopwords: ['the', 'a', 'an', 'of'] },
+    body: { stopwords: ['the', 'a', 'an', 'of'] } satisfies StopwordsSetUpsertSchema,
   },
   curation: {
     name: 'demo_curation',
@@ -389,6 +392,6 @@ export const demoSets = {
         { id: 'pin-watch', rule: { query: 'watch', match: 'contains' }, includes: [{ id: '2', position: 1 }] },
         { id: 'hide-bottle', rule: { query: 'bottle', match: 'contains' }, excludes: [{ id: '5' }] },
       ],
-    },
+    } satisfies CurationSetCreateSchema,
   },
 }

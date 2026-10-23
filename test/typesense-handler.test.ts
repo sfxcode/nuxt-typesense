@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { describeTypesenseError } from '../src/runtime/utils/typesenseErrors'
 import { defineTypesenseHandler } from '../src/runtime/server/composables/typesenseHandler'
+import { useTypesenseError } from '../src/runtime/composables/typesenseError'
 import { FetchError, RequiredError, ResponseError } from '../src/runtime/api/runtime'
 
 // h3 is provided by Nitro at runtime and is not resolvable from plain vitest
@@ -113,5 +114,14 @@ describe('defineTypesenseHandler', () => {
       throw new TypeError('bad input')
     })
     await expect(handler(event)).rejects.toMatchObject({ statusCode: 500, message: 'bad input' })
+  })
+})
+
+describe('useTypesenseError', () => {
+  it('describes errors thrown by the browser API clients', async () => {
+    const { describeError } = useTypesenseError()
+
+    expect(await describeError(new ResponseError(jsonResponse(404, { message: 'Not Found' })))).toMatchObject({ statusCode: 404, message: 'Not Found' })
+    expect(await describeError(new FetchError(new Error('offline')))).toMatchObject({ statusCode: 502 })
   })
 })

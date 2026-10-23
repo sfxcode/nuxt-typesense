@@ -127,7 +127,7 @@ export interface CurationItemCreateSchema {
      * @type {string}
      * @memberof CurationItemCreateSchema
      */
-    id?: string;
+    id: string;
 }
 
 /**
