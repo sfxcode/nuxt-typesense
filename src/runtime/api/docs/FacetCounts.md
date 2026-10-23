@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `counts` | [Array&lt;FacetCountsCountsInner&gt;](FacetCountsCountsInner.md)
 `fieldName` | string
+`sampled` | boolean
 `stats` | [FacetCountsStats](FacetCountsStats.md)
 
 ## Example
@@ -19,6 +20,7 @@ import type { FacetCounts } from ''
 const example = {
   "counts": null,
   "fieldName": null,
+  "sampled": null,
   "stats": null,
 } satisfies FacetCounts
 

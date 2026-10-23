@@ -30,6 +30,8 @@ import type {
   UpdateDocuments200Response,
   UpdateDocumentsUpdateDocumentsParametersParameter,
 } from '../models/index';
+
+import {removeUndefined} from "../../utils/api";
 import {
     DeleteDocuments200ResponseFromJSON,
     DeleteDocuments200ResponseToJSON,
@@ -60,8 +62,6 @@ import {
     UpdateDocumentsUpdateDocumentsParametersParameterFromJSON,
     UpdateDocumentsUpdateDocumentsParametersParameterToJSON,
 } from '../models/index';
-
-import {removeUndefined} from "../../utils/api";
 
 export interface DeleteDocumentRequest {
     collectionName: string;
@@ -514,10 +514,10 @@ export class DocumentsApi extends runtime.BaseAPI {
             );
         }
 
-        const queryParameters: any = {};
+        let queryParameters: any = {};
 
         if (requestParameters['searchParameters'] != null) {
-            queryParameters['searchParameters'] = requestParameters['searchParameters'];
+          queryParameters = removeUndefined(SearchParametersToJSON(requestParameters.searchParameters));
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

@@ -15,10 +15,13 @@ Name | Type
 `maxExtraPrefix` | number
 `maxExtraSuffix` | number
 `filterBy` | string
+`enableLazyFilter` | boolean
+`maxFilterByCandidates` | number
 `sortBy` | string
 `facetBy` | string
 `maxFacetValues` | number
 `facetQuery` | string
+`facetQueryNumTypos` | number
 `numTypos` | string
 `page` | number
 `perPage` | number
@@ -27,6 +30,7 @@ Name | Type
 `groupBy` | string
 `groupLimit` | number
 `groupMissingValues` | boolean
+`groupMaxCandidates` | number
 `includeFields` | string
 `excludeFields` | string
 `highlightFullFields` | string
@@ -42,11 +46,13 @@ Name | Type
 `enableSynonyms` | boolean
 `enableAnalytics` | boolean
 `synonymPrefix` | boolean
+`demoteSynonymMatch` | boolean
 `synonymNumTypos` | number
 `pinnedHits` | string
 `hiddenHits` | string
 `curationTags` | string
 `highlightFields` | string
+`rerankHybridMatches` | boolean
 `preSegmentedQuery` | boolean
 `preset` | string
 `enableCurations` | boolean
@@ -56,6 +62,7 @@ Name | Type
 `enableTyposForNumericalTokens` | boolean
 `exhaustiveSearch` | boolean
 `searchCutoffMs` | number
+`limitHits` | number
 `useCache` | boolean
 `cacheTtl` | number
 `minLen1typo` | number
@@ -66,13 +73,16 @@ Name | Type
 `facetStrategy` | string
 `stopwords` | string
 `facetReturnParent` | string
+`facetSamplePercent` | number
+`facetSampleThreshold` | number
+`facetSampleSlope` | number
 `voiceQuery` | string
 `conversation` | boolean
 `conversationModelId` | string
 `conversationId` | string
+`validateFieldNames` | boolean
 `collection` | string
 `xTypesenseApiKey` | string
-`rerankHybridMatches` | boolean
 
 ## Example
 
@@ -90,10 +100,13 @@ const example = {
   "maxExtraPrefix": null,
   "maxExtraSuffix": null,
   "filterBy": num_employees:>100 && country: [USA, UK],
+  "enableLazyFilter": null,
+  "maxFilterByCandidates": null,
   "sortBy": null,
   "facetBy": null,
   "maxFacetValues": null,
   "facetQuery": null,
+  "facetQueryNumTypos": null,
   "numTypos": null,
   "page": null,
   "perPage": null,
@@ -102,6 +115,7 @@ const example = {
   "groupBy": null,
   "groupLimit": null,
   "groupMissingValues": null,
+  "groupMaxCandidates": null,
   "includeFields": null,
   "excludeFields": null,
   "highlightFullFields": null,
@@ -117,11 +131,13 @@ const example = {
   "enableSynonyms": null,
   "enableAnalytics": null,
   "synonymPrefix": null,
+  "demoteSynonymMatch": null,
   "synonymNumTypos": null,
   "pinnedHits": null,
   "hiddenHits": null,
   "curationTags": null,
   "highlightFields": null,
+  "rerankHybridMatches": null,
   "preSegmentedQuery": null,
   "preset": null,
   "enableCurations": null,
@@ -131,6 +147,7 @@ const example = {
   "enableTyposForNumericalTokens": null,
   "exhaustiveSearch": null,
   "searchCutoffMs": null,
+  "limitHits": null,
   "useCache": null,
   "cacheTtl": null,
   "minLen1typo": null,
@@ -141,13 +158,16 @@ const example = {
   "facetStrategy": null,
   "stopwords": null,
   "facetReturnParent": null,
+  "facetSamplePercent": null,
+  "facetSampleThreshold": null,
+  "facetSampleSlope": null,
   "voiceQuery": null,
   "conversation": null,
   "conversationModelId": null,
   "conversationId": null,
+  "validateFieldNames": null,
   "collection": null,
   "xTypesenseApiKey": null,
-  "rerankHybridMatches": null,
 } satisfies MultiSearchCollectionParameters
 
 console.log(example)

@@ -7,6 +7,7 @@
 Name | Type
 ------------ | -------------
 `collectionName` | string
+`firstQ` | string
 `q` | string
 `perPage` | number
 `voiceQuery` | [SearchRequestParamsVoiceQuery](SearchRequestParamsVoiceQuery.md)
@@ -19,6 +20,7 @@ import type { SearchRequestParams } from ''
 // TODO: Update the object below with actual values
 const example = {
   "collectionName": null,
+  "firstQ": null,
   "q": null,
   "perPage": null,
   "voiceQuery": null,

@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `q` | string
 `queryBy` | string
+`validateFieldNames` | boolean
 `nlQuery` | boolean
 `nlModelId` | string
 `queryByWeights` | string
@@ -17,11 +18,13 @@ Name | Type
 `maxExtraPrefix` | number
 `maxExtraSuffix` | number
 `filterBy` | string
+`enableLazyFilter` | boolean
 `maxFilterByCandidates` | number
 `sortBy` | string
 `facetBy` | string
 `maxFacetValues` | number
 `facetQuery` | string
+`facetQueryNumTypos` | number
 `numTypos` | string
 `page` | number
 `perPage` | number
@@ -30,6 +33,7 @@ Name | Type
 `groupBy` | string
 `groupLimit` | number
 `groupMissingValues` | boolean
+`groupMaxCandidates` | number
 `includeFields` | string
 `excludeFields` | string
 `highlightFullFields` | string
@@ -47,11 +51,13 @@ Name | Type
 `filterCuratedHits` | boolean
 `enableSynonyms` | boolean
 `synonymPrefix` | boolean
+`demoteSynonymMatch` | boolean
 `synonymNumTypos` | number
 `pinnedHits` | string
 `hiddenHits` | string
 `curationTags` | string
 `highlightFields` | string
+`rerankHybridMatches` | boolean
 `splitJoinTokens` | string
 `preSegmentedQuery` | boolean
 `preset` | string
@@ -63,6 +69,7 @@ Name | Type
 `enableTyposForNumericalTokens` | boolean
 `exhaustiveSearch` | boolean
 `searchCutoffMs` | number
+`limitHits` | number
 `useCache` | boolean
 `cacheTtl` | number
 `minLen1typo` | number
@@ -73,6 +80,9 @@ Name | Type
 `facetStrategy` | string
 `stopwords` | string
 `facetReturnParent` | string
+`facetSamplePercent` | number
+`facetSampleThreshold` | number
+`facetSampleSlope` | number
 `voiceQuery` | string
 `conversation` | boolean
 `conversationModelId` | string
@@ -89,6 +99,7 @@ import type { PresetUpsertSchemaValue } from ''
 const example = {
   "q": null,
   "queryBy": null,
+  "validateFieldNames": null,
   "nlQuery": null,
   "nlModelId": null,
   "queryByWeights": null,
@@ -98,11 +109,13 @@ const example = {
   "maxExtraPrefix": null,
   "maxExtraSuffix": null,
   "filterBy": num_employees:>100 && country: [USA, UK],
+  "enableLazyFilter": null,
   "maxFilterByCandidates": null,
   "sortBy": num_employees:desc,
   "facetBy": null,
   "maxFacetValues": null,
   "facetQuery": null,
+  "facetQueryNumTypos": null,
   "numTypos": null,
   "page": null,
   "perPage": null,
@@ -111,6 +124,7 @@ const example = {
   "groupBy": null,
   "groupLimit": null,
   "groupMissingValues": null,
+  "groupMaxCandidates": null,
   "includeFields": null,
   "excludeFields": null,
   "highlightFullFields": null,
@@ -128,11 +142,13 @@ const example = {
   "filterCuratedHits": null,
   "enableSynonyms": null,
   "synonymPrefix": null,
+  "demoteSynonymMatch": null,
   "synonymNumTypos": null,
   "pinnedHits": null,
   "hiddenHits": null,
   "curationTags": null,
   "highlightFields": null,
+  "rerankHybridMatches": null,
   "splitJoinTokens": null,
   "preSegmentedQuery": null,
   "preset": null,
@@ -144,6 +160,7 @@ const example = {
   "enableTyposForNumericalTokens": null,
   "exhaustiveSearch": null,
   "searchCutoffMs": null,
+  "limitHits": null,
   "useCache": null,
   "cacheTtl": null,
   "minLen1typo": null,
@@ -154,6 +171,9 @@ const example = {
   "facetStrategy": null,
   "stopwords": null,
   "facetReturnParent": null,
+  "facetSamplePercent": null,
+  "facetSampleThreshold": null,
+  "facetSampleSlope": null,
   "voiceQuery": null,
   "conversation": null,
   "conversationModelId": null,
