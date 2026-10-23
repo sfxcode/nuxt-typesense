@@ -1,65 +1,61 @@
 <template>
   <UCard>
-    <div class="flex flex-wrap items-center gap-2">
-      <UNavigationMenu
-        :items="items"
-        orientation="horizontal"
-      />
-    </div>
+    <UNavigationMenu
+      :items="items"
+      orientation="horizontal"
+      content-orientation="vertical"
+    />
   </UCard>
 </template>
 
 <script setup lang="ts">
-const items = [
+import type { NavigationMenuItem } from '@nuxt/ui'
+
+const route = useRoute()
+
+// Groups keep the bar short; a group is highlighted when one of its pages is active.
+const groups = [
   {
-    label: 'Overview',
-    to: '/',
-    icon: 'i-lucide-home',
-  },
-  {
-    label: 'Search Demo',
-    to: '/search',
+    label: 'Search',
     icon: 'i-lucide-search',
+    children: [
+      { label: 'Search Demo', to: '/search', icon: 'i-lucide-search', description: 'Live product search' },
+      { label: 'Search Presets', to: '/presets', icon: 'i-lucide-sliders-horizontal', description: 'Reusable search parameters' },
+    ],
   },
   {
-    label: 'Info',
-    to: '/info',
-    icon: 'i-lucide-info',
-  },
-  {
-    label: 'Collections',
-    to: '/collections',
-    icon: 'i-lucide-database',
-  },
-  {
-    label: 'Key Management',
-    to: '/keys',
-    icon: 'i-lucide-key-round',
-  },
-  {
-    label: 'Analytics',
-    to: '/analytics',
-    icon: 'i-lucide-chart-column',
-  },
-  {
-    label: 'Operations',
-    to: '/operations',
-    icon: 'i-lucide-wrench',
-  },
-  {
-    label: 'Search Presets',
-    to: '/presets',
-    icon: 'i-lucide-sliders-horizontal',
-  },
-  {
-    label: 'Search Tuning',
-    to: '/tuning',
+    label: 'Tuning',
     icon: 'i-lucide-wand-sparkles',
+    children: [
+      { label: 'Synonyms & Stopwords', to: '/tuning', icon: 'i-lucide-wand-sparkles', description: 'Query rewriting sets' },
+      { label: 'Curation', to: '/curation', icon: 'i-lucide-pin', description: 'Pin or hide results' },
+    ],
   },
   {
-    label: 'Examples',
-    to: '/examples',
-    icon: 'i-lucide-code-2',
+    label: 'Data',
+    icon: 'i-lucide-database',
+    children: [
+      { label: 'Collections', to: '/collections', icon: 'i-lucide-database', description: 'Schemas and documents' },
+      { label: 'Analytics', to: '/analytics', icon: 'i-lucide-chart-column', description: 'Rules and events' },
+    ],
+  },
+  {
+    label: 'Admin',
+    icon: 'i-lucide-settings',
+    children: [
+      { label: 'Info', to: '/info', icon: 'i-lucide-info', description: 'Server health and metrics' },
+      { label: 'Key Management', to: '/keys', icon: 'i-lucide-key-round', description: 'API and scoped keys' },
+      { label: 'Operations', to: '/operations', icon: 'i-lucide-wrench', description: 'Snapshots, cache, compaction' },
+    ],
   },
 ]
+
+const items = computed<NavigationMenuItem[]>(() => [
+  { label: 'Overview', to: '/', icon: 'i-lucide-home' },
+  ...groups.map(group => ({
+    ...group,
+    active: group.children.some(child => route.path.startsWith(child.to)),
+  })),
+  { label: 'Examples', to: '/examples', icon: 'i-lucide-code-2' },
+])
 </script>

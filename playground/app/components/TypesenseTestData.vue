@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { products, books, users, collectionSchemas } from '~/utils/testData'
+import { products, books, users, collectionSchemas, demoSets } from '~/utils/testData'
 import type { Product, Book, User } from '~/utils/testData'
 
 interface ResultData {
@@ -10,6 +10,7 @@ interface ResultData {
     users?: { imported: number, result: unknown }
   }
   deleted?: string[]
+  tuning?: string[]
   errors?: Array<{ collection: string, message: string }>
 }
 
@@ -126,6 +127,26 @@ async function initializeTestData() {
       })
     }
 
+    // Search-tuning sets are optional: older Typesense versions may not support them
+    results.tuning = []
+    const tuningRequests = [
+      { label: 'synonym set', url: `/api/typesense/synonym_sets/${demoSets.synonyms.name}`, body: demoSets.synonyms.body },
+      { label: 'stopword set', url: `/api/typesense/stopwords/${demoSets.stopwords.id}`, body: demoSets.stopwords.body },
+      { label: 'curation set', url: `/api/typesense/curation_sets/${demoSets.curation.name}`, body: demoSets.curation.body },
+    ]
+    for (const { label, url, body } of tuningRequests) {
+      try {
+        await $fetch(url, { method: 'PUT', body })
+        results.tuning.push(label)
+      }
+      catch (error: unknown) {
+        results.errors!.push({
+          collection: label,
+          message: `Failed to create: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        })
+      }
+    }
+
     result.value = {
       success: true,
       message: 'Test data initialized successfully',
@@ -178,6 +199,21 @@ async function clearTestData() {
             message: error instanceof Error ? error.message : 'Unknown error',
           })
         }
+      }
+    }
+
+    const tuningDeletes = [
+      { label: 'demo_synonyms', url: `/api/typesense/synonym_sets/${demoSets.synonyms.name}` },
+      { label: 'demo_stopwords', url: `/api/typesense/stopwords/${demoSets.stopwords.id}` },
+      { label: 'demo_curation', url: `/api/typesense/curation_sets/${demoSets.curation.name}` },
+    ]
+    for (const { label, url } of tuningDeletes) {
+      try {
+        await $fetch(url, { method: 'DELETE' })
+        results.deleted!.push(label)
+      }
+      catch {
+        // set does not exist; nothing to clear
       }
     }
 
@@ -278,6 +314,20 @@ async function clearTestData() {
             </li>
           </ul>
 
+          <template v-if="result.data.tuning?.length">
+            <div class="font-semibold mt-3">
+              Search Tuning Created:
+            </div>
+            <ul class="list-disc list-inside space-y-1">
+              <li
+                v-for="item in result.data.tuning"
+                :key="item"
+              >
+                demo {{ item }}
+              </li>
+            </ul>
+          </template>
+
           <div class="font-semibold mt-3">
             Documents Imported:
           </div>
@@ -322,6 +372,7 @@ async function clearTestData() {
           <li><strong>Products:</strong> 10 sample products with electronics, furniture, and sports items</li>
           <li><strong>Books:</strong> 8 sample books across various genres</li>
           <li><strong>Users:</strong> 5 sample users from different countries</li>
+          <li><strong>Search tuning:</strong> a synonym set, a stopword set, and a curation set (see Search Tuning and Curation pages)</li>
         </ul>
       </div>
     </div>

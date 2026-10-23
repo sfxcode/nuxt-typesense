@@ -367,3 +367,25 @@ export const collectionSchemas = {
     default_sorting_field: 'joinedAt',
   },
 }
+
+// Search-tuning fixtures; names match the defaults on the /tuning and /curation pages.
+export const demoSets = {
+  synonyms: {
+    name: 'demo_synonyms',
+    body: { items: [{ synonyms: ['laptop', 'notebook', 'computer'] }, { synonyms: ['headphones', 'earphones', 'headset'] }] },
+  },
+  stopwords: {
+    id: 'demo_stopwords',
+    body: { stopwords: ['the', 'a', 'an', 'of'] },
+  },
+  curation: {
+    name: 'demo_curation',
+    body: {
+      description: 'Pin the smart watch for "watch", hide the water bottle for "bottle"',
+      items: [
+        { rule: { query: 'watch', match: 'contains' }, includes: [{ id: '2', position: 1 }] },
+        { rule: { query: 'bottle', match: 'contains' }, excludes: [{ id: '5' }] },
+      ],
+    },
+  },
+}
