@@ -6,7 +6,7 @@
 
 A Nuxt module for integrating [Typesense](https://typesense.org/) - a fast, typo-tolerant search engine - into your Nuxt 4 application.
 
-> 📖 **[Read the full documentation](./docs/README.md)** for detailed guides, API references, and examples.
+> 📖 **[Read the full documentation](https://sfxcode.github.io/nuxt-typesense/)** for detailed guides, API references, and examples.
 
 ## Features
 
@@ -278,7 +278,7 @@ If the generator output changes so a patch no longer matches, the script fails w
 
 ## Documentation
 
-Full documentation is in the `docs/` directory (Getting Started, Configuration, Core Concepts, API Reference, Examples).
+Full documentation is published at **https://sfxcode.github.io/nuxt-typesense/** (source in the `docs/` directory: Getting Started, Configuration, Core Concepts, API Reference, Examples).
 
 ```bash
 pnpm run docs:dev      # dev server (http://localhost:5173)
@@ -298,6 +298,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Resources
 
+- 📖 [Nuxt Typesense Documentation](https://sfxcode.github.io/nuxt-typesense/)
 - 📖 [Typesense Documentation](https://typesense.org/docs/)
 - 🎮 [Typesense API Explorer](https://typesense.org/api/)
 - 💬 [Typesense Slack Community](https://join.slack.com/t/typesense-community/shared_invite/zt-2fetvh0pw-ft5y2YQlq4l_bPhhqpjXig)
