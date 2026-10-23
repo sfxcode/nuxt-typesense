@@ -86,7 +86,7 @@ async function runDemo() {
     })
   }
   catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'Failed to run preset search demo'
+    error.value = errorMessage(e, 'Failed to run preset search demo')
   }
   finally {
     loading.value = false

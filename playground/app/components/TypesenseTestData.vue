@@ -68,7 +68,7 @@ async function initializeTestData() {
     catch (error: unknown) {
       results.errors!.push({
         collection: 'products',
-        message: `Failed to import documents: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        message: `Failed to import documents: ${errorMessage(error, 'Unknown error')}`,
       })
     }
 
@@ -96,7 +96,7 @@ async function initializeTestData() {
     catch (error: unknown) {
       results.errors!.push({
         collection: 'books',
-        message: `Failed to import documents: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        message: `Failed to import documents: ${errorMessage(error, 'Unknown error')}`,
       })
     }
 
@@ -123,7 +123,7 @@ async function initializeTestData() {
     catch (error: unknown) {
       results.errors!.push({
         collection: 'users',
-        message: `Failed to import documents: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        message: `Failed to import documents: ${errorMessage(error, 'Unknown error')}`,
       })
     }
 
@@ -142,7 +142,7 @@ async function initializeTestData() {
       catch (error: unknown) {
         results.errors!.push({
           collection: label,
-          message: `Failed to create: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          message: `Failed to create: ${errorMessage(error, 'Unknown error')}`,
         })
       }
     }
@@ -160,7 +160,7 @@ async function initializeTestData() {
     result.value = {
       success: false,
       message: 'Failed to initialize test data',
-      description: error instanceof Error ? error.message : 'An unexpected error occurred',
+      description: errorMessage(error, 'An unexpected error occurred'),
       data: results,
     }
   }
@@ -196,7 +196,7 @@ async function clearTestData() {
         catch (error: unknown) {
           results.errors!.push({
             collection: collectionName,
-            message: error instanceof Error ? error.message : 'Unknown error',
+            message: errorMessage(error, 'Unknown error'),
           })
         }
       }
@@ -234,7 +234,7 @@ async function clearTestData() {
     result.value = {
       success: false,
       message: 'Failed to clear test data',
-      description: error instanceof Error ? error.message : 'An unexpected error occurred',
+      description: errorMessage(error, 'An unexpected error occurred'),
     }
   }
   finally {

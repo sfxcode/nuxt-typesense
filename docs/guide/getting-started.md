@@ -1,13 +1,13 @@
 # Getting Started
 
-This guide will help you set up Nuxt Typesense in your Nuxt 3 application.
+This guide will help you set up Nuxt Typesense in your Nuxt 4 application.
 
 ## Prerequisites
 
 Before you begin, make sure you have:
 
 - Node.js 18.x or higher
-- A Nuxt 3 project (or create a new one)
+- A Nuxt 4 project (or create a new one)
 - A Typesense server instance (local or cloud)
 
 ## Setting up Typesense Server

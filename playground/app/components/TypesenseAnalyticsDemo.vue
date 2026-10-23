@@ -20,7 +20,7 @@ async function fetchAnalytics() {
       : []
   }
   catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'Unable to load analytics information.'
+    error.value = errorMessage(e, 'Unable to load analytics information.')
     status.value = null
     rules.value = []
   }

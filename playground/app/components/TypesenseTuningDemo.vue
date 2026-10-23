@@ -16,7 +16,7 @@ const hitCount = ref<number | null>(null)
 const split = (value: string) => value.split(',').map(v => v.trim()).filter(Boolean)
 
 function fail(e: unknown) {
-  error.value = e instanceof Error ? e.message : 'Request failed'
+  error.value = errorMessage(e, 'Request failed')
 }
 
 async function refresh() {

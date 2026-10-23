@@ -29,7 +29,7 @@ async function fetchOperationsData() {
     schemaChanges.value = schemaResponse
   }
   catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'Unable to load operations data.'
+    error.value = errorMessage(e, 'Unable to load operations data.')
     metrics.value = null
     stats.value = null
     schemaChanges.value = null
@@ -65,7 +65,7 @@ async function runAction(action: (typeof actions.value)[number]) {
     lastAction.value = { label: action.label, ok: true, at, response }
   }
   catch (e: unknown) {
-    lastAction.value = { label: action.label, ok: false, at, response: e instanceof Error ? e.message : 'Request failed' }
+    lastAction.value = { label: action.label, ok: false, at, response: errorMessage(e, 'Request failed') }
   }
   finally {
     running.value = null

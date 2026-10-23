@@ -24,7 +24,7 @@ async function fetchStatus() {
     status.value = await $fetch('/api/typesense/status')
   }
   catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'Unable to load status information.'
+    error.value = errorMessage(e, 'Unable to load status information.')
     status.value = null
   }
   finally {

@@ -1,6 +1,6 @@
 # What is Nuxt Typesense?
 
-Nuxt Typesense is a [Nuxt 3](https://nuxt.com/) module that provides seamless integration with [Typesense](https://typesense.org/), a fast, typo-tolerant search engine that you can host yourself or use as a managed service.
+Nuxt Typesense is a [Nuxt 4](https://nuxt.com/) module that provides seamless integration with [Typesense](https://typesense.org/), a fast, typo-tolerant search engine that you can host yourself or use as a managed service.
 
 ## Why Typesense?
 

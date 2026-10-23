@@ -169,7 +169,7 @@ const fetchKeys = async () => {
     keys.value = await $fetch<ApiKeysResponse>('/api/typesense/keys')
   }
   catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'Failed to fetch keys'
+    error.value = errorMessage(e, 'Failed to fetch keys')
   }
   finally {
     loading.value = false
@@ -194,7 +194,7 @@ const handleDeleteKey = async (keyId: number) => {
     await fetchKeys()
   }
   catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'Failed to delete key'
+    error.value = errorMessage(e, 'Failed to delete key')
   }
   finally {
     deleting.value = false

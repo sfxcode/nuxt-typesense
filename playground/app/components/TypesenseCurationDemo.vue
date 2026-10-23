@@ -20,7 +20,7 @@ const sets = ref<CurationSet[]>([])
 const error = ref<string | null>(null)
 
 function fail(e: unknown) {
-  error.value = e instanceof Error ? e.message : 'Request failed'
+  error.value = errorMessage(e, 'Request failed')
 }
 
 async function refresh() {

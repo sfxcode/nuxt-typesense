@@ -6,6 +6,26 @@ The module automatically registers server API routes that proxy requests to your
 Server routes use the API key configured in your `nuxt.config.ts` server runtime config, keeping your credentials secure. Never expose your admin API key to the client.
 :::
 
+## Error responses
+
+Errors from Typesense are passed through with their original status code and message, so clients can handle them normally:
+
+| Situation | Status | Message |
+|-----------|--------|---------|
+| Typesense returns an error (not found, invalid schema, bad key, ...) | Typesense's status | Typesense's own message |
+| Typesense is unreachable | `502` | `Typesense server is unreachable` |
+| Required parameter missing from the request | `400` | Describes the missing parameter |
+| Anything unexpected | `500` | The error message |
+
+```typescript
+try {
+  await $fetch('/api/typesense/collections/missing')
+}
+catch (error) {
+  // error.statusCode === 404, error.data.message === 'No collection with name `missing` found.'
+}
+```
+
 ## Status & Health
 
 ### GET `/api/typesense/status`

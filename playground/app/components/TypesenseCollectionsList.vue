@@ -15,7 +15,7 @@ async function fetchCollections() {
     lastUpdated.value = new Date().toLocaleString()
   }
   catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'An unexpected error occurred'
+    error.value = errorMessage(e, 'An unexpected error occurred')
     collections.value = null
   }
   finally {
@@ -35,7 +35,7 @@ async function deleteCollection(name: string) {
     await fetchCollections()
   }
   catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'Failed to delete collection'
+    error.value = errorMessage(e, 'Failed to delete collection')
   }
 }
 

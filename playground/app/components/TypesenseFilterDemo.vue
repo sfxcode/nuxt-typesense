@@ -72,7 +72,7 @@ async function search() {
     })
   }
   catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'Failed to search products'
+    error.value = errorMessage(e, 'Failed to search products')
     searchResult.value = null
   }
   finally {

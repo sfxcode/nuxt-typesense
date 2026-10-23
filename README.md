@@ -59,6 +59,7 @@ interface ModuleOptions {
   url?: string // Typesense server URL
   apiKey?: string // Typesense API key
   clientMode?: boolean // default: false
+  routes?: { readOnly?: boolean, exclude?: string[] } // limit the proxy routes (server mode)
 }
 ```
 
@@ -195,6 +196,19 @@ Note that the generated clients use camelCase parameter names (`queryBy`, `filte
 | Rotate keys regularly | Commit keys to version control |
 
 > **🔒 Security Rule**: If it modifies data, it belongs on the server.
+
+The proxy routes use the server key and have **no built-in authentication**. Limit what is exposed with the `routes` option, and protect `/api/typesense/**` with your own middleware on public sites:
+
+```typescript
+typesense: {
+  routes: {
+    readOnly: true, // GET routes, search and multi-search only (no key listing or debug)
+    exclude: ['/api/typesense/operations'], // drop route groups by prefix
+  },
+}
+```
+
+See [Configuration](./docs/guide/configuration.md#routes) for details.
 
 ## Development
 

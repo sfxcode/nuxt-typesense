@@ -172,7 +172,7 @@ async function runExample(example: (typeof examples)[number]) {
     executionState.value[example.id] = {
       ok: false,
       title: example.title,
-      message: error instanceof Error ? error.message : 'Example request failed.',
+      message: errorMessage(error, 'Example request failed.'),
     }
   }
   finally {

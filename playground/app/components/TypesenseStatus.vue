@@ -15,7 +15,7 @@ async function fetchStatus() {
     lastUpdated.value = new Date().toLocaleString()
   }
   catch (e: unknown) {
-    error.value = e instanceof Error ? e.message : 'An unexpected error occurred'
+    error.value = errorMessage(e, 'An unexpected error occurred')
     status.value = null
   }
   finally {
