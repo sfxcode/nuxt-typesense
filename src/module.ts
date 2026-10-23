@@ -7,6 +7,16 @@ export interface ModuleOptions {
   url?: string
   apiKey?: string
   clientMode?: boolean
+  /**
+   * Limit which `/api/typesense/*` proxy routes are registered. The proxy uses the
+   * server API key, so every registered route is callable by anyone who can reach the app.
+   */
+  routes?: {
+    /** Only register read routes: GET requests plus search and multi-search. */
+    readOnly?: boolean
+    /** Route prefixes to skip, e.g. `['/api/typesense/keys', '/api/typesense/operations']`. */
+    exclude?: string[]
+  }
 }
 
 export function validateTypesenseConfig(options: ModuleOptions, env: Record<string, string | undefined> = process.env) {
@@ -145,6 +155,23 @@ export const typesenseServerRoutes: TypesenseRoute[] = [
   { route: '/api/typesense/key/scoped/:key', method: 'post', handler: './runtime/server/api/typesense/key/scoped/[key].post' },
 ]
 
+const readOnlyPostRoutes = new Set([
+  '/api/typesense/documents/:collection/search',
+  '/api/typesense/documents/:collection/multi-search',
+])
+
+export function filterTypesenseRoutes(routes: TypesenseRoute[], options: ModuleOptions['routes'] = {}) {
+  const exclude = (options.exclude ?? []).map(prefix => prefix.replace(/\/+$/, ''))
+
+  return routes.filter(({ route, method }) => {
+    if (exclude.some(prefix => route === prefix || route.startsWith(`${prefix}/`)))
+      return false
+    if (options.readOnly && method && method !== 'get' && !(method === 'post' && readOnlyPostRoutes.has(route)))
+      return false
+    return true
+  })
+}
+
 function registerTypesenseRoutes(routes: TypesenseRoute[], resolver: ReturnType<typeof createResolver>) {
   routes.forEach(({ route, method, handler }) => {
     addServerHandler({
@@ -194,7 +221,7 @@ export default defineNuxtModule<ModuleOptions>({
       addServerImportsDir(resolver.resolve('./runtime/server/composables'))
     }
 
-    registerTypesenseRoutes(typesenseServerRoutes, resolver)
+    registerTypesenseRoutes(filterTypesenseRoutes(typesenseServerRoutes, options.routes), resolver)
 
     consola.success('nuxt-typesense available')
   },

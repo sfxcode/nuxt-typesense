@@ -60,6 +60,34 @@ When set to `true`, the module switches from server-side runtime config to publi
 
 The module validates this at startup. If `clientMode` is enabled and the configured API key matches a `TYPESENSE_ADMIN_KEY`/`NUXT_TYPESENSE_ADMIN_KEY`, it throws an error to prevent shipping a write-capable key to the browser.
 
+### `routes`
+
+- **Type:** `{ readOnly?: boolean, exclude?: string[] }`
+- **Default:** all routes registered
+
+In server mode the module registers `/api/typesense/*` proxy routes that call Typesense with the server API key. The module adds no authentication, so **every registered route is callable by anyone who can reach your app**, including deleting collections or creating keys. Restrict what is exposed:
+
+```typescript
+export default defineNuxtConfig({
+  modules: ['@sfxcode/nuxt-typesense'],
+  typesense: {
+    url: process.env.TYPESENSE_URL,
+    apiKey: process.env.TYPESENSE_API_KEY,
+    routes: {
+      // only GET routes plus search and multi-search
+      readOnly: true,
+      // additionally drop route groups by prefix (matched on path segments)
+      exclude: ['/api/typesense/keys', '/api/typesense/operations'],
+    },
+  },
+})
+```
+
+- `readOnly` keeps `GET` routes, `/api/typesense/status`, and the `search` and `multi-search` POST routes.
+- `exclude` removes a route and everything beneath it, so `/api/typesense/key` does not match `/api/typesense/keys`.
+
+For public sites, combine `readOnly` with your own Nitro middleware (for example session or token checks on `/api/typesense/**`), or use [`clientMode`](#clientmode) with a search-only key.
+
 ### Runtime config behavior
 
 The module stores credentials in different Nuxt runtime config locations depending on `clientMode`:
